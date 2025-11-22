@@ -1,0 +1,49 @@
+﻿@using AddWebsiteMvc.ViewModels
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="voting-info">
+        <p>
+            ⚠️ Voting Instructions: Select one contestant below and click "Submit
+            Vote" to confirm your choice.
+        </p>
+    </div>
+
+    <div class="contestants-grid" id="contestantsGrid">
+        <!-- Contestants will be populated by JavaScript -->
+        <div class="contestant-card">
+            <div class="contestant-info">
+                <button class="vote-btn" onclick="LoadContestantPage()">
+                    Manage Contestants (@Model.ContestantCount)
+                </button>
+            </div>
+        </div>
+
+        <div class="contestant-card">
+            <div class="contestant-info">
+                <button class="vote-btn" href="#">
+                    Manage Election (@Model.Election?.description)
+                </button>
+            </div>
+        </div>
+
+        <div class="contestant-card">
+            <div class="contestant-info">
+                <button class="vote-btn" href="#">View Revenue</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function LoadContestantPage(){
+            window.location.href='@Url.Action("Index", "Contestant", new { area = "Admin" })';
+        }
+    </script>
+}
+
+

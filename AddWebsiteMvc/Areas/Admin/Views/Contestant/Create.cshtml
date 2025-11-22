@@ -1,0 +1,443 @@
+﻿@model AddWebsiteMvc.Models.Contestant
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f8f9fa;
+    }
+
+    .container-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(22, 163, 74, 0.2);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+        .page-header h1 {
+            font-size: 2.2em;
+            color: white;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .page-header h4 {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin: 0;
+        }
+
+    .form-container {
+        background: white;
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            letter-spacing: 0.3px;
+        }
+
+            .form-group label::after {
+                content: " *";
+                color: #dc2626;
+                font-weight: 700;
+            }
+
+        .form-group .control-label {
+            text-transform: capitalize;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.95em;
+        transition: all 0.3s ease;
+        outline: none;
+        font-family: inherit;
+    }
+
+        .form-control:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1);
+        }
+
+        .form-control:hover {
+            border-color: #d1d5db;
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+    .text-danger {
+        color: #dc2626;
+        font-size: 0.85em;
+        margin-top: 6px;
+        display: block;
+        font-weight: 500;
+    }
+
+    .validation-summary-errors {
+        background: #fee2e2;
+        border-left: 4px solid #dc2626;
+        padding: 16px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+    }
+
+        .validation-summary-errors ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            .validation-summary-errors ul li {
+                color: #991b1b;
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+                .validation-summary-errors ul li:last-child {
+                    margin-bottom: 0;
+                }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 35px;
+        padding-top: 25px;
+        border-top: 2px solid #f3f4f6;
+    }
+
+    .btn {
+        padding: 14px 32px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95em;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+    .btn-secondary {
+        background: white;
+        color: #374151;
+        border: 2px solid #e5e7eb;
+    }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+            transform: translateY(-2px);
+        }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #16a34a;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+        font-size: 0.95em;
+    }
+
+        .back-link:hover {
+            color: #15803d;
+            gap: 12px;
+        }
+
+        .back-link::before {
+            content: "←";
+            font-size: 1.2em;
+        }
+
+    .info-box {
+        background: #f0fdf4;
+        border-left: 4px solid #16a34a;
+        padding: 16px 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+        .info-box p {
+            margin: 0;
+            color: #065f46;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+    .field-icon {
+        position: relative;
+    }
+
+        .field-icon::before {
+            content: attr(data-icon);
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1.1em;
+        }
+
+        .field-icon .form-control {
+            padding-left: 45px;
+        }
+
+    /* File Input Styling */
+    input[type="file"].form-control {
+        padding: 12px 16px;
+        cursor: pointer;
+    }
+
+        input[type="file"].form-control::file-selector-button {
+            padding: 8px 16px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"].form-control:hover::file-selector-button {
+            background: #15803d;
+        }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .form-container {
+            padding: 30px 20px;
+        }
+
+        .page-header {
+            padding: 30px 20px;
+        }
+
+            .page-header h1 {
+                font-size: 1.6em;
+            }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-group {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    /* Animation */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-container {
+        animation: fadeIn 0.5s ease-out;
+    }
+</style>
+
+<div class="container-wrapper">
+    <div class="page-header">
+        <h1>✨ Create New Contestant</h1>
+        <h4>Add a new contestant to the voting platform</h4>
+    </div>
+
+    <div class="form-container">
+        <div class="info-box">
+            <p>📋 Fill in all required fields marked with an asterisk (*) to create a new contestant profile.</p>
+        </div>
+        @* @if (Model.Errors.Any())
+        {
+            <div class="alert alert-danger">
+                @foreach (var item in Model.Errors)
+                {
+                    <div>@item</div>
+                }
+            </div>
+        } *@
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
+
+            <div class="form-section">
+
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="firstName" class="control-label">First Name</label>
+                        <input asp-for="firstName" class="form-control" placeholder="Enter first name" />
+                        <span asp-validation-for="firstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="lastName" class="control-label">Last Name</label>
+                        <input asp-for="lastName" class="form-control" placeholder="Enter last name" />
+                        <span asp-validation-for="lastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="talent" class="control-label">Talent</label>
+                        <input asp-for="talent" class="form-control" placeholder="Talent" />
+                        <span asp-validation-for="talent" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="shortNote" class="control-label">Short Note</label>
+                        <input asp-for="shortNote" class="form-control" placeholder="Short Note" />
+                        <span asp-validation-for="shortNote" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="electionId" class="control-label">Election</label>
+                        <input asp-for="electionId" value="@Model.election.description" class="form-control" readonly />
+                        <span asp-validation-for="electionId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="dob" class="control-label">Date of Birth</label>
+                        <input asp-for="dob" type="text" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="dob" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="passportFile" class="control-label">Passport Photo</label>
+                        <input asp-for="passportFile" class="form-control" type="file" style="height:50px;" accept="image/*" />
+                        <span asp-validation-for="passportFile" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="videoFile" class="control-label">Video File</label>
+                        <input asp-for="videoFile" class="form-control" type="file" style="height:50px;" accept="video/*" />
+                        <span asp-validation-for="videoFile" class="text-danger"></span>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">
+                    💾 Create Contestant
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    ✕ Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="back-link">Back to Contestants List</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+                $('#dob').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+                endDate: new Date(),
+                startView: 'decade',
+                maxViewMode: 2,
+                orientation: 'bottom auto',
+                templates: {
+                    leftArrow: '←',
+                    rightArrow: '→'
+                }
+            });
+
+              });
+    </script>
+}

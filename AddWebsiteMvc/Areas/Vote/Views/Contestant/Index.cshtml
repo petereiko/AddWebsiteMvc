@@ -1,0 +1,210 @@
+﻿@model GetAllContestantResponse
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_VoteLayout.cshtml";
+    int index = 0;
+}
+<div class="voting-info">
+    <p>
+        ⚠️ Voting Instructions: Select one contestant below and click "Submit
+        Vote" to confirm your choice.
+    </p>
+</div>
+<div class="contestants-grid" id="contestantsGrid">
+    @foreach (var item in Model.data)
+    {
+        <div class="contestant-card" style="opacity:0.95">
+            <div class="contestant-image" style="background-image: url('@item.passportFileName')">
+                <div class="contestant-number">
+                    Contestant #@(index + 1)
+                </div>
+                <div class="vote-count-badge">
+                    <i class="vote-icon">❤️</i>
+                    <span class="vote-number">@item.voteCount</span>
+                    <span class="vote-text">votes</span>
+                </div>
+            </div>
+            <div class="contestant-info">
+                <h2>@item.firstName @item.lastName</h2>
+                <div class="info-row">
+                    <strong>Age:</strong> <span>
+                        @item.dob years
+                    </span>
+                </div>
+                <div class="info-row">
+                    <strong>Video Link:</strong> <span>
+                        <a href="@item.videoFileName">@item.videoFileName</a>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <strong>Talent:</strong> <span>
+                        @item.talent
+                    </span>
+                </div>
+                <div class="info-row vote-count-row">
+                    <strong>Total Votes:</strong> <span class="vote-count-text">
+                        @item.voteCount
+                    </span>
+                </div>
+                <div class="bio">@item.shortNote</div>
+                <button class="vote-btn" onclick="selectContestant('@item.id')">
+                    Vote for @item.firstName
+                </button>
+            </div>
+        </div>
+        index = index + 1;
+    }
+</div>
+<style>
+    .contestants-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .contestant-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .contestant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .contestant-image {
+        width: 100%;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    .contestant-number {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .vote-count-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .vote-icon {
+        font-size: 1rem;
+        font-style: normal;
+    }
+
+    .vote-number {
+        font-weight: bold;
+        color: #e74c3c;
+        font-size: 1.1rem;
+    }
+
+    .vote-text {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .contestant-info {
+        padding: 1.5rem;
+    }
+
+        .contestant-info h2 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+    .info-row {
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+        .info-row strong {
+            color: #555;
+            margin-right: 0.5rem;
+        }
+
+    .vote-count-row {
+        background: #f0f8ff;
+        padding: 0.75rem;
+        border-radius: 6px;
+        margin-top: 0.5rem;
+        border-left: 4px solid #28a745;
+    }
+
+    .vote-count-text {
+        font-weight: bold;
+        color: #28a745;
+        font-size: 1.1rem;
+    }
+
+    .bio {
+        margin: 1rem 0;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .vote-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: green;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+        .vote-btn:hover {
+            background: lightgreen;
+        }
+
+    @@media (max-width: 768px) {
+        .contestants-grid {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+            gap: 1.5rem;
+        }
+    }
+
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .contestants-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+@section Scripts {
+    <script>
+         function selectContestant(id){
+            window.location.href='@Url.Action("Details","Contestant", new{area="Vote"})?id='+id;
+        }
+    </script>
+       
+}
