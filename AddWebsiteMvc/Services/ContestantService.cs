@@ -1,5 +1,6 @@
 ﻿using AddWebsiteMvc.Interfaces;
 using AddWebsiteMvc.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
 
 namespace AddWebsiteMvc.Services
@@ -332,7 +333,8 @@ namespace AddWebsiteMvc.Services
                     firstName = model.firstName,
                     lastName = model.lastName,
                     contestantId = model.contestantId,
-                    count = model.count
+                    count = model.count,
+                    email = model.email
                 };
                 var content = new StringContent(JsonConvert.SerializeObject(payload), null, "application/json");
                 request.Content = content;

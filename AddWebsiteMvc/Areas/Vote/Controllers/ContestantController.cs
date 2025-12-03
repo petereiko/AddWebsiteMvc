@@ -33,7 +33,7 @@ namespace AddWebsiteMvc.Areas.Vote.Controllers
                 talent = x.talent,
                 videoFileName = $"{_configuration["BaseUrl"]}/videos/{x.videoFileName}",
                 voteCount=x.voteCount
-            }).ToList();
+            })/*.OrderBy(x=>x.shortNote).OrderByDescending(x=>x.voteCount)*/.ToList();
             return View(contestantsResult);
         }
 

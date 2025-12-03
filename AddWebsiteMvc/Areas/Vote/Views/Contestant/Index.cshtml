@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_VoteLayout.cshtml";
     int index = 0;
 }
+
+
 <div class="voting-info">
     <p>
         ⚠️ Voting Instructions: Select one contestant below and click "Submit
@@ -16,13 +18,14 @@
         <div class="contestant-card" style="opacity:0.95">
             <div class="contestant-image" style="background-image: url('@item.passportFileName')">
                 <div class="contestant-number">
-                    Contestant #@(index + 1)
+                    Contestant @(index + 1)
                 </div>
                 <div class="vote-count-badge">
                     <i class="vote-icon">❤️</i>
                     <span class="vote-number">@item.voteCount</span>
                     <span class="vote-text">votes</span>
                 </div>
+
             </div>
             <div class="contestant-info">
                 <h2>@item.firstName @item.lastName</h2>
@@ -86,11 +89,11 @@
         position: relative;
     }
 
-    .contestant-number {
+    contestant-number {
         position: absolute;
-        top: 1rem;
+        bottom: 1rem;
         left: 1rem;
-        background: rgba(0, 0, 0, 0.7);
+        background: none;
         color: white;
         padding: 0.5rem 1rem;
         border-radius: 20px;
@@ -99,7 +102,7 @@
 
     .vote-count-badge {
         position: absolute;
-        top: 1rem;
+        bottom: 1rem; /* Changed from top to bottom */
         right: 1rem;
         background: rgba(255, 255, 255, 0.95);
         padding: 0.5rem 1rem;
@@ -203,8 +206,8 @@
 @section Scripts {
     <script>
          function selectContestant(id){
-            window.location.href='@Url.Action("Details","Contestant", new{area="Vote"})?id='+id;
+            window.location.href='@Url.Action("Details", "Contestant", new { area = "Vote" })?id='+id;
         }
     </script>
-       
+
 }

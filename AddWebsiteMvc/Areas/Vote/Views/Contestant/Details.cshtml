@@ -3,6 +3,8 @@
     ViewData["Title"] = "Contestant Details";
     Layout = "~/Views/Shared/_VoteLayout.cshtml";
 }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.min.css" rel="stylesheet">
 
 <div class="details-container">
     <!-- Back Button -->
@@ -51,7 +53,6 @@
                     <span class="btn-icon">🗳️</span>
                     Vote for @Model.firstName
                 </button>
-                <p class="vote-reminder">You can only vote once</p>
             </div>
         </div>
 
@@ -159,6 +160,9 @@
                 </div>
                 <div>
                     <input type="text" placeholder="Your Last Name" id="voterlastname" class="vote-input" />
+                </div>
+                <div>
+                    <input type="email" placeholder="Your Email" id="voteremail" class="vote-input" />
                 </div>
                 <div>Please note that a vote costs ₦ @Model.votePrice?.ToString("N2")</div>
 
@@ -833,6 +837,7 @@
                 lastName:document.getElementById("voterlastname").value.trim(),
                 contestantId: '@Model.id',
                 count:Number(document.getElementById("number").value),
+                email:document.getElementById('voteremail').value.trim()
             };
 
             $.ajax({
@@ -841,34 +846,22 @@
                 dataType:'json',
                 data:payload,
                 success:function(response){
-                    console.log(response);
                     if(response.statusCode==200){
                     location.href=response.data.authorizationUrl;
                     }
                     else{
-                        alert('An error occurred');
+                        Swal.fire({
+                            title:'Error!',
+                            text:response.errors[0],
+                            icon:'error'
+                        });
                     }
                 },
                 error:function(err){
-                    alert('An error occurred while trying to process your request');
+          console.error('Error Response', xhr.responseJSON);
+        
                 }
-            })
-
-            // Example: Make AJAX call to vote endpoint
-            // fetch('@Url.Action("Vote", "Vote")', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ contestantId: contestantId })
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     alert('Vote submitted successfully!');
-            //     closeVoteModal();
-            //     location.reload();
-            // });
-
-            // For now, just close modal and redirect
-            //alert('Vote submitted successfully!');
+            });
             closeVoteModal();
         }
 
