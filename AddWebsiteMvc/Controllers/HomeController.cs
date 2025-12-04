@@ -18,6 +18,8 @@ namespace AddWebsiteMvc.Controllers
             return View();
         }
 
+       
+
         public IActionResult Privacy()
         {
             return View();
