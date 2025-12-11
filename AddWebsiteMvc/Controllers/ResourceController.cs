@@ -19,6 +19,16 @@ namespace AddWebsiteMvc.Controllers
             return View();
         }
 
+        public IActionResult Team()
+        {
+            return View();
+        }
+
+        public IActionResult Contact() 
+        {
+            return View();
+        }
+
         public IActionResult AboutUs() 
         {
             return View();

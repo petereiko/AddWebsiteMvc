@@ -12,8 +12,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="~/assets/img/adda-logo.png" rel="icon">
-    <link href="~/assets/img/adda-logo.png" rel="apple-touch-icon">
+    @Html.Partial("_Favicons")
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -69,9 +68,8 @@
             color: #555;
         }
 
-
         /*--------------------------------------------------------------
-        # Partners Section CSS - Add to existing footer styles
+        # Partners Section CSS - Fixed and Enhanced
         --------------------------------------------------------------*/
 
         .partners {
@@ -83,12 +81,13 @@
 
             .partners > div {
                 text-align: center;
-                max-width: 400px;
+                width: 100%;
+                max-width: 1000px;
             }
 
             .partners h4 {
                 font-size: 28px;
-                margin: 0 0 25px 0;
+                margin: 0 0 35px 0;
                 padding: 0;
                 line-height: 1.2;
                 font-weight: 700;
@@ -109,58 +108,13 @@
                     border-radius: 2px;
                 }
 
-            .partners a {
-                display: inline-block;
-                padding: 20px 30px;
-                background: rgba(255, 255, 255, 0.95);
-                border-radius: 15px;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 5px 20px rgba(25, 135, 84, 0.15);
-                border: 2px solid rgba(25, 135, 84, 0.1);
-                position: relative;
-                overflow: hidden;
-            }
-
-                .partners a::before {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    left: -100%;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient( 90deg, transparent, rgba(25, 135, 84, 0.1), transparent );
-                    transition: left 0.6s ease;
-                }
-
-                .partners a:hover::before {
-                    left: 100%;
-                }
-
-                .partners a:hover {
-                    transform: translateY(-5px) scale(1.05);
-                    box-shadow: 0 10px 30px rgba(25, 135, 84, 0.25);
-                    border-color: #198754;
-                    text-decoration: none;
-                }
-
-            .partners img {
-                max-width: 180px;
-                height: auto;
-                display: block;
-                transition: all 0.3s ease;
-                filter: grayscale(0%) brightness(1);
-            }
-
-            .partners a:hover img {
-                filter: grayscale(0%) brightness(1.1);
-                transform: scale(1.05);
-            }
-
-        /* Multiple partners layout - when you add more partners */
+        /* Static Partners Grid - Side by Side */
         .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
             margin-top: 30px;
             padding: 0 20px;
         }
@@ -169,7 +123,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 25px;
+                padding: 25px 35px;
                 background: rgba(255, 255, 255, 0.95);
                 border-radius: 15px;
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -178,6 +132,7 @@
                 position: relative;
                 overflow: hidden;
                 min-height: 120px;
+                flex: 0 1 auto;
             }
 
                 .partners-grid a::before {
@@ -187,7 +142,7 @@
                     left: -100%;
                     width: 100%;
                     height: 100%;
-                    background: linear-gradient( 90deg, transparent, rgba(25, 135, 84, 0.1), transparent );
+                    background: linear-gradient(90deg, transparent, rgba(25, 135, 84, 0.1), transparent);
                     transition: left 0.6s ease;
                 }
 
@@ -203,8 +158,8 @@
                 }
 
             .partners-grid img {
-                max-width: 150px;
-                max-height: 80px;
+                max-width: 180px;
+                max-height: 90px;
                 width: auto;
                 height: auto;
                 display: block;
@@ -217,38 +172,143 @@
                 transform: scale(1.08);
             }
 
+        /* Carousel Partners - Animated Sliding */
+        .partners-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        .partners-carousel-track {
+            display: flex;
+            gap: 40px;
+            animation: scroll-partners 20s linear infinite;
+            width: max-content;
+        }
+
+        .partners-carousel:hover .partners-carousel-track {
+            animation-play-state: paused;
+        }
+
+        .partners-carousel a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 35px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 20px rgba(25, 135, 84, 0.15);
+            border: 2px solid rgba(25, 135, 84, 0.1);
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            flex-shrink: 0;
+        }
+
+            .partners-carousel a::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(25, 135, 84, 0.1), transparent);
+                transition: left 0.6s ease;
+            }
+
+            .partners-carousel a:hover::before {
+                left: 100%;
+            }
+
+            .partners-carousel a:hover {
+                transform: translateY(-5px) scale(1.05);
+                box-shadow: 0 10px 30px rgba(25, 135, 84, 0.25);
+                border-color: #198754;
+                text-decoration: none;
+            }
+
+        .partners-carousel img {
+            max-width: 180px;
+            max-height: 90px;
+            width: auto;
+            height: auto;
+            display: block;
+            transition: all 0.3s ease;
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .partners-carousel a:hover img {
+            filter: grayscale(0%) brightness(1.1);
+            transform: scale(1.08);
+        }
+
+        /* Carousel Animation */
+        @@keyframes scroll-partners {
+            0%
+
+        {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+
+        }
+
+        /* Gradient Fade Effect on Carousel Edges */
+        .partners-carousel::before,
+        .partners-carousel::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .partners-carousel::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+        }
+
+        .partners-carousel::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+        }
+
         /* Responsive adjustments */
         @@media (max-width: 768px) {
             .partners h4
 
         {
             font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .partners img {
-            max-width: 140px;
-        }
-
-        .partners a {
-            padding: 15px 20px;
+            margin-bottom: 25px;
         }
 
         .partners-grid {
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+            gap: 25px;
             padding: 0 10px;
         }
 
-            .partners-grid img {
-                max-width: 120px;
-                max-height: 60px;
-            }
-
-            .partners-grid a {
-                padding: 20px;
+            .partners-grid a,
+            .partners-carousel a {
+                padding: 20px 25px;
                 min-height: 100px;
             }
+
+            .partners-grid img,
+            .partners-carousel img {
+                max-width: 140px;
+                max-height: 70px;
+            }
+
+        .partners-carousel-track {
+            gap: 30px;
+        }
 
         }
 
@@ -259,12 +319,27 @@
             font-size: 22px;
         }
 
-        .partners img {
-            max-width: 120px;
+        .partners-grid {
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .partners-grid {
-            grid-template-columns: 1fr;
+            .partners-grid a,
+            .partners-carousel a {
+                padding: 18px 22px;
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .partners-grid img,
+            .partners-carousel img {
+                max-width: 130px;
+                max-height: 65px;
+            }
+
+        .partners-carousel::before,
+        .partners-carousel::after {
+            width: 50px;
         }
 
         }
@@ -287,8 +362,8 @@
                     <li><a class="nav-link scrollto active" asp-action="Index" asp-controller="Home">Home</a></li>
                     <li><a class="nav-link scrollto" asp-action="AboutUs" asp-controller="Resource">About</a></li>
                     <li><a class="nav-link scrollto" asp-action="Services" asp-controller="Resource">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" asp-action="Team" asp-controller="Resource">Team</a></li>
+                    <li><a class="nav-link scrollto" asp-action="Contact" asp-controller="Resource">Contact</a></li>
                     <li><a class="nav-link scrollto" asp-action="FaQ" asp-controller="Resource">FAQs</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -325,22 +400,90 @@
     <!-- ======= Footer ======= -->
     <footer id="footer">
 
+        <!-- OPTION 1: STATIC PARTNERS (Side by Side) -->
+        <!-- Use this for a clean, simple side-by-side display -->
+
         <div class="footer-newsletter">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-10">
                         <div class="partners">
                             <div>
                                 <h4>Our Partners</h4>
-                                <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
-                                    <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
-                                </a>
+                                <div class="partners-grid">
+                                    <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
+                                        <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
+                                    </a>
+                                    <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
+                                        <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
+                                    </a>
+                                    <!-- Add more partners as needed - they'll wrap nicely -->
+                                    <!-- <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
+                                        <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
+                                    </a>
+                                    <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
+                                        <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
+                                    </a> -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <!-- OPTION 3: CAROUSEL WITH MORE PARTNERS (Better for 4+ partners) -->
+        <!-- This version shows how to handle more partners in the carousel -->
+
+
+        @* <div class="footer-newsletter">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="partners">
+                            <div>
+                                <h4>Our Partners</h4>
+                                <div class="partners-carousel">
+                                    <div class="partners-carousel-track">
+                                        <!-- First Set -->
+                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
+                                        </a>
+                                        <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
+                                        </a>
+                                        <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
+                                        </a>
+                                        <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
+                                        </a>
+
+                                        <!-- Duplicate Set (MUST match exactly for seamless loop) -->
+                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
+                                        </a>
+                                        <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
+                                        </a>
+                                        <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
+                                        </a>
+                                        <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> *@
+
+
+
 
         <div class="footer-top">
             <div class="container">
@@ -408,34 +551,7 @@
     </footer>
 
 
-    <!-- ALTERNATIVE: If you want to add multiple partners in the future, use this structure instead -->
-    <!--
-    <div class="footer-newsletter">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="partners">
-                        <div>
-                            <h4>Our Partners</h4>
-                            <div class="partners-grid">
-                                <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
-                                    <img src="~/assets/img/partners/GF-White-1.png" alt="GoodFirms Partner" />
-                                </a>
-                                <a href="https://partner2.com" target="_blank" rel="noopener noreferrer">
-                                    <img src="~/assets/img/partners/partner2-logo.png" alt="Partner 2" />
-                                </a>
-                                <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
-                                    <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
-    <!-- End Footer -->
+    
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
