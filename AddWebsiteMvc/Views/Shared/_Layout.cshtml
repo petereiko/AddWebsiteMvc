@@ -189,7 +189,7 @@
         .partners-carousel-track {
             display: flex;
             gap: 40px;
-            animation: scroll-partners 20s linear infinite;
+            animation: scroll-partners 5s linear infinite;
             width: max-content;
         }
 
@@ -409,7 +409,7 @@
         <!-- OPTION 1: STATIC PARTNERS (Side by Side) -->
         <!-- Use this for a clean, simple side-by-side display -->
 
-        <div class="footer-newsletter">
+@*         <div class="footer-newsletter">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
@@ -437,13 +437,13 @@
                 </div>
             </div>
         </div>
-
+ *@
 
         <!-- OPTION 3: CAROUSEL WITH MORE PARTNERS (Better for 4+ partners) -->
         <!-- This version shows how to handle more partners in the carousel -->
 
 
-        @* <div class="footer-newsletter">
+        <div class="footer-newsletter">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
@@ -453,21 +453,23 @@
                                 <div class="partners-carousel">
                                     <div class="partners-carousel-track">
                                         <!-- First Set -->
-                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
-                                        </a>
+                                        
                                         <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
                                             <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
                                         </a>
-                                        <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
+                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
                                         </a>
-                                        <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
+                                        <a href="https://clutch.co" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/clutch-black.png" alt="Clutch" />
+                                        </a>
+                                       
+                                        @* <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
                                             <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
-                                        </a>
+                                        </a> *@
 
                                         <!-- Duplicate Set (MUST match exactly for seamless loop) -->
-                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
+                                        @* <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
                                             <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
                                         </a>
                                         <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
@@ -478,7 +480,7 @@
                                         </a>
                                         <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
                                             <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
-                                        </a>
+                                        </a> *@
                                     </div>
                                 </div>
                             </div>
@@ -486,7 +488,7 @@
                     </div>
                 </div>
             </div>
-        </div> *@
+        </div>
 
 
 
