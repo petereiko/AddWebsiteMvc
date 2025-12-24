@@ -1,6 +1,4 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -75,8 +73,8 @@
         }
 
         /*--------------------------------------------------------------
-        # Partners Section CSS - Fixed and Enhanced
-        --------------------------------------------------------------*/
+                # Partners Section CSS - Fixed and Enhanced
+                --------------------------------------------------------------*/
 
         .partners {
             display: flex;
@@ -349,6 +347,171 @@
         }
 
         }
+
+        /*--------------------------------------------------------------
+                # WhatsApp Floating Button - Professional Design
+                --------------------------------------------------------------*/
+        .whatsapp-float {
+            position: fixed;
+            bottom: 100px;
+            right: 0.5px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .whatsapp-label {
+            background: #ffffff;
+            color: #333;
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover .whatsapp-label {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            transform: translateX(-3px);
+        }
+
+        .whatsapp-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+            .whatsapp-button::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+            }
+
+            .whatsapp-button:hover::before {
+                width: 100%;
+                height: 100%;
+            }
+
+            .whatsapp-button:hover {
+                transform: scale(1.1) translateY(-3px);
+                box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            }
+
+            .whatsapp-button:active {
+                transform: scale(0.95);
+            }
+
+        .whatsapp-icon {
+            width: 32px;
+            height: 32px;
+            fill: white;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-button:hover .whatsapp-icon {
+            transform: scale(1.1);
+        }
+
+        /* Pulse animation */
+        @@keyframes whatsapp-pulse {
+            0%
+
+        {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+        }
+
+        }
+
+        .whatsapp-button {
+            animation: whatsapp-pulse 2s infinite;
+        }
+
+            .whatsapp-button:hover {
+                animation: none;
+            }
+
+        /* Responsive adjustments */
+        @@media (max-width: 768px) {
+            .whatsapp-float
+
+        {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .whatsapp-button {
+            width: 56px;
+            height: 56px;
+        }
+
+        .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .whatsapp-label {
+            font-size: 13px;
+            padding: 10px 14px;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .whatsapp-float
+
+        {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .whatsapp-button {
+            width: 52px;
+            height: 52px;
+        }
+
+        .whatsapp-icon {
+            width: 26px;
+            height: 26px;
+        }
+
+        .whatsapp-label {
+            font-size: 12px;
+            padding: 8px 12px;
+        }
+
+        }
     </style>
 </head>
 
@@ -396,52 +559,29 @@
     </aside>
 
 
-    
+
     <main id="main">
 
         @RenderBody()
 
 
     </main><!-- End #main -->
+    <!-- WhatsApp Floating Button -->
+    <div class="whatsapp-float">
+        <span class="whatsapp-label">Chat with us</span>
+        <a href="https://wa.me/2348166308838?text=Hello%20ADDA%20Consulting!%20I%20would%20like%20to%20inquire%20about%20your%20services."
+           class="whatsapp-button"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Chat with us on WhatsApp">
+            <svg class="whatsapp-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 0C7.164 0 0 7.164 0 16c0 2.825.739 5.482 2.029 7.804L.059 31.53l8.048-2.113A15.924 15.924 0 0016 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333c-2.444 0-4.75-.666-6.726-1.823l-.481-.288-4.987 1.308 1.331-4.868-.316-.499A13.261 13.261 0 012.667 16c0-7.364 5.969-13.333 13.333-13.333S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.303-9.97c-.4-.2-2.365-1.167-2.732-1.3-.367-.133-.634-.2-.901.2-.267.4-1.034 1.3-1.267 1.567-.233.267-.467.3-.867.1-.4-.2-1.688-.622-3.215-1.985-1.189-1.061-1.992-2.371-2.225-2.771-.233-.4-.025-.616.175-.816.18-.18.4-.467.6-.7.2-.233.267-.4.4-.667.133-.267.067-.5-.033-.7-.1-.2-.901-2.171-1.234-2.971-.324-.779-.654-.673-.901-.686-.233-.012-.5-.015-.767-.015s-.7.1-1.067.5c-.367.4-1.4 1.367-1.4 3.333s1.433 3.867 1.633 4.133c.2.267 2.825 4.313 6.845 6.048.956.413 1.703.66 2.285.845.96.305 1.835.262 2.527.159.771-.115 2.365-.967 2.699-1.9.333-.933.333-1.733.233-1.9-.1-.167-.367-.267-.767-.467z" fill="currentColor" />
+            </svg>
+        </a>
+    </div>
+
     <!-- ======= Footer ======= -->
     <footer id="footer">
-
-        <!-- OPTION 1: STATIC PARTNERS (Side by Side) -->
-        <!-- Use this for a clean, simple side-by-side display -->
-
-@*         <div class="footer-newsletter">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="partners">
-                            <div>
-                                <h4>Our Partners</h4>
-                                <div class="partners-grid">
-                                    <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
-                                        <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
-                                    </a>
-                                    <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
-                                        <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
-                                    </a>
-                                    <!-- Add more partners as needed - they'll wrap nicely -->
-                                    <!-- <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
-                                        <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
-                                    </a>
-                                    <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
-                                        <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
-                                    </a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
- *@
-
-        <!-- OPTION 3: CAROUSEL WITH MORE PARTNERS (Better for 4+ partners) -->
-        <!-- This version shows how to handle more partners in the carousel -->
-
 
         <div class="footer-newsletter">
             <div class="container">
@@ -453,16 +593,6 @@
                                 <div class="partners-carousel">
                                     <div class="partners-carousel-track">
                                         <!-- First Set -->
-                                        
-                                        <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
-                                        </a>
-                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
-                                        </a>
-                                        <a href="https://clutch.co" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/clutch-black.png" alt="Clutch" />
-                                        </a>
 
                                         <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
                                             <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
@@ -474,19 +604,16 @@
                                             <img src="~/assets/img/partners/clutch-black.png" alt="Clutch" />
                                         </a>
 
-                                        <!-- Duplicate Set (MUST match exactly for seamless loop) -->
-                                        @* <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
-                                        </a>
                                         <a href="https://www.paystack.com" target="_blank" rel="noopener noreferrer">
                                             <img src="~/assets/img/partners/paystack.png" alt="Paystack Partner" />
                                         </a>
-                                        <a href="https://partner3.com" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/partner3-logo.png" alt="Partner 3" />
+                                        <a href="https://www.goodfirms.co/" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/GF-Blue-2.png" alt="GoodFirms Partner" />
                                         </a>
-                                        <a href="https://partner4.com" target="_blank" rel="noopener noreferrer">
-                                            <img src="~/assets/img/partners/partner4-logo.png" alt="Partner 4" />
-                                        </a> *@
+                                        <a href="https://clutch.co" target="_blank" rel="noopener noreferrer">
+                                            <img src="~/assets/img/partners/clutch-black.png" alt="Clutch" />
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>
@@ -507,7 +634,7 @@
                         <h3>Our Address</h3>
                         <p>
                             5A, Akanbi Disu Street Lekki Phase 1 <br />
-                            Lagos State, Nigeria <br />
+                            Lorem State, Nigeria <br />
                             <br />
                             <ul>
                                 <li><strong>Phone:</strong> <a href="tel:+2348125841005">+ (234) 8125841005</a></li>
@@ -565,11 +692,11 @@
     </footer>
 
 
-    
+
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-    
+
     <!-- Vendor JS Files -->
     <script src="~/assets/vendor/aos/aos.js"></script>
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
