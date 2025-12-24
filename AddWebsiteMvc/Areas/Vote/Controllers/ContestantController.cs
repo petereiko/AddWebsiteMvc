@@ -19,7 +19,7 @@ namespace AddWebsiteMvc.Areas.Vote.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var contestantsResult = await _contestantService.GetAllContestantsAsync();
+            GetAllContestantResponse contestantsResult = await _contestantService.GetAllContestantsAsync();
             contestantsResult.data = contestantsResult.data.Where(x=>x.IsActive).Select(x => new Models.Contestant
             {
                 dob = (DateTime.Now.Year - Convert.ToInt32(x.dob.Split('-')[0])).ToString(),

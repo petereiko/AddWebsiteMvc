@@ -3,8 +3,33 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_VoteLayout.cshtml";
     int index = 0;
+    var votingEndDate = Model.CloseDate;
 }
 
+<div class="countdown-container">
+    <h2 class="countdown-title">Voting Ends In:</h2>
+    <div class="countdown-timer" id="countdown">
+        <div class="time-unit">
+            <span class="time-value" id="days">00</span>
+            <span class="time-label">Days</span>
+        </div>
+        <div class="time-separator">:</div>
+        <div class="time-unit">
+            <span class="time-value" id="hours">00</span>
+            <span class="time-label">Hours</span>
+        </div>
+        <div class="time-separator">:</div>
+        <div class="time-unit">
+            <span class="time-value" id="minutes">00</span>
+            <span class="time-label">Minutes</span>
+        </div>
+        <div class="time-separator">:</div>
+        <div class="time-unit">
+            <span class="time-value" id="seconds">00</span>
+            <span class="time-label">Seconds</span>
+        </div>
+    </div>
+</div>
 
 <div class="voting-info">
     <p>
@@ -59,6 +84,65 @@
     }
 </div>
 <style>
+
+    .countdown-container {
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, red 0%, white 100%);
+        margin: 0 auto 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .countdown-title {
+        color: white;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .countdown-timer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        min-width: 80px;
+        backdrop-filter: blur(10px);
+    }
+
+    .time-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        line-height: 1;
+    }
+
+    .time-label {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .time-separator {
+        font-size: 2rem;
+        color: white;
+        font-weight: bold;
+    }
+
+
     .contestants-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -205,6 +289,36 @@
 </style>
 @section Scripts {
     <script>
+
+        var votingEndDate = new Date('@Model.CloseDate.ToString("yyyy-MM-ddTHH:mm:ss")').getTime();
+
+        function updateCountdown() {
+            var now = new Date().getTime();
+            var distance = votingEndDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="time-unit"><span class="time-value" style="font-size: 1.5rem;">VOTING ENDED</span></div>';
+                return;
+            }
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Update countdown immediately
+        updateCountdown();
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+
+
          function selectContestant(id){
             window.location.href='@Url.Action("Details", "Contestant", new { area = "Vote" })?id='+id;
         }
