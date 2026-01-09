@@ -5,5 +5,7 @@ namespace AddWebsiteMvc.Interfaces
     public interface IElectionService
     {
         Task<GetElectionResponse> GetActiveElectionAsync();
+
+        Task<GetAllStateResponse> GetAllStatesAsync();
     }
 }

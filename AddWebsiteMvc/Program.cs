@@ -1,6 +1,7 @@
 using AddWebsiteMvc.Interfaces;
 using AddWebsiteMvc.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
+builder.Services.Configure<HttpClientFactoryOptions>(options =>
+{
+    options.HttpClientActions.Add(client =>
+        client.Timeout = TimeSpan.FromMinutes(5));
+});
 
 builder.Services.AddTransient<IAuthUser, AuthUser>();
 
-builder.Services.AddTransient<IContestantService, ContestantService>();
+builder.Services.AddTransient<ICandidateService, CandidateService>();
 
 builder.Services.AddTransient<IElectionService, ElectionService>();
 

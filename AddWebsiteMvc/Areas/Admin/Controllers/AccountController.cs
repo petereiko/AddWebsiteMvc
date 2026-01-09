@@ -37,9 +37,9 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
             request.Content = content;
             var response = await _httpClient.SendAsync(request);
             var json = await response.Content.ReadAsStringAsync();
-            LoginResponse? loginResponse = JsonConvert.DeserializeObject<LoginResponse>(json);
+            LoginResponse? loginResponse = JsonConvert.DeserializeObject<LoginResponse>(json); ;
             if (loginResponse.statusCode==200)
-            {
+            { 
                 // Sign in the user
                 await SignInUser(loginResponse.data.user, true, loginResponse.data.accessToken);
 
@@ -48,7 +48,7 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
                 {
                     return Redirect(returnUrl);
                 }
-                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                return RedirectToAction("Index", "Contestant", new { area = "Admin" });
             }
             else
             {

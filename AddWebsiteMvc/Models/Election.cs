@@ -8,6 +8,6 @@
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
         public bool isActive { get; set; }
-        public List<Contestant> contestants { get; set; } = new();
+        public List<Candidate> contestants { get; set; } = new();
     }
 }
