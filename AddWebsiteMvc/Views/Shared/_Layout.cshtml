@@ -37,757 +37,6 @@
 
 
     <style>
-        /*--------------------------------------------------------------
-                # Professional Christmas Theme - Elegant & Sophisticated
-                --------------------------------------------------------------*/
-
-        /* Snowflakes Animation - Keep this, it's perfect */
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            z-index: 9999;
-            color: #fff;
-            font-size: 1em;
-            font-family: Arial, sans-serif;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            pointer-events: none;
-            animation: fall linear infinite;
-        }
-
-        @@keyframes fall {
-            0%
-
-        {
-            top: -10%;
-            opacity: 1;
-        }
-
-        100% {
-            top: 100%;
-            opacity: 0.3;
-        }
-
-        }
-
-        /* Professional Christmas Modal/Toast */
-        .christmas-toast {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
-            background: linear-gradient(135deg, rgba(193, 30, 58, 0.98), rgba(22, 91, 51, 0.98));
-            backdrop-filter: blur(20px);
-            padding: 50px 60px;
-            border-radius: 20px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            max-width: 600px;
-            width: 90%;
-            opacity: 0;
-            animation: toastFadeIn 0.6s ease-out forwards, toastFadeOut 0.6s ease-in 4.4s forwards;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .christmas-toast-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 9999;
-            opacity: 0;
-            animation: overlayFadeIn 0.6s ease-out forwards, overlayFadeOut 0.6s ease-in 4.4s forwards;
-        }
-
-        @@keyframes toastFadeIn {
-            0%
-
-        {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8);
-        }
-
-        100% {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        }
-
-        @@keyframes toastFadeOut {
-            0%
-
-        {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        100% {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8);
-            pointer-events: none;
-        }
-
-        }
-
-        @@keyframes overlayFadeIn {
-            0%
-
-        {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
-
-        }
-
-        @@keyframes overlayFadeOut {
-            0%
-
-        {
-            opacity: 1;
-        }
-
-        100% {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        }
-
-        .christmas-toast h2 {
-            color: #ffffff;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.5px;
-        }
-
-        .christmas-toast p {
-            color: rgba(255, 255, 255, 0.95);
-            font-size: 18px;
-            line-height: 1.6;
-            margin: 0;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .christmas-toast::before {
-            content: "";
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #c41e3a, #165b33, #c41e3a, #165b33);
-            background-size: 300% 300%;
-            border-radius: 20px;
-            z-index: -1;
-            animation: gradientRotate 3s ease infinite;
-            opacity: 0.5;
-        }
-
-        @@keyframes gradientRotate {
-            0%
-
-        {
-            background-position: 0% 50%;
-        }
-
-        50% {
-            background-position: 100% 50%;
-        }
-
-        100% {
-            background-position: 0% 50%;
-        }
-
-        }
-
-        /* Elegant Christmas Lights String */
-        .christmas-lights-elegant {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: repeating-linear-gradient( 90deg, transparent, transparent 30px, rgba(255, 215, 0, 0.3) 30px, rgba(255, 215, 0, 0.3) 32px );
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .elegant-light {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            top: -2px;
-            box-shadow: 0 0 15px currentColor;
-            animation: elegantTwinkle 2s infinite ease-in-out;
-        }
-
-            .elegant-light:nth-child(1) {
-                left: 10%;
-                background: #ffd700;
-                animation-delay: 0s;
-            }
-
-            .elegant-light:nth-child(2) {
-                left: 20%;
-                background: #ff6b6b;
-                animation-delay: 0.3s;
-            }
-
-            .elegant-light:nth-child(3) {
-                left: 30%;
-                background: #4ecdc4;
-                animation-delay: 0.6s;
-            }
-
-            .elegant-light:nth-child(4) {
-                left: 40%;
-                background: #ffd700;
-                animation-delay: 0.9s;
-            }
-
-            .elegant-light:nth-child(5) {
-                left: 50%;
-                background: #ff6b6b;
-                animation-delay: 1.2s;
-            }
-
-            .elegant-light:nth-child(6) {
-                left: 60%;
-                background: #4ecdc4;
-                animation-delay: 1.5s;
-            }
-
-            .elegant-light:nth-child(7) {
-                left: 70%;
-                background: #ffd700;
-                animation-delay: 1.8s;
-            }
-
-            .elegant-light:nth-child(8) {
-                left: 80%;
-                background: #ff6b6b;
-                animation-delay: 2.1s;
-            }
-
-            .elegant-light:nth-child(9) {
-                left: 90%;
-                background: #4ecdc4;
-                animation-delay: 2.4s;
-            }
-
-        @@keyframes elegantTwinkle {
-            0%, 100%
-
-        {
-            opacity: 0.4;
-            transform: scale(0.9);
-        }
-
-        50% {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        }
-
-        /* Festive Header Accent */
-        #header.header-scrolled::after,
-        #header.header-inner-pages::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #c41e3a 20%, #ffd700 40%, #165b33 60%, #c41e3a 80%, transparent );
-            opacity: 0.5;
-        }
-
-        /* Elegant Footer Holiday Border */
-        .footer-holiday-accent {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #c41e3a 0%, #ffd700 25%, #165b33 50%, #ffd700 75%, #c41e3a 100% );
-            background-size: 200% 100%;
-            animation: shimmer 5s linear infinite;
-            z-index: 1;
-        }
-
-        @@keyframes shimmer {
-            0%
-
-        {
-            background-position: 0% 0%;
-        }
-
-        100% {
-            background-position: 200% 0%;
-        }
-
-        }
-
-        /* Subtle Festive Glow on Partner Logos */
-        .partners-grid a:hover,
-        .partners-carousel a:hover {
-            box-shadow: 0 10px 30px rgba(193, 30, 58, 0.2), 0 0 20px rgba(22, 91, 51, 0.1);
-        }
-
-        /* Professional Star Decorations (SVG-based) */
-        .professional-star {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0;
-            animation: starTwinkle 3s ease-in-out infinite;
-        }
-
-        @@keyframes starTwinkle {
-            0%, 100%
-
-        {
-            opacity: 0;
-            transform: scale(0.8) rotate(0deg);
-        }
-
-        50% {
-            opacity: 0.6;
-            transform: scale(1) rotate(180deg);
-        }
-
-        }
-
-        .professional-star svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.5));
-        }
-
-        /* Festive Accent on WhatsApp Button */
-        .whatsapp-button:hover {
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6), 0 0 30px rgba(193, 30, 58, 0.2);
-        }
-
-        /* Holiday Touch on Back-to-Top */
-        .back-to-top {
-            box-shadow: 0 8px 25px rgba(25, 135, 84, 0.3), 0 0 20px rgba(193, 30, 58, 0.15);
-        }
-
-            .back-to-top:hover {
-                box-shadow: 0 15px 35px rgba(25, 135, 84, 0.4), 0 0 30px rgba(193, 30, 58, 0.3);
-            }
-
-        /* Festive Accent on Aside Panel */
-        .info-aside {
-            border-left: 4px solid #c41e3a;
-            box-shadow: -10px 0 30px rgba(193, 30, 58, 0.15);
-        }
-
-        /* Subtle Holiday Glow on Services/Team Cards */
-        .services .icon-box:hover,
-        .team .member:hover {
-            box-shadow: 0 25px 50px rgba(25, 135, 84, 0.15), 0 0 40px rgba(193, 30, 58, 0.1);
-        }
-
-        /* Responsive adjustments */
-        @@media (max-width: 768px) {
-            .christmas-toast
-
-        {
-            padding: 40px 30px;
-            max-width: 85%;
-        }
-
-        .christmas-toast h2 {
-            font-size: 26px;
-        }
-
-        .christmas-toast p {
-            font-size: 16px;
-        }
-
-        .professional-star {
-            width: 16px;
-            height: 16px;
-        }
-
-        }
-
-        @@media (max-width: 480px) {
-            .christmas-toast
-
-        {
-            padding: 30px 25px;
-        }
-
-        .christmas-toast h2 {
-            font-size: 22px;
-        }
-
-        .christmas-toast p {
-            font-size: 15px;
-        }
-
-        .snowflake {
-            font-size: 0.8em;
-        }
-
-        }
-
-        /*--------------------------------------------------------------
-                # Realistic Christmas Tree - Bottom Left Corner
-                --------------------------------------------------------------*/
-        .christmas-tree-container {
-            position: fixed;
-            bottom: 20px;
-            left: 0px;
-            z-index: 9997;
-            display: flex;
-            align-items: flex-end;
-            gap: 15px;
-        }
-
-        .christmas-tree {
-            position: relative;
-            width: 150px;
-            height: 180px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
-        }
-
-            .christmas-tree:hover {
-                transform: scale(1.08);
-            }
-
-            .christmas-tree img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-            }
-
-        /* Christmas tree lights overlay */
-        .tree-light {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            animation: treeLightTwinkle 1.5s infinite ease-in-out;
-            box-shadow: 0 0 15px currentColor;
-            z-index: 2;
-        }
-
-            /* Position lights strategically on the tree */
-            .tree-light:nth-child(1) {
-                top: 15%;
-                left: 48%;
-                background: #ff6b6b;
-                animation-delay: 0s;
-            }
-
-            .tree-light:nth-child(2) {
-                top: 25%;
-                left: 35%;
-                background: #ffd700;
-                animation-delay: 0.3s;
-            }
-
-            .tree-light:nth-child(3) {
-                top: 25%;
-                left: 62%;
-                background: #4ecdc4;
-                animation-delay: 0.6s;
-            }
-
-            .tree-light:nth-child(4) {
-                top: 38%;
-                left: 28%;
-                background: #ff6b6b;
-                animation-delay: 0.9s;
-            }
-
-            .tree-light:nth-child(5) {
-                top: 38%;
-                left: 48%;
-                background: #ffd700;
-                animation-delay: 1.2s;
-            }
-
-            .tree-light:nth-child(6) {
-                top: 38%;
-                left: 70%;
-                background: #4ecdc4;
-                animation-delay: 1.5s;
-            }
-
-            .tree-light:nth-child(7) {
-                top: 52%;
-                left: 22%;
-                background: #ffd700;
-                animation-delay: 1.8s;
-            }
-
-            .tree-light:nth-child(8) {
-                top: 52%;
-                left: 48%;
-                background: #4ecdc4;
-                animation-delay: 2.1s;
-            }
-
-            .tree-light:nth-child(9) {
-                top: 52%;
-                left: 75%;
-                background: #ff6b6b;
-                animation-delay: 2.4s;
-            }
-
-            .tree-light:nth-child(10) {
-                top: 68%;
-                left: 18%;
-                background: #4ecdc4;
-                animation-delay: 2.7s;
-            }
-
-            .tree-light:nth-child(11) {
-                top: 68%;
-                left: 48%;
-                background: #ffd700;
-                animation-delay: 3s;
-            }
-
-            .tree-light:nth-child(12) {
-                top: 68%;
-                left: 78%;
-                background: #ff6b6b;
-                animation-delay: 3.3s;
-            }
-
-            .tree-light:nth-child(13) {
-                top: 82%;
-                left: 32%;
-                background: #ffd700;
-                animation-delay: 3.6s;
-            }
-
-            .tree-light:nth-child(14) {
-                top: 82%;
-                left: 65%;
-                background: #4ecdc4;
-                animation-delay: 3.9s;
-            }
-
-        @@keyframes treeLightTwinkle {
-            0%, 100%
-
-        {
-            opacity: 0.3;
-            transform: scale(0.8);
-        }
-
-        50% {
-            opacity: 1;
-            transform: scale(1.3);
-        }
-
-        }
-
-        /* Tree star topper - enhanced glow */
-        .tree-star {
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 24px;
-            animation: starGlow 2s ease-in-out infinite;
-            z-index: 3;
-        }
-
-            .tree-star svg {
-                width: 100%;
-                height: 100%;
-                filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 12px #ffd700);
-            }
-
-        @@keyframes starGlow {
-            0%, 100%
-
-        {
-            opacity: 0.8;
-            transform: translateX(-50%) scale(0.9) rotate(0deg);
-        }
-
-        50% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1.15) rotate(180deg);
-        }
-
-        }
-
-        /* Festive message banner - now appears on the RIGHT */
-        .tree-message-banner {
-            background: linear-gradient(135deg, rgba(193, 30, 58, 0.98), rgba(22, 91, 51, 0.98));
-            backdrop-filter: blur(20px);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(-20px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            font-size: 15px;
-            font-weight: 600;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            margin-bottom: 20px;
-            order: 2;
-        }
-
-            /* Arrow pointing LEFT to the tree */
-            .tree-message-banner::before {
-                content: "";
-                position: absolute;
-                left: -8px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 0;
-                height: 0;
-                border-style: solid;
-                border-width: 8px 8px 8px 0;
-                border-color: transparent rgba(22, 91, 51, 0.98) transparent transparent;
-            }
-
-            .tree-message-banner::after {
-                content: "";
-                position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
-                background: linear-gradient(45deg, #c41e3a, #165b33, #c41e3a, #165b33);
-                background-size: 300% 300%;
-                border-radius: 15px;
-                z-index: -1;
-                animation: gradientRotate 3s ease infinite;
-                opacity: 0.5;
-            }
-
-        .christmas-tree-container:hover .tree-message-banner {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        }
-
-        .tree-message-banner .message-line {
-            display: block;
-            line-height: 1.4;
-        }
-
-            .tree-message-banner .message-line:first-child {
-                font-size: 16px;
-                margin-bottom: 3px;
-            }
-
-            .tree-message-banner .message-line:last-child {
-                font-size: 14px;
-                opacity: 0.95;
-            }
-
-        /* Responsive adjustments for tree */
-        @@media (max-width: 768px) {
-            .christmas-tree-container
-
-        {
-            bottom: 80px;
-            left: 0px;
-        }
-
-        .christmas-tree {
-            width: 120px;
-            height: 145px;
-        }
-
-        .tree-light {
-            width: 6px;
-            height: 6px;
-        }
-
-        .tree-star {
-            width: 20px;
-            height: 20px;
-        }
-
-        .tree-message-banner {
-            font-size: 13px;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-        }
-
-            .tree-message-banner .message-line:first-child {
-                font-size: 14px;
-            }
-
-            .tree-message-banner .message-line:last-child {
-                font-size: 12px;
-            }
-
-        }
-
-        @@media (max-width: 480px) {
-            .christmas-tree-container
-
-        {
-            bottom: 70px;
-            left: 0px;
-        }
-
-        .christmas-tree {
-            width: 100px;
-            height: 120px;
-        }
-
-        .tree-light {
-            width: 5px;
-            height: 5px;
-        }
-
-        .tree-star {
-            width: 16px;
-            height: 16px;
-            top: -6px;
-        }
-
-        .tree-message-banner {
-            font-size: 11px;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-        }
-
-            .tree-message-banner .message-line:first-child {
-                font-size: 12px;
-            }
-
-            .tree-message-banner .message-line:last-child {
-                font-size: 10px;
-            }
-
-        }
-
         /* General styling for the team section */
         .member-info h4 {
             font-size: 20px;
@@ -824,8 +73,8 @@
         }
 
         /*--------------------------------------------------------------
-                # Partners Section CSS - Fixed and Enhanced
-                --------------------------------------------------------------*/
+                        # Partners Section CSS - Fixed and Enhanced
+                        --------------------------------------------------------------*/
 
         .partners {
             display: flex;
@@ -1001,16 +250,13 @@
 
         /* Carousel Animation */
         @@keyframes scroll-partners {
-            0%
+            0% {
+                transform: translateX(0);
+            }
 
-        {
-            transform: translateX(0);
-        }
-
-        100% {
-            transform: translateX(-50%);
-        }
-
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* Gradient Fade Effect on Carousel Edges */
@@ -1037,75 +283,69 @@
 
         /* Responsive adjustments */
         @@media (max-width: 768px) {
-            .partners h4
-
-        {
-            font-size: 24px;
-            margin-bottom: 25px;
-        }
-
-        .partners-grid {
-            gap: 25px;
-            padding: 0 10px;
-        }
-
-            .partners-grid a,
-            .partners-carousel a {
-                padding: 20px 25px;
-                min-height: 100px;
+            .partners h4 {
+                font-size: 24px;
+                margin-bottom: 25px;
             }
 
-            .partners-grid img,
-            .partners-carousel img {
-                max-width: 140px;
-                max-height: 70px;
+            .partners-grid {
+                gap: 25px;
+                padding: 0 10px;
             }
 
-        .partners-carousel-track {
-            gap: 30px;
-        }
+                .partners-grid a,
+                .partners-carousel a {
+                    padding: 20px 25px;
+                    min-height: 100px;
+                }
 
+                .partners-grid img,
+                .partners-carousel img {
+                    max-width: 140px;
+                    max-height: 70px;
+                }
+
+            .partners-carousel-track {
+                gap: 30px;
+            }
         }
 
         @@media (max-width: 480px) {
-            .partners h4
-
-        {
-            font-size: 22px;
-        }
-
-        .partners-grid {
-            flex-direction: column;
-            gap: 20px;
-        }
-
-            .partners-grid a,
-            .partners-carousel a {
-                padding: 18px 22px;
-                width: 100%;
-                max-width: 250px;
+            .partners h4 {
+                font-size: 22px;
             }
 
-            .partners-grid img,
-            .partners-carousel img {
-                max-width: 130px;
-                max-height: 65px;
+            .partners-grid {
+                flex-direction: column;
+                gap: 20px;
             }
 
-        .partners-carousel::before,
-        .partners-carousel::after {
-            width: 50px;
-        }
+                .partners-grid a,
+                .partners-carousel a {
+                    padding: 18px 22px;
+                    width: 100%;
+                    max-width: 250px;
+                }
 
+                .partners-grid img,
+                .partners-carousel img {
+                    max-width: 130px;
+                    max-height: 65px;
+                }
+
+            .partners-carousel::before,
+            .partners-carousel::after {
+                width: 50px;
+            }
         }
 
         /*--------------------------------------------------------------
-                # WhatsApp Floating Button - Professional Design
-                --------------------------------------------------------------*/
+                        # WhatsApp Floating Button - Professional Design
+                        --------------------------------------------------------------*/
         .whatsapp-float {
             position: fixed;
             bottom: 100px;
-            right: 30px;
+            right: 0.5px;
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -1189,20 +429,17 @@
 
         /* Pulse animation */
         @@keyframes whatsapp-pulse {
-            0%
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
 
-        {
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-        }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
 
-        70% {
-            box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-        }
-
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
         }
 
         .whatsapp-button {
@@ -1215,53 +452,47 @@
 
         /* Responsive adjustments */
         @@media (max-width: 768px) {
-            .whatsapp-float
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
 
-        {
-            bottom: 20px;
-            right: 20px;
-        }
+            .whatsapp-button {
+                width: 56px;
+                height: 56px;
+            }
 
-        .whatsapp-button {
-            width: 56px;
-            height: 56px;
-        }
+            .whatsapp-icon {
+                width: 28px;
+                height: 28px;
+            }
 
-        .whatsapp-icon {
-            width: 28px;
-            height: 28px;
-        }
-
-        .whatsapp-label {
-            font-size: 13px;
-            padding: 10px 14px;
-        }
-
+            .whatsapp-label {
+                font-size: 13px;
+                padding: 10px 14px;
+            }
         }
 
         @@media (max-width: 480px) {
-            .whatsapp-float
+            .whatsapp-float {
+                bottom: 15px;
+                right: 15px;
+            }
 
-        {
-            bottom: 15px;
-            right: 15px;
-        }
+            .whatsapp-button {
+                width: 52px;
+                height: 52px;
+            }
 
-        .whatsapp-button {
-            width: 52px;
-            height: 52px;
-        }
+            .whatsapp-icon {
+                width: 26px;
+                height: 26px;
+            }
 
-        .whatsapp-icon {
-            width: 26px;
-            height: 26px;
-        }
-
-        .whatsapp-label {
-            font-size: 12px;
-            padding: 8px 12px;
-        }
-
+            .whatsapp-label {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
         }
     </style>
 </head>
@@ -1270,19 +501,6 @@
 
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top ">
-        <!-- Elegant Christmas Lights -->
-        <div class="christmas-lights-elegant">
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-            <div class="elegant-light"></div>
-        </div>
-
         <div class="container d-flex align-items-center">
 
             <!-- Button to toggle the aside section -->
@@ -1344,48 +562,8 @@
         </a>
     </div>
 
-    <!-- Realistic Christmas Tree with Hover Message -->
-    <div class="christmas-tree-container">
-        <div class="christmas-tree">
-            <!-- Tree Star Topper -->
-            <div class="tree-star">
-                <svg viewBox="0 0 51 48" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M25.5 0L31.5 18H51L35.5 29L41.5 48L25.5 37L9.5 48L15.5 29L0 18H19.5L25.5 0Z"
-                          fill="#FFD700" />
-                </svg>
-            </div>
-
-            <!-- Christmas Tree Image (replace with your own tree PNG) -->
-            <img src="~/assets/img/xmas-tree.png"
-                 alt="Christmas Tree"
-                 onerror="this.src='https://cdn.pixabay.com/photo/2016/11/29/02/05/christmas-tree-1866637_1280.png'">
-
-            <!-- Christmas Lights on Tree -->
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-            <div class="tree-light"></div>
-        </div>
-        <div class="tree-message-banner">
-            <span class="message-line">🎄 Happy Holidays from ADDA! 🎅</span>
-            <span class="message-line">Wishing you a season of joy & success</span>
-        </div>
-    </div>
-
     <!-- ======= Footer ======= -->
     <footer id="footer">
-        <!-- Elegant Holiday Accent -->
-        <div class="footer-holiday-accent"></div>
 
         <div class="footer-newsletter">
             <div class="container">
@@ -1513,94 +691,6 @@
     <!-- Template Main JS File -->
     <script src="~/assets/js/main.js"></script>
 
-    <!-- Professional Christmas Decorations Script -->
-    <script>
-        // Create falling snowflakes
-        function createSnowflake() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerHTML = '❄';
-            snowflake.style.left = Math.random() * 100 + '%';
-            snowflake.style.animationDuration = Math.random() * 3 + 5 + 's';
-            snowflake.style.opacity = Math.random();
-            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
-
-            document.body.appendChild(snowflake);
-
-            setTimeout(() => {
-                snowflake.remove();
-            }, 8000);
-        }
-
-        // Create snowflakes periodically
-        setInterval(createSnowflake, 300);
-
-        // Create professional SVG stars
-        function createProfessionalStars() {
-            const positions = [
-                { top: '15%', left: '8%', delay: '0s' },
-                { top: '25%', left: '92%', delay: '0.5s' },
-                { top: '45%', left: '5%', delay: '1s' },
-                { top: '55%', left: '95%', delay: '1.5s' },
-                { top: '75%', left: '10%', delay: '2s' },
-                { top: '85%', left: '88%', delay: '2.5s' }
-            ];
-
-            positions.forEach((pos) => {
-                const star = document.createElement('div');
-                star.classList.add('professional-star');
-                star.style.top = pos.top;
-                star.style.left = pos.left;
-                star.style.animationDelay = pos.delay;
-
-                // Create SVG star
-                star.innerHTML = `
-                    <svg viewBox="0 0 51 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M25.5 0L31.5 18H51L35.5 29L41.5 48L25.5 37L9.5 48L15.5 29L0 18H19.5L25.5 0Z"
-                              fill="#FFD700" opacity="0.8"/>
-                    </svg>
-                `;
-                document.body.appendChild(star);
-            });
-        }
-
-        // Show Christmas greeting toast on page load
-        function showChristmasToast() {
-            // Check if toast has been shown in this session
-            if (sessionStorage.getItem('christmasToastShown')) {
-                return;
-            }
-
-            const overlay = document.createElement('div');
-            overlay.classList.add('christmas-toast-overlay');
-
-            const toast = document.createElement('div');
-            toast.classList.add('christmas-toast');
-            toast.innerHTML = `
-                <h2>Season's Greetings!</h2>
-                <p>Wishing all our valued clients a Merry Christmas and a prosperous New Year filled with success and innovation.</p>
-            `;
-
-            document.body.appendChild(overlay);
-            document.body.appendChild(toast);
-
-            // Mark as shown in session
-            sessionStorage.setItem('christmasToastShown', 'true');
-
-            // Remove after animation completes
-            setTimeout(() => {
-                overlay.remove();
-                toast.remove();
-            }, 5000);
-        }
-
-        // Initialize Christmas decorations
-        window.addEventListener('load', () => {
-            createProfessionalStars();
-            // Show toast after a brief delay for page to settle
-            setTimeout(showChristmasToast, 500);
-        });
-    </script>
 
 </body>
 
