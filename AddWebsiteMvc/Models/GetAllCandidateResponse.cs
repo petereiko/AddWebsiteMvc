@@ -5,9 +5,11 @@
     {
         public List<Candidate> data { get; set; } = new();
         public DateTime CloseDate { get; set; }
+        public DateTime StartDate { get; set; }
         public decimal unitVotePrice { get; set; }
         public int VotesCastToday { get; set; }
         public string ElectionTitle { get; set; } = default!;
+        public bool ElectionHasStarted { get; set; }
 
     }
 }

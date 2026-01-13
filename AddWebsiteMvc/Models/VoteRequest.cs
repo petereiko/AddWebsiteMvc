@@ -9,5 +9,6 @@ namespace AddWebsiteMvc.Models
         public string lastName { get; set; }
         public string candidateId { get; set; }
         public int count { get; set; }
+        public int categoryId { get; set; }
     }
 }

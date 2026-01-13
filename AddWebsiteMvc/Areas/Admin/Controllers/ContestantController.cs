@@ -1,5 +1,6 @@
-﻿using AddWebsiteMvc.Interfaces;
-using AddWebsiteMvc.Models;
+﻿using AddWebsiteMvc.Business.Interfaces;
+using AddWebsiteMvc.Business.Models;
+using AddWebsiteMvc.Business.Models.Election;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,36 +12,35 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
     [Authorize]
     public class ContestantController : Controller
     {
-        private readonly ICandidateService _contestantService;
+        private readonly ICandidateService _candidateService;
         private readonly IElectionService _electionService;
 
         public ContestantController(ICandidateService contestantService, IElectionService electionService)
         {
-            _contestantService = contestantService;
+            _candidateService = contestantService;
             _electionService = electionService;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var apiResult = await _contestantService.GetAllCandidatesAsync();
-            List<Candidate> model = apiResult.data;
-            return View(model);
+            MessageResult<IEnumerable<CandidateDto>> result = await _candidateService.GetAllAsync(cancellationToken);
+            return View(result.Data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(CancellationToken cancellationToken)
         {
-            Candidate model = new();
-            var electionResponse = await _electionService.GetActiveElectionAsync();
-            model.election = electionResponse.data;
-            model.electionId = electionResponse.data.id;
+            CandidateDto model = new();
+            var electionResponse = await _electionService.GetActiveAsync();
+            model.Election = electionResponse.Data!;
+            model.ElectionId = electionResponse.Data!.Id;
 
-            GetAllStateResponse stateResponse = await _electionService.GetAllStatesAsync();
-            if (stateResponse.statusCode == 200)
+            var stateResponse = await _electionService.GetAllStatesAsync(cancellationToken);
+            if (stateResponse.Success)
             {
-                model.States = stateResponse.data.Select(x => new SelectListItem
+                model.States = stateResponse.Data.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
@@ -51,21 +51,21 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
 
         [HttpPost]
         [RequestSizeLimit(10485760)]//10MB
-        public async Task<IActionResult> Create(Candidate model, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CandidateDto model, CancellationToken cancellationToken)
         {
-            GetAllStateResponse? stateResponse = null;
-            GetElectionResponse? electionResponse = null;
+            MessageResult<IEnumerable<StateDto>>? stateResponse = null;
+            MessageResult<ElectionDto>? electionResponse = null;
             if (model == null)
             {
                 model = new() { Errors = new List<string>() { "Bad Request" } };
-                electionResponse = await _electionService.GetActiveElectionAsync();
-                model.election = electionResponse.data;
-                model.electionId = electionResponse.data.id;
+                electionResponse = await _electionService.GetActiveAsync();
+                model.Election = electionResponse.Data!;
+                model.ElectionId = electionResponse.Data!.Id;
 
-                stateResponse = await _electionService.GetAllStatesAsync();
-                if (stateResponse.statusCode == 200)
+                stateResponse = await _electionService.GetAllStatesAsync(cancellationToken);
+                if (stateResponse.Success)
                 {
-                    model.States = stateResponse.data.Select(x => new SelectListItem
+                    model.States = stateResponse.Data!.Select(x => new SelectListItem
                     {
                         Text = x.Name,
                         Value = x.Id.ToString()
@@ -74,51 +74,51 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
 
                 return View(model);
             }
-            var result = await _contestantService.AddAsync(model, cancellationToken);
-            if (result.statusCode == 200) 
+            var result = await _candidateService.AddAsync(model, cancellationToken);
+            if (result.Success)
             {
                 TempData["SuccessMessage"] = "Contestant enrolled successfully";
                 return RedirectToAction("Index", "Contestant", new { area = "Admin" });
             }
-            result.data = new() { Errors = result.errors };
-            electionResponse = await _electionService.GetActiveElectionAsync();
-            model.election = electionResponse.data;
-            model.electionId = electionResponse.data.id;
-            stateResponse = await _electionService.GetAllStatesAsync();
-            if (stateResponse.statusCode == 200)
+            result.Data = new() { Errors = new() { result.Message } };
+            electionResponse = await _electionService.GetActiveAsync();
+            model.Election = electionResponse.Data;
+            model.ElectionId = electionResponse.Data.Id;
+            stateResponse = await _electionService.GetAllStatesAsync(cancellationToken);
+            if (stateResponse.Success)
             {
-                model.States = stateResponse.data.Select(x => new SelectListItem
+                model.States = stateResponse.Data.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
                 }).ToList();
             }
-            model.Errors.AddRange(result.data.Errors);
+            model.Errors.Add(result.Message);
             return View(model);
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
         {
-            BaseResponse<Candidate> response = await _contestantService.GetCandidateByIdAsync(id);
-            Candidate model = new();
-            if (response.statusCode == 200) 
+            MessageResult<CandidateDto> response = await _candidateService.GetByIdAsync(id, cancellationToken);
+            CandidateDto model = new();
+            if (response.Success)
             {
-                model = response.data;
+                model = response.Data;
 
-                GetAllStateResponse stateResponse = await _electionService.GetAllStatesAsync();
-                if (stateResponse.statusCode == 200)
+                var stateResponse = await _electionService.GetAllStatesAsync(cancellationToken);
+                if (stateResponse.Success)
                 {
-                    model.States = stateResponse.data.Select(x => new SelectListItem
+                    model.States = stateResponse.Data.Select(x => new SelectListItem
                     {
                         Text = x.Name,
                         Value = x.Id.ToString()
                     }).ToList();
                 }
-                var electionResponse = await _electionService.GetActiveElectionAsync();
-                model.election = electionResponse.data;
-                model.electionId = electionResponse.data.id;
+                var electionResponse = await _electionService.GetActiveAsync();
+                model.Election = electionResponse.Data!;
+                model.ElectionId = electionResponse.Data!.Id;
 
                 return View(model);
             }
@@ -126,32 +126,113 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Candidate model, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(CandidateDto model, CancellationToken cancellationToken)
         {
-            var result = await _contestantService.EditAsync(model, cancellationToken);
-            if (result.statusCode == 200)
+            var result = await _candidateService.UpdateAsync(model, cancellationToken);
+            if (result.Success)
             {
                 TempData["SuccessMessage"] = "Contestant enrolled successfully";
                 return RedirectToAction(nameof(Index));
             }
-            GetAllStateResponse stateResponse = await _electionService.GetAllStatesAsync();
-            if (stateResponse.statusCode == 200)
+            var stateResponse = await _electionService.GetAllStatesAsync(cancellationToken);
+            if (stateResponse.Success)
             {
-                model.States = stateResponse.data.Select(x => new SelectListItem
+                model.States = stateResponse.Data.Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
                 }).ToList();
             }
-            result.data = new() { Errors = result.errors };
-            model.Errors.AddRange(result.data.Errors);
-            var electionResponse = await _electionService.GetActiveElectionAsync();
-            model.election = electionResponse.data;
-            model.electionId = electionResponse.data.id;
+            result.Data = new() { Errors = new() { stateResponse.Message } };
+            model.Errors.AddRange(result.Data.Errors);
+            var electionResponse = await _electionService.GetActiveAsync();
+            model.Election = electionResponse.Data!;
+            model.ElectionId = electionResponse.Data!.Id;
             return View(model);
         }
 
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        {
+            MessageResult response = await _candidateService.DeleteAsync(id, cancellationToken);
+            if (response.Success)
+            {
+                TempData["SuccessMessage"] = "Candidate deleted successfully";
+
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the candidate";
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageCategories(Guid id, string title, string firstname, string lastname, string state)
+        {
+            MessageResult<List<CandidateCategoryViewModel>> apiResponse = await _candidateService.FetchCandidateCategoriesAsync(id);
+            CandidateCategoryListViewModel model = new();
+            if (apiResponse.Success)
+            {
+                model = new()
+                {
+                    CandidateId = id,
+                    Categories = apiResponse.Data.Select(x => new CheckboxListItem
+                    {
+                        IsChecked = x.IsChecked,
+                        Name = x.Name,
+                        Value = x.CategoryId
+                    }).ToList(),
+                    FirstName = firstname,
+                    LastName = lastname,
+                    Title = title,
+                    State = state
+                };
+                return View(model);
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "An error occurred while deleting the candidate";
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ManageCategories(CandidateCategoryListViewModel model, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ManageCategories", new { id = model.CandidateId, title = model.Title, firstname = model.FirstName, lastname = model.LastName, state = model.State });
+            }
+
+            var updateModel = new CandidateCategoryListViewModel()
+            {
+                CandidateId = model.CandidateId,
+                Categories = model.Categories.Select(x => new CheckboxListItem
+                {
+                    IsChecked = x.IsChecked,
+                    Name = x.Name,
+                    Value = x.Value
+                }).ToList()
+            };
+
+            var result = await _candidateService.UpdateCandidateCategoriesAsync(updateModel, cancellationToken);
+            if (!result.Success)
+            {
+                TempData["ErrorMessage"] = "An error occurred while updating categories.";
+                return RedirectToAction("ManageCategories", new { id = model.CandidateId, title = model.Title, firstname = model.FirstName, lastname = model.LastName, state = model.State });
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "Categories updated successfully.";
+
+                return RedirectToAction(nameof(Index));
+
+            }
+        }
     }
 }

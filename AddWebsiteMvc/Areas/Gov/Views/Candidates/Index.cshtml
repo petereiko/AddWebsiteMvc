@@ -1,10 +1,12 @@
-﻿@using AddWebsiteMvc.Models
+﻿@using AddWebsiteMvc.Business.Models
+@using AddWebsiteMvc.Business.Models.Election
 
 @{
     Layout = null;
+    bool HasElectionStarted = Model.Data.Election != null && Model.Data.Election.StartDate <= DateTime.UtcNow && Model.Data.Election.EndDate >= DateTime.UtcNow;
 }
 
-@model GetAllCandidateResponse
+@model MessageResult<CandidateGridViewModel>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -536,31 +538,25 @@
         }
 
         @@keyframes fadeIn {
-            from
+            from {
+                opacity: 0;
+            }
 
-        {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-
+            to {
+                opacity: 1;
+            }
         }
 
         @@keyframes slideUp {
-            from
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
 
-        {
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .modal-header {
@@ -872,12 +868,9 @@
         }
 
         @@keyframes spin {
-            to
-
-        {
-            transform: rotate(360deg);
-        }
-
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* No Results */
@@ -902,36 +895,33 @@
 
         /* Responsive */
         @@media (max-width: 768px) {
-            .navbar-container
+            .navbar-container {
+                flex-direction: column;
+                padding: 16px 24px;
+                min-height: auto;
+                gap: 16px;
+            }
 
-        {
-            flex-direction: column;
-            padding: 16px 24px;
-            min-height: auto;
-            gap: 16px;
-        }
+            .navbar-actions {
+                width: 100%;
+                justify-content: center;
+            }
 
-        .navbar-actions {
-            width: 100%;
-            justify-content: center;
-        }
+            .search-header h2 {
+                font-size: 24px;
+            }
 
-        .search-header h2 {
-            font-size: 24px;
-        }
+            .stats-dashboard {
+                grid-template-columns: 1fr;
+            }
 
-        .stats-dashboard {
-            grid-template-columns: 1fr;
-        }
+            .candidates-grid {
+                grid-template-columns: 1fr;
+            }
 
-        .candidates-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .footer-content {
-            grid-template-columns: 1fr;
-        }
-
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -944,11 +934,11 @@
                     <i class="fas fa-vote-yea"></i>
                 </div>
                 <div class="brand-text">
-                    <h1>@Model.ElectionTitle</h1>
+                    <h1>@Model.Data.Election.Title</h1>
                     <p>Secure • Transparent • Democratic</p>
                 </div>
             </a>
-            
+
         </div>
     </nav>
 
@@ -1006,7 +996,7 @@
                 <div class="stat-value" id="displayedCandidates">0</div>
                 <div class="stat-label">Showing Now</div>
             </div>
-           @*  <div class="stat-card">
+            @*  <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-flag"></i>
                 </div>
@@ -1017,7 +1007,7 @@
                 <div class="stat-icon">
                     <i class="fas fa-vote-yea"></i>
                 </div>
-                <div class="stat-value" id="totalVotes1">@Model.VotesCastToday</div>
+                <div class="stat-value" id="totalVotes1">@Model.Data.VotesCastToday</div>
                 <div class="stat-label">Votes Cast Today</div>
             </div>
         </div>
@@ -1044,7 +1034,7 @@
                 </div>
                 <h2 class="modal-title">Verify Your Identity</h2>
                 <p class="modal-subtitle">Enter your Email Address to cast your vote</p>
-                
+
             </div>
             <div class="modal-body">
                 <div class="info-box">
@@ -1096,7 +1086,18 @@
                                placeholder="Enter your Email Address"
                                maxlength="50"
                                required />
-                        
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-id-card"></i>
+                            Category:
+                        </label>
+                        <select class="form-input" id="category" required>
+                            <option value="">--Select Category--</option>
+                        </select>
+
                     </div>
 
                     <div class="form-group">
@@ -1118,7 +1119,7 @@
                         function ComputeAmount(e){
                             if(e.value!=null){
                                 const amount = Number(e.value);
-                                const payableAmount = amount * @Model.unitVotePrice;
+                                const payableAmount = amount * @Model.Data.VotePrice.Price;
                                 document.getElementById("amountresult").innerHTML = "You will pay <strong>₦" +payableAmount.toString()+"</strong>";
                             }
                         }
@@ -1131,7 +1132,7 @@
                             Important Notice
                         </div>
                         <div class="info-box-text">
-                            Please note that a Vote costs ₦ @Model.unitVotePrice.ToString("#,##")
+                            Please note that a Vote costs ₦ @Model.Data.VotePrice.Price.ToString("#,##")
                             Once you cast your vote, it cannot be changed. Please ensure you
                             have selected the correct candidate before proceeding.
                         </div>
@@ -1280,7 +1281,6 @@
                         Error Details
                     </div>
                     <div class="info-box-text" id="errordetails" style="color:red">
-                        
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -1378,340 +1378,360 @@
     </footer> *@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
-        // Sample candidate data with stock image URLs
-        let candidates=@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.data));
+            // Sample candidate data with stock image URLs
+            let candidates=@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Candidates));
+            let hasElectionStarted = @HasElectionStarted.ToString().ToLower();
+            let candidateCategories = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.CandidateCategories))
+
+            console.log(candidates);
 
 
-        console.log(candidates);
-        
+            // Anti-spam tracking
+            const emails = new Set(
+              JSON.parse(localStorage.getItem("votedVoterIds") || "[]")
+            );
+            let currentVoteCandidate = null;
+            let currentDetailsCandidate = null;
+            //let totalVotesCount = parseInt(localStorage.getItem("totalVotes") || "0");
 
-        // Anti-spam tracking
-        const emails = new Set(
-          JSON.parse(localStorage.getItem("votedVoterIds") || "[]")
-        );
-        let currentVoteCandidate = null;
-        let currentDetailsCandidate = null;
-        //let totalVotesCount = parseInt(localStorage.getItem("totalVotes") || "0");
+            // Initialize
+            function init() {
+              renderCandidates(candidates);
+              updateStats(candidates);
+              setupEventListeners();
+              //updateVoteCount();
+            }
 
-        // Initialize
-        function init() {
-          renderCandidates(candidates);
-          updateStats(candidates);
-          setupEventListeners();
-          //updateVoteCount();
-        }
-
-        function setupEventListeners() {
-          document
-            .getElementById("searchInput")
-            .addEventListener("input", handleSearch);
-
-          // Filter buttons
-          document.querySelectorAll(".filter-btn").forEach((btn) => {
-            btn.addEventListener("click", function () {
+            function setupEventListeners() {
               document
-                .querySelectorAll(".filter-btn")
-                .forEach((b) => b.classList.remove("active"));
-              this.classList.add("active");
+                .getElementById("searchInput")
+                .addEventListener("input", handleSearch);
 
-              const filter = this.dataset.filter;
-              if (filter === "all") {
-                renderCandidates(candidates);
-              } else {
-                const filtered = candidates.filter((c) => c.category === filter);
-                renderCandidates(filtered);
+              // Filter buttons
+              document.querySelectorAll(".filter-btn").forEach((btn) => {
+                btn.addEventListener("click", function () {
+                  document
+                    .querySelectorAll(".filter-btn")
+                    .forEach((b) => b.classList.remove("active"));
+                  this.classList.add("active");
+
+                  const filter = this.dataset.filter;
+                  if (filter === "all") {
+                    renderCandidates(candidates);
+                  } else {
+                    const filtered = candidates.filter((c) => c.category === filter);
+                    renderCandidates(filtered);
+                  }
+                });
+              });
+
+              // Vote form submission
+              document
+                .getElementById("voteForm")
+                .addEventListener("submit", handleVoteSubmit);
+            }
+
+            function renderCandidates(candidatesToRender) {
+              const grid = document.getElementById("candidatesGrid");
+              const noResults = document.getElementById("noResults");
+
+              if (candidatesToRender.length === 0) {
+                grid.style.display = "none";
+                noResults.style.display = "block";
+                return;
               }
-            });
-          });
 
-          // Vote form submission
-          document
-            .getElementById("voteForm")
-            .addEventListener("submit", handleVoteSubmit);
-        }
+              grid.style.display = "grid";
+              noResults.style.display = "none";
 
-        function renderCandidates(candidatesToRender) {
-          const grid = document.getElementById("candidatesGrid");
-          const noResults = document.getElementById("noResults");
-
-          if (candidatesToRender.length === 0) {
-            grid.style.display = "none";
-            noResults.style.display = "block";
-            return;
-          }
-
-          grid.style.display = "grid";
-          noResults.style.display = "none";
-
-          grid.innerHTML = candidatesToRender
-            .map(
-              (candidate, index) => `
-                      <div class="candidate-card" style="animation-delay: ${index * 0.05}s; height:600px !important">
-                      <div class="">
-                          <img src="${candidate.passportFileName}" alt="${candidate.firstName}" style="width:100%; height:500px;bject-fit: cover">
-                          <div class="candidate-badge">${candidate.stateName} State</div>
-                      </div>
-                      <div class="">
-                          <div class="candidate-actions">
-                              <button class="btn btn-vote" onclick="initiateVote('${candidate.id}')">
-                                  <i class="fas fa-vote-yea"></i>
-                                      Cast Vote (<span class="party-abbr">Votes: ${candidate.voteCount}</span>)
-                              </button>
+              grid.innerHTML = candidatesToRender
+                .map(
+                  (candidate, index) => hasElectionStarted? `
+                          <div class="candidate-card" style="animation-delay: ${index * 0.05}s; height:600px !important">
+                          <div class="">
+                              <img src="${candidate.PassportFileName}" alt="${candidate.FirstName}" style="width:100%; height:500px;bject-fit: cover">
+                              <div class="candidate-badge">${candidate.StateName} State</div>
+                          </div>
+                          <div  class="">
+                              <div class="candidate-actions">
+                                  <button class="btn btn-vote" onclick="initiateVote('${candidate.Id}')">
+                                      <i class="fas fa-vote-yea"></i>
+                                          Cast Vote (<span class="party-abbr">Votes: ${candidate.VoteCount}</span>)
+                                  </button>
+                              </div>
                           </div>
                       </div>
-                  </div>
-              `
-            )
-            .join("");
+                  `:
+                   `
+                          <div class="candidate-card" style="animation-delay: ${index * 0.05}s; height:500px !important">
+                          <div class="">
+                              <img src="${candidate.PassportFileName}" alt="${candidate.FirstName}" style="width:100%; height:500px;bject-fit: cover">
+                              <div class="candidate-badge">${candidate.StateName} State</div>
+                          </div>
+                      </div>
+                  `
+                )
+                .join("");
 
-          updateStats(candidatesToRender);
-        }
+              updateStats(candidatesToRender);
+            }
 
-        function updateStats(candidatesToDisplay) {
-          document.getElementById("totalCandidates").textContent =
-            candidates.length;
-          document.getElementById("displayedCandidates").textContent =
-            candidatesToDisplay.length;
+            function updateStats(candidatesToDisplay) {
+              document.getElementById("totalCandidates").textContent =
+                candidates.length;
+              document.getElementById("displayedCandidates").textContent =
+                candidatesToDisplay.length;
 
-          // const uniqueParties = new Set(candidates.map((c) => c.party));
-          // document.getElementById("totalPartiestotalParties").textContent =
-          //   uniqueParties.size;
-        }
+              // const uniqueParties = new Set(candidates.map((c) => c.party));
+              // document.getElementById("totalPartiestotalParties").textContent =
+              //   uniqueParties.size;
+            }
 
-        // function updateVoteCount() {
-        //   document.getElementById("totalVotes").textContent = totalVotesCount;
-        // }
+            // function updateVoteCount() {
+            //   document.getElementById("totalVotes").textContent = totalVotesCount;
+            // }
 
-        function handleSearch(e) {
-          const searchTerm = e.target.value.toLowerCase();
-          // const activeFilter =
-          //   document.querySelector(".filter-btn.active").dataset.filter;
+            function handleSearch(e) {
+              const searchTerm = e.target.value.toLowerCase();
+              // const activeFilter =
+              //   document.querySelector(".filter-btn.active").dataset.filter;
 
-          let filtered = candidates;
+              let filtered = candidates;
 
-          // if (activeFilter !== "all") {
-          //   filtered = filtered.filter((c) => c.category === activeFilter);
-          // }
+              // if (activeFilter !== "all") {
+              //   filtered = filtered.filter((c) => c.category === activeFilter);
+              // }
 
-          if (searchTerm) {
-            filtered = filtered.filter((candidate) => {
-              return (
-                candidate.firstName.toLowerCase().includes(searchTerm) ||
-                candidate.lastName.toLowerCase().includes(searchTerm) ||
-                candidate.stateName.toLowerCase().includes(searchTerm)
-              );
-            });
-          }
-
-          renderCandidates(filtered);
-        }
-
-        let _candidateId=0;
-
-        function initiateVote(candidateId) {
-            console.log(candidateId);
-            _candidateId=candidateId;
-            const candidate = candidates.find((c) => c.id === candidateId);
-          if (!candidate) return;
-
-          currentVoteCandidate = candidate;
-
-          document.getElementById("voteCandidate").textContent = candidate.title+" "+ candidate.firstName+" "+candidate.lastName;
-          
-          document.getElementById("voteState").textContent = candidate.stateName;
-
-          document.getElementById("email").value = "";
-          document.getElementById("voteCount").value = "";
-          document.getElementById("firstName").value="";
-          document.getElementById("surname").value="";
-
-          document.getElementById("voteModal").classList.add("active");
-          document.body.style.overflow = "hidden";
-        }
-
-        function handleVoteSubmit(e) {
-          e.preventDefault();
-
-          const email = document.getElementById("email").value.trim();
-          const firstName = document.getElementById("firstName").value.trim();
-          const surname = document.getElementById("surname").value.trim();
-          const voteCount = document.getElementById("voteCount").value.trim();
-          const submitBtn = document.getElementById("submitVoteBtn");
-
-          if(firstName==""){
-                  document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">First name is required</span>';
-                        document.getElementById("firstName").focus();
-                    return;
-          }
-              if(surname==""){
-                      document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Surname is required</span>';
-                            document.getElementById("surname").focus();
-                        return;
+              if (searchTerm) {
+                filtered = filtered.filter((candidate) => {
+                  return (
+                    candidate.firstName.toLowerCase().includes(searchTerm) ||
+                    candidate.lastName.toLowerCase().includes(searchTerm) ||
+                    candidate.stateName.toLowerCase().includes(searchTerm)
+                  );
+                });
               }
 
-          // Validation
-          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-    //return regex.test(email);
-        if(!emailRegex.test(email)){
-            document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Invalid email address</span>';
-                document.getElementById("email").focus();
+              renderCandidates(filtered);
+            }
+
+            let _candidateId=0;
+
+            function initiateVote(candidateId) {
+                console.log(candidateId);
+                _candidateId=candidateId;
+                const candidate = candidates.find((c) => c.id === candidateId);
+              if (!candidate) return;
+
+              //Load Categories
+              let filteredCategories = candidateCategories.filter(c=>c.CandidateId==candidateId);
+              console.log('filteredCategories', candidateCategories);
+              let categorySelectListHtml = '<option value="">--Select Category--</option>';
+                filteredCategories.forEach(cat=>{
+                    categorySelectListHtml += `<option value="${cat.CategoryId}">${cat.Category}</option>`;
+                });
+                document.getElementById("category").innerHTML = categorySelectListHtml;
+
+              currentVoteCandidate = candidate;
+
+              document.getElementById("voteCandidate").textContent = candidate.title+" "+ candidate.firstName+" "+candidate.lastName;
+
+              document.getElementById("voteState").textContent = candidate.stateName;
+
+              document.getElementById("email").value = "";
+              document.getElementById("voteCount").value = "";
+              document.getElementById("firstName").value="";
+              document.getElementById("surname").value="";
+
+              document.getElementById("voteModal").classList.add("active");
+              document.body.style.overflow = "hidden";
+            }
+
+            function handleVoteSubmit(e) {
+              e.preventDefault();
+
+              const email = document.getElementById("email").value.trim();
+              const firstName = document.getElementById("firstName").value.trim();
+              const surname = document.getElementById("surname").value.trim();
+              const voteCount = document.getElementById("voteCount").value.trim();
+              const submitBtn = document.getElementById("submitVoteBtn");
+              const category = document.getElementById("category").value;
+
+              if(firstName==""){
+                      document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">First name is required</span>';
+                            document.getElementById("firstName").focus();
+                        return;
+              }
+                  if(surname==""){
+                          document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Surname is required</span>';
+                                document.getElementById("surname").focus();
+                            return;
+                  }
+
+              // Validation
+              const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        //return regex.test(email);
+            if(!emailRegex.test(email)){
+                document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Invalid email address</span>';
+                    document.getElementById("email").focus();
+                    return;
+        }
+
+                if (voteCount<0) {
+                document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%;padding:10px; border-radius:3px">Invalid vote count</span>';
                 return;
-    }
+              }
+                  document.getElementById("lblmessage").innerHTML="";
+              // Show loading state
+              submitBtn.disabled = true;
+              submitBtn.innerHTML = '<span class="loading"></span> Processing...';
 
-            if (voteCount<0) {
-            document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%;padding:10px; border-radius:3px">Invalid vote count</span>';
-            return;
-          }
-              document.getElementById("lblmessage").innerHTML="";
-          // Show loading state
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<span class="loading"></span> Processing...';
-
-          // Simulate API call
-          
+              // Simulate API call
 
 
 
-          setTimeout(() => {
-            // Record the vote
-            emails.add(email);
-            localStorage.setItem("votedVoterIds", JSON.stringify([...emails]));
 
-            //totalVotesCount++;
-            //localStorage.setItem("totalVotes", totalVotesCount.toString());
-            //updateVoteCount();
+              setTimeout(() => {
+                // Record the vote
+                emails.add(email);
+                localStorage.setItem("votedVoterIds", JSON.stringify([...emails]));
 
-            // Generate reference number
-            const referenceNumber =
-              "LG-" +
-              Date.now().toString(36).toUpperCase() +
-              "-" +
-              Math.random().toString(36).substring(2, 8).toUpperCase();
-            const timestamp = new Date().toLocaleString("en-US", {
-              dateStyle: "long",
-              timeStyle: "short",
+                //totalVotesCount++;
+                //localStorage.setItem("totalVotes", totalVotesCount.toString());
+                //updateVoteCount();
+
+                // Generate reference number
+                const referenceNumber =
+                  "LG-" +
+                  Date.now().toString(36).toUpperCase() +
+                  "-" +
+                  Math.random().toString(36).substring(2, 8).toUpperCase();
+                const timestamp = new Date().toLocaleString("en-US", {
+                  dateStyle: "long",
+                  timeStyle: "short",
+                });
+
+                // Show success modal
+                document.getElementById("referenceNumber").textContent =
+                  referenceNumber;
+                document.getElementById("voteTimestamp").textContent = timestamp;
+                document.getElementById("confirmedVoterId").textContent =
+                  email.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+
+                closeVoteModal();
+                document.getElementById("successModal").classList.add("active");
+
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Vote';
+
+                        $.ajax({
+                              url:'@Url.Action("Vote", "Candidates", new { Area = "Gov" })',
+                              type:'post',
+                              dataType:'json',
+                              data:{
+                                  email:email,
+                                  count:voteCount,
+                                  firstName:firstName,
+                                  lastName:surname,
+                                  candidateId:_candidateId,
+                                  categoryId: category
+                              },
+                              success:function(response){
+                                  console.log(response);
+                                  if(response.statusCode==200){
+                                  location.href=response.data.authorizationUrl;
+                                  }
+                                  else{
+
+                                          console.log(response.errors)
+                                          let htmlContent='';
+                                          $.each(response.errors,(i,error)=>{
+                                              htmlContent+=error+'</br>';
+                                          });
+
+                                              document.getElementById("successModal").classList.remove("active");
+                                              document.getElementById("errorModal").classList.add("active");
+                                              document.getElementById('errordetails').innerHTML = htmlContent;//errordetails
+                                  }
+                              },
+                              error:function(err){
+                                      document.getElementById("successModal").classList.remove("active");
+                                          document.getElementById("errorModal").classList.add("active");
+                                      document.getElementById('errordetails').innerHtml = err.responseText;
+                              }
+                      });
+
+                // Here you would make your actual API call
+                // submitVoteToAPI(currentVoteCandidate.id, voterId, phone);
+              }, 2000);
+            }
+
+            function showDetails(candidateId) {
+              const candidate = candidates.find((c) => c.id === candidateId);
+              if (!candidate) return;
+
+              currentDetailsCandidate = candidate;
+
+              document.getElementById("modalName").textContent = candidate.name;
+              document.getElementById(
+                "modalParty"
+              ).textContent = `${candidate.party} (${candidate.partyAbbr})`;
+              document.getElementById("modalPosition").textContent =
+                candidate.position;
+              document.getElementById("modalPartyFull").textContent = candidate.party;
+              document.getElementById("modalRunningMate").textContent =
+                candidate.runningMate;
+              document.getElementById("modalPlatform").textContent =
+                candidate.platform;
+              document.getElementById("modalExperience").textContent =
+                candidate.experience;
+              document.getElementById("modalEducation").textContent =
+                candidate.education;
+
+              document.getElementById("detailsModal").classList.add("active");
+              document.body.style.overflow = "hidden";
+            }
+
+            function voteFromDetails() {
+              closeDetailsModal();
+              if (currentDetailsCandidate) {
+                initiateVote(currentDetailsCandidate.id);
+              }
+            }
+
+            function closeVoteModal() {
+              document.getElementById("voteModal").classList.remove("active");
+              document.body.style.overflow = "auto";
+            }
+
+            function closeDetailsModal() {
+              document.getElementById("detailsModal").classList.remove("active");
+              document.body.style.overflow = "auto";
+            }
+
+            function closeSuccessModal() {
+              document.getElementById("successModal").classList.remove("active");
+              document.body.style.overflow = "auto";
+            }
+
+                function closeErrorModal() {
+                  document.getElementById("errorModal").classList.remove("active");
+                  document.body.style.overflow = "auto";
+                }
+
+            // Close modals when clicking outside
+            document.querySelectorAll(".modal").forEach((modal) => {
+              modal.addEventListener("click", function (e) {
+                if (e.target === this) {
+                  this.classList.remove("active");
+                  document.body.style.overflow = "auto";
+                }
+              });
             });
 
-            // Show success modal
-            document.getElementById("referenceNumber").textContent =
-              referenceNumber;
-            document.getElementById("voteTimestamp").textContent = timestamp;
-            document.getElementById("confirmedVoterId").textContent =
-              email.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
-
-            closeVoteModal();
-            document.getElementById("successModal").classList.add("active");
-
-            // Reset button
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Vote';
-
-                    $.ajax({
-                          url:'@Url.Action("Vote", "Candidates", new { Area = "Gov" })',
-                          type:'post',
-                          dataType:'json',
-                          data:{
-                              email:email,
-                              count:voteCount,
-                              firstName:firstName,
-                              lastName:surname,
-                              candidateId:_candidateId
-                          },
-                          success:function(response){
-                              console.log(response);
-                              if(response.statusCode==200){
-                              location.href=response.data.authorizationUrl;
-                              }
-                              else{
-
-                                      console.log(response.errors)
-                                      let htmlContent='';
-                                      $.each(response.errors,(i,error)=>{
-                                          htmlContent+=error+'</br>';
-                                      });
-
-                                          document.getElementById("successModal").classList.remove("active");
-                                          document.getElementById("errorModal").classList.add("active");
-                                          document.getElementById('errordetails').innerHTML = htmlContent;//errordetails
-                              }
-                          },
-                          error:function(err){
-                                  document.getElementById("successModal").classList.remove("active");
-                                      document.getElementById("errorModal").classList.add("active");
-                                  document.getElementById('errordetails').innerHtml = err.responseText;
-                          }
-                  });
-
-            // Here you would make your actual API call
-            // submitVoteToAPI(currentVoteCandidate.id, voterId, phone);
-          }, 2000);
-        }
-
-        function showDetails(candidateId) {
-          const candidate = candidates.find((c) => c.id === candidateId);
-          if (!candidate) return;
-
-          currentDetailsCandidate = candidate;
-
-          document.getElementById("modalName").textContent = candidate.name;
-          document.getElementById(
-            "modalParty"
-          ).textContent = `${candidate.party} (${candidate.partyAbbr})`;
-          document.getElementById("modalPosition").textContent =
-            candidate.position;
-          document.getElementById("modalPartyFull").textContent = candidate.party;
-          document.getElementById("modalRunningMate").textContent =
-            candidate.runningMate;
-          document.getElementById("modalPlatform").textContent =
-            candidate.platform;
-          document.getElementById("modalExperience").textContent =
-            candidate.experience;
-          document.getElementById("modalEducation").textContent =
-            candidate.education;
-
-          document.getElementById("detailsModal").classList.add("active");
-          document.body.style.overflow = "hidden";
-        }
-
-        function voteFromDetails() {
-          closeDetailsModal();
-          if (currentDetailsCandidate) {
-            initiateVote(currentDetailsCandidate.id);
-          }
-        }
-
-        function closeVoteModal() {
-          document.getElementById("voteModal").classList.remove("active");
-          document.body.style.overflow = "auto";
-        }
-
-        function closeDetailsModal() {
-          document.getElementById("detailsModal").classList.remove("active");
-          document.body.style.overflow = "auto";
-        }
-
-        function closeSuccessModal() {
-          document.getElementById("successModal").classList.remove("active");
-          document.body.style.overflow = "auto";
-        }
-
-            function closeErrorModal() {
-              document.getElementById("errorModal").classList.remove("active");
-              document.body.style.overflow = "auto";
-            }
-
-        // Close modals when clicking outside
-        document.querySelectorAll(".modal").forEach((modal) => {
-          modal.addEventListener("click", function (e) {
-            if (e.target === this) {
-              this.classList.remove("active");
-              document.body.style.overflow = "auto";
-            }
-          });
-        });
-
-        // Initialize on load
-        init();
+            // Initialize on load
+            init();
     </script>
 </body>
 </html>

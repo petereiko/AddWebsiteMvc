@@ -1,9 +1,11 @@
-﻿namespace AddWebsiteMvc.Models
+﻿using AddWebsiteMvc.Business.Models.Election;
+
+namespace AddWebsiteMvc.Models
 {
 
     public class GetElectionResponse:BaseResponse
     {
-        public Election data { get; set; } = default!;
+        public ElectionDto Election { get; set; } = default!;
     }
 
 
