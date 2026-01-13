@@ -7,9 +7,9 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
     [Area("Admin")]
     public class PaymentController : Controller
     {
-        private readonly IContestantService _contestantService;
+        private readonly ICandidateService _contestantService;
 
-        public PaymentController(IContestantService contestantService)
+        public PaymentController(ICandidateService contestantService)
         {
             _contestantService = contestantService;
         }
@@ -21,7 +21,7 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
             if (result.statusCode == 200) 
             {
                 TempData["SuccessMessage"] = "You vote has been counted successfully";
-                return RedirectToAction("Index", "Contestant", new { area = "Vote" });
+                return RedirectToAction("Index", "Candidates", new { area = "Gov" });
             }
             return View();
         }

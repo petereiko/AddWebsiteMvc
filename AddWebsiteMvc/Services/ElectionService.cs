@@ -33,7 +33,29 @@ namespace AddWebsiteMvc.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load all contestants by this time");
+                result.errors.Add("Failed to load all Candidate by this time");
+            }
+
+            return result;
+        }
+
+
+        public async Task<GetAllStateResponse> GetAllStatesAsync()
+        {
+            GetAllStateResponse result = new();
+            try
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, _configuration["GetAllStatesEndpoint"]);
+                request.Headers.Add("Authorization", $"Bearer {_authUser.Token}");
+                var response = await _httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<GetAllStateResponse>(json)!;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                result.errors.Add("Failed to load all Candidate by this time");
             }
 
             return result;

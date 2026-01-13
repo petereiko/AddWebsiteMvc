@@ -2,17 +2,18 @@
 using AddWebsiteMvc.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Newtonsoft.Json;
+using NuGet.Packaging.Signing;
 
 namespace AddWebsiteMvc.Services
 {
-    public class ContestantService:IContestantService
+    public class CandidateService:ICandidateService
     {
         private readonly IConfiguration _configuration;
         private readonly IAuthUser _authUser;
         private readonly HttpClient _httpClient;
-        private readonly ILogger<ContestantService> _logger;
+        private readonly ILogger<CandidateService> _logger;
         private readonly IWebHostEnvironment _env;
-        public ContestantService(IConfiguration configuration, HttpClient httpClient, IAuthUser authUser, ILogger<ContestantService> logger, IWebHostEnvironment env)
+        public CandidateService(IConfiguration configuration, HttpClient httpClient, IAuthUser authUser, ILogger<CandidateService> logger, IWebHostEnvironment env)
         {
             _configuration = configuration;
             _httpClient = httpClient;
@@ -21,67 +22,56 @@ namespace AddWebsiteMvc.Services
             _env = env;
         }
 
-        public async Task<GetAllContestantResponse> GetAllContestantsAsync()
+        public async Task<GetAllCandidateResponse> GetAllCandidatesAsync()
         {
-            GetAllContestantResponse result = new();
+            GetAllCandidateResponse result = new();
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, _configuration["GetAllContestantsEndpoint"]);
+                var request = new HttpRequestMessage(HttpMethod.Get, _configuration["GetAllCandidatesEndpoint"]);
                 request.Headers.Add("Authorization", $"Bearer {_authUser.Token}");
                 var response = await _httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<GetAllContestantResponse>(json)!;
+                result = JsonConvert.DeserializeObject<GetAllCandidateResponse>(json)!;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load all contestants by this time");
+                result.errors.Add("Failed to load all Candidates by this time");
             }
             
             return result;
         }
 
-        public async Task<BaseResponse<Contestant>> GetContestantByIdAsync(string id)
+        public async Task<BaseResponse<Candidate>> GetCandidateByIdAsync(string id)
         {
-            BaseResponse<Contestant> result = new();
+            BaseResponse<Candidate> result = new();
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, _configuration["GetContestantByIdEndpoint"].Replace("{id}", id));
+                var request = new HttpRequestMessage(HttpMethod.Get, _configuration["GetCandidateByIdEndpoint"].Replace("{id}", id));
                 request.Headers.Add("Authorization", $"Bearer {_authUser.Token}");
                 var response = await _httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<BaseResponse<Contestant>>(json)!;
-                result.data.dob = Convert.ToDateTime(result.data.dob).ToString("yyyy-MM-dd");
+                result = JsonConvert.DeserializeObject<BaseResponse<Candidate>>(json)!;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load contestant by this time");
+                result.errors.Add("Failed to load Candidate by this time");
             }
 
             return result;
         }
 
-        public async Task<BaseResponse<Contestant>>AddAsync(Contestant model, CancellationToken cancellationToken)
+        public async Task<BaseResponse<Candidate>>AddAsync(Candidate model, CancellationToken cancellationToken)
         {
-            BaseResponse<Contestant> result = new() { data = new() { } };
+            BaseResponse<Candidate> result = new() { data = new() { } };
             try
             {
                 if (model == null)
                 {
                     result.data.Errors.Add("Invalid request");
-                    return result;
-                }
-                if (string.IsNullOrEmpty(model.shortNote))
-                {
-                    result.data.Errors.Add("Short note is required");
-                    return result;
-                }
-                if (string.IsNullOrEmpty(model.talent))
-                {
-                    result.data.Errors.Add("talent is required");
                     return result;
                 }
                 if (string.IsNullOrEmpty(model.firstName))
@@ -94,15 +84,10 @@ namespace AddWebsiteMvc.Services
                     result.data.Errors.Add("Last Name is required");
                     return result;
                 }
-                if (string.IsNullOrEmpty(model.dob))
-                {
-                    result.data.Errors.Add("DOB is required");
-                    return result;
-                }
                 //Process Image File
                 if (model.passportFile == null)
                 {
-                    result.data.Errors.Add("Please upload the contestant's passport");
+                    result.data.Errors.Add("Please upload the Candidate's passport");
                     return result;
                 }
                 string[] allowedExtensions = [".png", ".jpeg", ".jpg"];
@@ -129,85 +114,42 @@ namespace AddWebsiteMvc.Services
                 fs.Close();
                 model.passportFileName = fileName;
 
-                //Process Video File
-                if (model.videoFile == null)
-                {
-                    result.data.Errors.Add("Please upload the contestant's video");
-                    return result;
-                }
-
-                allowedExtensions = [".mp4", ".mov", ".avi", ".wmv", ".mpeg", ".flv", ".mpg"];
-                ext = Path.GetExtension(model.videoFile.FileName);
-                if (!allowedExtensions.Contains(ext))
-                {
-                    result.data.Errors.Add($"Only {string.Join(',', allowedExtensions)} video files are allowed");
-                    return result;
-                }
-
-                fileSizeInBytes = model.videoFile.Length;
-                fileSizeInMB = fileSizeInBytes / (1024.0 * 1024.0);
-                if (fileSizeInMB > 50)
-                {
-                    result.data.Errors.Add("Video File too large.");
-                    return result;
-                }
-
-                fileName = $"{Guid.NewGuid().ToString()}{ext}";
-                filePath = Path.Combine(_env.WebRootPath, "Videos", fileName);
-                fs = new FileStream(filePath, FileMode.Create);
-                await model.videoFile.CopyToAsync(fs, cancellationToken);
-                fs.Close();
-                model.videoFileName = fileName;
-
-                var request = new HttpRequestMessage(HttpMethod.Post, _configuration["CreateContestantsEndpoint"]);
+                var request = new HttpRequestMessage(HttpMethod.Post, _configuration["CreateCandidateEndpoint"]);
                 request.Headers.Add("Authorization", $"Bearer {_authUser.Token}");
 
-                DateTime dobDate = Convert.ToDateTime(model.dob);
 
                 var payload = new
                 {
                     firstName = model.firstName,
                     lastName = model.lastName,
-                    dob = dobDate,
                     passportFileName = model.passportFileName,
-                    videoFileName = model.videoFileName,
-                    shortNote = model.shortNote,
-                    talent = model.talent,
-                    order = model.order
+                    order = model.order,
+                    stateId = model.stateId,
+                    title = model.title
                 };
                 var content = new StringContent(JsonConvert.SerializeObject(payload), null, "application/json");
                 request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<BaseResponse<Contestant>>(json)!;
+                result = JsonConvert.DeserializeObject<BaseResponse<Candidate>>(json)!;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load all contestants by this time");
+                result.errors.Add("Failed to load all Candidates by this time");
             }
 
             return result;
         }
 
-        public async Task<BaseResponse<Contestant>> EditAsync(Contestant model, CancellationToken cancellationToken)
+        public async Task<BaseResponse<Candidate>> EditAsync(Candidate model, CancellationToken cancellationToken)
         {
-            BaseResponse<Contestant> result = new() { data = new() { }, statusCode = 400 };
+            BaseResponse<Candidate> result = new() { data = new() { }, statusCode = 400 };
             try
             {
                 if (model == null)
                 {
                     result.data.Errors.Add("Invalid request");
-                    return result;
-                }
-                if (string.IsNullOrEmpty(model.shortNote))
-                {
-                    result.data.Errors.Add("Short note is required");
-                    return result;
-                }
-                if (string.IsNullOrEmpty(model.talent))
-                {
-                    result.data.Errors.Add("talent is required");
                     return result;
                 }
                 if (string.IsNullOrEmpty(model.firstName))
@@ -218,11 +160,6 @@ namespace AddWebsiteMvc.Services
                 if (string.IsNullOrEmpty(model.lastName))
                 {
                     result.data.Errors.Add("Last Name is required");
-                    return result;
-                }
-                if (string.IsNullOrEmpty(model.dob))
-                {
-                    result.data.Errors.Add("DOB is required");
                     return result;
                 }
                 List<string> allowedExtensions = new();
@@ -260,61 +197,31 @@ namespace AddWebsiteMvc.Services
                     model.passportFileName = fileName;
                 }
 
-                //Process Video File
-                if (model.videoFile != null)
-                {
-                    allowedExtensions = [".mp4"];
-                    ext = Path.GetExtension(model.videoFile.FileName);
-                    if (!allowedExtensions.Contains(ext))
-                    {
-                        result.data.Errors.Add($"Only {string.Join(',', allowedExtensions)} video files are allowed");
-                        return result;
-                    }
-
-                    fileSizeInBytes = model.videoFile.Length;
-                    fileSizeInMB = fileSizeInBytes / (1024.0 * 1024.0);
-                    if (fileSizeInMB > 50)
-                    {
-                        result.data.Errors.Add("Video File too large.");
-                        return result;
-                    }
-
-                    fileName = $"{Guid.NewGuid().ToString()}{ext}";
-                    filePath = Path.Combine(_env.WebRootPath, "Videos", fileName);
-                    fs = new FileStream(filePath, FileMode.Create);
-                    await model.videoFile.CopyToAsync(fs, cancellationToken);
-                    fs.Close();
-                    model.videoFileName = fileName;
-                }
-
-                var request = new HttpRequestMessage(HttpMethod.Post, _configuration["EditContestantsEndpoint"]);
+                var request = new HttpRequestMessage(HttpMethod.Post, _configuration["EditCandidateEndpoint"]);
                 request.Headers.Add("Authorization", $"Bearer {_authUser.Token}");
 
-                DateTime dobDate = Convert.ToDateTime(model.dob);
 
                 var payload = new
                 {
                     id = model.id,
                     firstName = model.firstName,
                     lastName = model.lastName,
-                    dob = dobDate,
                     passportFileName = model.passportFileName,
-                    videoFileName = model.videoFileName,
-                    shortNote = model.shortNote,
-                    talent = model.talent,
                     IsActive = model.IsActive,
-                    order = model.order
+                    order = model.order,
+                    title = model.title,
+                    stateId = model.stateId,
                 };
                 var content = new StringContent(JsonConvert.SerializeObject(payload), null, "application/json");
                 request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<BaseResponse<Contestant>>(json)!;
+                result = JsonConvert.DeserializeObject<BaseResponse<Candidate>>(json)!;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load all contestants by this time");
+                result.errors.Add("Failed to load all Candidates by this time");
             }
 
             return result;
@@ -332,7 +239,7 @@ namespace AddWebsiteMvc.Services
                 {
                     firstName = model.firstName,
                     lastName = model.lastName,
-                    contestantId = model.contestantId,
+                    candidateId = model.candidateId,
                     count = model.count,
                     email = model.email
                 };
@@ -340,12 +247,20 @@ namespace AddWebsiteMvc.Services
                 request.Content = content;
                 var response = await _httpClient.SendAsync(request);
                 var json = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<BaseResponse<VoteResponseData>>(json)!;
+                if (response.IsSuccessStatusCode)
+                {
+                    result = JsonConvert.DeserializeObject<BaseResponse<VoteResponseData>>(json)!;
+                }
+                else
+                {
+                    ErrorResponse error = JsonConvert.DeserializeObject<ErrorResponse>(json)!;
+                    result.errors = error.errors;
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load all contestants by this time");
+                result.errors.Add("Failed to load all Candidates by this time");
             }
 
             return result;
@@ -366,7 +281,7 @@ namespace AddWebsiteMvc.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                result.errors.Add("Failed to load contestant by this time");
+                result.errors.Add("Failed to load Candidate by this time");
             }
 
             return result;

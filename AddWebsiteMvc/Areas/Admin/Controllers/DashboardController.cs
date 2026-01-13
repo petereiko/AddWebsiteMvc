@@ -12,10 +12,10 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
     public class DashboardController : Controller
     {
         private readonly IAuthUser _authUser;
-        private readonly IContestantService _contestantService;
+        private readonly ICandidateService _contestantService;
         private readonly IElectionService _electionService;
 
-        public DashboardController(IAuthUser authUser, IContestantService contestantService, IElectionService electionService)
+        public DashboardController(IAuthUser authUser, ICandidateService contestantService, IElectionService electionService)
         {
             _authUser = authUser;
             _contestantService = contestantService;
@@ -24,7 +24,7 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Task<GetAllContestantResponse> getAllContestantResponseTask = _contestantService.GetAllContestantsAsync();
+            Task<GetAllCandidateResponse> getAllContestantResponseTask = _contestantService.GetAllCandidatesAsync();
             Task<GetElectionResponse> getElectionResponseTask = _electionService.GetActiveElectionAsync();
 
             await Task.WhenAll(getAllContestantResponseTask, getElectionResponseTask);

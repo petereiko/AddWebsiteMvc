@@ -1,4 +1,4 @@
-﻿@model List<Contestant>
+﻿@model List<Candidate>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -344,9 +344,9 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>📋 Contestants Management</h1>
+        <h1>📋 Governor Management</h1>
         <a asp-action="Create" asp-controller="Contestant" asp-area="Admin" class="create-btn">
-            ✨ Create New Contestant
+            ✨ Add Governor
         </a>
     </div>
 
@@ -354,13 +354,11 @@
         <table id="tbl" class="display">
             <thead>
                 <tr>
-                    <th>S/N</th>
-                    <th>Order</th>
-                    <th>Full Name</th>
+                    <th style="width:10px !important">S/N</th>
+                    <th>State</th>
+                    <th>Name</th>
+                    <th style="width:10px !important">Votes</th>
                     <th>Active</th>
-                    <th>Date of Birth</th>
-                    <th>Short Note</th>
-                    <th>Talent</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -369,12 +367,20 @@
                 {
                     <tr>
                         <td><strong>@sn</strong></td>
-                        <td>@item.order</td>
-                        <td><strong>@item.firstName @item.lastName</strong></td>
-                        <td>@item.IsActive</td>
-                        <td>@item.dob</td>
-                        <td>@item.shortNote</td>
-                        <td><span class="badge badge-success">@item.talent</span></td>
+                        <td>Executive Gov. of @item.stateName State</td>
+                        <td><strong>@item.title @item.firstName @item.lastName</strong></td>
+                        <td><strong>@item.voteCount</strong></td>
+                        <td style="text-align:left">
+                            @if (item.IsActive)
+                            {
+                                <span class="badge badge-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge" style="color:white; background-color:red">inactive</span>
+                            }
+
+                        </td>
                         <td>
                             <a asp-action="Edit" asp-controller="Contestant" asp-area="Admin" asp-route-id="@item.id" class="action-link">
                                 Edit
@@ -401,20 +407,20 @@
                 "pageLength": 10,
                 "order": [[0, "asc"]],
                 "language": {
-                    "search": "🔍 Search contestants:",
-                    "lengthMenu": "Show _MENU_ contestants per page",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ contestants",
+                    "search": "🔍 Search Governors:",
+                    "lengthMenu": "Show _MENU_ Governors per page",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ Governors",
                     "infoEmpty": "No contestants available",
-                    "infoFiltered": "(filtered from _MAX_ total contestants)",
-                    "zeroRecords": "No matching contestants found",
-                    "emptyTable": "No contestants have been added yet",
+                    "infoFiltered": "(filtered from _MAX_ total Governors)",
+                    "zeroRecords": "No matching Governor found",
+                    "emptyTable": "No Governor have been added yet",
                     "paginate": {
                         "first": "First",
                         "last": "Last",
                         "next": "Next »",
                         "previous": "« Previous"
                     },
-                    "processing": "Loading contestants..."
+                    "processing": "Loading Governors..."
                 },
                 "responsive": true,
                 "processing": true
