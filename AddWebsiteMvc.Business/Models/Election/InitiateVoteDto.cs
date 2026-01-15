@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AddWebsiteMvc.Business.Models.Vote;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ namespace AddWebsiteMvc.Business.Models.Election
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public Guid CandidateId { get; set; } = Guid.Empty;
-        public int Count { get; set; }
         public string? Reference { get; set; }
-        public int CategoryId { get; set; }
+
+        public List<VoteCategoryItem> CategoryItems { get; set; } = new();
     }
 }

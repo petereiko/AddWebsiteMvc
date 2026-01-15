@@ -17,7 +17,7 @@ namespace AddWebsiteMvc.Business.Models.Election
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public string Title { get; set; } = string.Empty;
+        public string? Title { get; set; }
         public string State { get; set; } = string.Empty;
         public Guid CandidateId { get; set; }
         public List<CheckboxListItem> Categories { get; set; } = new List<CheckboxListItem>();

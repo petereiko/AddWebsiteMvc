@@ -21,6 +21,8 @@ namespace AddWebsiteMvc.Business.Entities
         public Guid CandidateId { get; set; }
         public virtual Candidate Candidate { get; set; } = default!;
 
+        public string Reference { get; set; } = default!;
+
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; } = default!;
 

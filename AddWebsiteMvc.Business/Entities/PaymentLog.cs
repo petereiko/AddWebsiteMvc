@@ -14,8 +14,6 @@ namespace AddWebsiteMvc.Business.Entities
         public decimal Amount { get; set; }
         public string Reference { get; set; } = default!;
         public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
-        public Guid BallotId { get; set; }
-        public virtual Ballot Ballot { get; set; } = default!;
         public DateTime CreatedDate { get; set; }
         public DateTime? ConfirmedDate { get; set; }
         public string? AuthorizationUrl { get; set; }

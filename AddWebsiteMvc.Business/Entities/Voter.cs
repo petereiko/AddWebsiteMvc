@@ -15,7 +15,5 @@ namespace AddWebsiteMvc.Business.Entities
         public string? Email { get; set; }
         public string? Reference { get; set; }
         public BallotStatus? BallotStatus { get; set; } = Enums.BallotStatus.Pending;
-        public int? CategoryId { get; set; }
-        public virtual Category? Category { get; set; }
     }
 }

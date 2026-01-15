@@ -1181,7 +1181,6 @@
                                     </label>
                                     <input width="100" type="number"
                                            id="voteCountForm"
-                                           onkeyup="ComputeAmountForm(this)"
                                            class="form-input"
                                            placeholder="Count"
                                            maxlength="6"
@@ -1189,11 +1188,87 @@
                                 </td>
                                 <td>
                                     <br />
-                                    <button style="font-size:12px; height:30px" class="modal-btn modal-btn-primary">Add</button>
+                                    <button type="button" style="font-size:12px; height:30px" class="modal-btn modal-btn-primary" onclick="AddItem()">Add</button>
                                 </td>
                             </tr>
                         </table>
                     </div>
+
+                    
+                    <script>
+                        let items=[];
+                        function AddItem(){
+                            let categoryElement = document.getElementById("category");
+                            let voteCountFormElement = document.getElementById("voteCountForm");
+                            
+                            if(categoryElement.value===""){
+                                categoryElement.focus();
+                                categoryElement.style.borderColor="red";
+                                return;
+                            }
+                            if(voteCountFormElement.value===""){
+                                voteCountFormElement.focus();
+                                voteCountFormElement.style.borderColor="red";
+                                return;
+                            }
+                            
+                            let voteCount = Number(voteCountFormElement.value)
+                            if(voteCount<=0){
+                                voteCountFormElement.focus();
+                                voteCountFormElement.style.borderColor="red";
+                                return;
+                            }
+
+                            let item = {
+                                id: Math.random().toString(16).slice(2),
+                                categoryName: categoryElement.options[categoryElement.selectedIndex].text,
+                                voteCount: voteCount,
+                                categoryId : categoryElement.value
+                            };
+
+                            var foundItem = items.find(x=>x.categoryId==item.categoryId);
+                            if(foundItem){
+                                alert("You have already added votes for this category.");
+                                return;
+                            }
+
+
+                            items = [...items, item];
+
+                            LoadTable(items);
+                        }
+
+                        function DeleteItem(id){
+                            items = items.filter(x=>x.id!==id);
+                            LoadTable(items);
+                        }
+
+                        function LoadTable(items){
+                            let html='';
+                            let iota=1;
+                            let price = @Model.Data.VotePrice.Price;
+
+                            let totalPrice=0;
+
+                            items.forEach((item, index)=>{
+                                iota = index+1;
+                                 totalPrice+=item.voteCount * price;
+                                html+=`
+                                        <tr>
+                                            <td>${iota}</td>
+                                            <td>${item.categoryName}</td>
+                                            <td>${item.voteCount}</td>
+                                            <td>${item.voteCount * price}</td>
+                                            <td><button type="button" style="font-size:12px;color:white !important; background-color:red !important" class="btn btn-delete" onclick="DeleteItem('${item.id}')"><i class="fas fa-trash"></i></button></td>
+                                        </tr>
+                                      `;
+                            });
+
+                            document.getElementById("lbltotalamount").innerHTML =`₦${totalPrice}`;
+                            document.getElementById("categoryTableBody").innerHTML=html;
+                        }
+
+                    </script>
 
                     <div class="form-group">
                         <table class="professional-table">
@@ -1201,39 +1276,26 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Category</th>
+                                    <th>Votes</th>
+                                    <th>Amount</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
+                            
                             <tbody id="categoryTableBody">
-                                <!-- Dynamic rows will be added here -->
+                                <tr>
+                                    <td colspan="6"><center>No vote has been added yet</center></td>
+                                </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="3"></th>
+                                    <th><label id="lbltotalamount"></label></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-phone"></i>
-                            Vote Count
-                        </label>
-                        <input type="number"
-                               id="voteCount"
-                               onkeyup="ComputeAmount(this)"
-                               class="form-input"
-                               placeholder="Enter your the number of Votes"
-                               maxlength="6"
-                               required />
-                        <p class="form-help" id="amountresult"></p>
-                    </div>
-
-                    <script>
-                        function ComputeAmount(e){
-                            if(e.value!=null){
-                                const amount = Number(e.value);
-                                const payableAmount = amount * @Model.Data.VotePrice.Price;
-                                document.getElementById("amountresult").innerHTML = "You will pay <strong>₦" +payableAmount.toString()+"</strong>";
-                            }
-                        }
-                    </script>
 
                     <div class="info-box"
                          style="background: #fef3c7; border-left-color: var(--warning)">
@@ -1242,7 +1304,7 @@
                             Important Notice
                         </div>
                         <div class="info-box-text">
-                            Please note that a Vote costs ₦ @Model.Data.VotePrice.Price.ToString("#,##")
+                            Please note that a Vote costs ₦@Model.Data.VotePrice.Price.ToString("#,##")
                             Once you cast your vote, it cannot be changed. Please ensure you
                             have selected the correct candidate before proceeding.
                         </div>
@@ -1255,7 +1317,7 @@
                             <i class="fas fa-times"></i>
                             Cancel
                         </button>
-                        <button type="submit"
+                        <button
                                 class="modal-btn modal-btn-primary"
                                 id="submitVoteBtn">
                             <i class="fas fa-check"></i>
@@ -1615,9 +1677,9 @@
               if (searchTerm) {
                 filtered = filtered.filter((candidate) => {
                   return (
-                    candidate.firstName.toLowerCase().includes(searchTerm) ||
-                    candidate.lastName.toLowerCase().includes(searchTerm) ||
-                    candidate.stateName.toLowerCase().includes(searchTerm)
+                    candidate.FirstName.toLowerCase().includes(searchTerm) ||
+                    candidate.LastName.toLowerCase().includes(searchTerm) ||
+                    candidate.StateName.toLowerCase().includes(searchTerm)
                   );
                 });
               }
@@ -1649,7 +1711,7 @@
               document.getElementById("voteState").textContent = candidate.StateName;
 
               document.getElementById("email").value = "";
-              document.getElementById("voteCount").value = "";
+              //document.getElementById("voteCount").value = "";
               document.getElementById("firstName").value="";
               document.getElementById("surname").value="";
 
@@ -1663,9 +1725,8 @@
               const email = document.getElementById("email").value.trim();
               const firstName = document.getElementById("firstName").value.trim();
               const surname = document.getElementById("surname").value.trim();
-              const voteCount = document.getElementById("voteCount").value.trim();
+              //const voteCount = document.getElementById("voteCount").value.trim();
               const submitBtn = document.getElementById("submitVoteBtn");
-              const category = document.getElementById("category").value;
 
               if(firstName==""){
                       document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">First name is required</span>';
@@ -1687,10 +1748,10 @@
                     return;
         }
 
-                if (voteCount<0) {
-                document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%;padding:10px; border-radius:3px">Invalid vote count</span>';
-                return;
-              }
+              //   if (voteCount<0) {
+              //   document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%;padding:10px; border-radius:3px">Invalid vote count</span>';
+              //   return;
+              // }
                   document.getElementById("lblmessage").innerHTML="";
               // Show loading state
               submitBtn.disabled = true;
@@ -1741,24 +1802,21 @@
                               dataType:'json',
                               data:{
                                   email:email,
-                                  count:voteCount,
                                   firstName:firstName,
                                   lastName:surname,
                                   candidateId:_candidateId,
-                                  categoryId: category
+                                  categoryItems: items
                               },
                               success:function(response){
                                   console.log(response);
-                                  if(response.statusCode==200){
+                                  if(response.success){
                                   location.href=response.data.authorizationUrl;
                                   }
                                   else{
 
-                                          console.log(response.errors)
-                                          let htmlContent='';
-                                          $.each(response.errors,(i,error)=>{
-                                              htmlContent+=error+'</br>';
-                                          });
+                                          console.log(response.message)
+                                          let htmlContent=response.message;
+                                          
 
                                               document.getElementById("successModal").classList.remove("active");
                                               document.getElementById("errorModal").classList.add("active");

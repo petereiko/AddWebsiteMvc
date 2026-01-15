@@ -99,11 +99,6 @@ namespace AddWebsiteMvc.Business.Services.Election
                 result.Message = "Voting has closed";
                 return result;
             }
-            if(model.CategoryId==0)
-            {
-                result.Message = "Invalid candidate category";
-                return result;
-            }
 
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", $"Bearer {_appSettings.PayStack.Secret}");
@@ -112,7 +107,8 @@ namespace AddWebsiteMvc.Business.Services.Election
 
             var votePrice = await _votePriceRepository.GetSingleAsync(x => x.IsActive);
 
-            decimal amount = votePrice.Price * model.Count;
+            decimal amount = model.CategoryItems.Sum(x => x.VoteCount * votePrice!.Price);
+
 
             var payload = new
             {
@@ -146,30 +142,35 @@ namespace AddWebsiteMvc.Business.Services.Election
                 Id = Guid.NewGuid(),
                 FullName = $"{model.FirstName} {model.LastName}",
                 Email = model.Email,
-                Reference = reference,
-                CategoryId = model.CategoryId
+                Reference = reference
             };
             await _voterRepository.AddAsync(voter, cancellationToken);
 
             //Insert into Ballot Table
-            Ballot ballot = new()
+
+            foreach (var categoryItem in model.CategoryItems)
             {
-                Id = Guid.NewGuid(),
-                CastTime = DateTime.Now,
-                CandidateId = model.CandidateId,
-                Count = model.Count,
-                VoteDate = DateTime.Now,
-                VoterId = voter.Id,
-                CategoryId = model.CategoryId
-            };
-            await _ballotRepository.AddAsync(ballot, cancellationToken);
+                Ballot ballotItem = new()
+                {
+                    Id = Guid.NewGuid(),
+                    CastTime = DateTime.Now,
+                    CandidateId = model.CandidateId,
+                    Count = categoryItem.VoteCount,
+                    VoteDate = DateTime.Now,
+                    VoterId = voter.Id,
+                    CategoryId = categoryItem.CategoryId,
+                    Reference = reference
+                };
+                await _ballotRepository.AddAsync(ballotItem, cancellationToken);
+            }
+
+                
 
             //Insert into Payment Log Table
             PaymentLog paymentLog = new()
             {
                 Id = Guid.NewGuid(),
                 Amount = amount,
-                BallotId = ballot.Id,
                 CreatedDate = DateTime.Now,
                 Reference = reference,
                 AccessCode = initPaymentResult.data.access_code,
@@ -216,35 +217,31 @@ namespace AddWebsiteMvc.Business.Services.Election
             }
             var json = await responseMessage.Content.ReadAsStringAsync();
 
-            VerifyTransactionResponse? response = new();
-            try
-            {
-                response = JsonConvert.DeserializeObject<VerifyTransactionResponse>(json);
-            }
-            catch (Exception ex)
-            {
-                
-            }
+            VerifyTransactionResponse? response = JsonConvert.DeserializeObject<VerifyTransactionResponse>(json);
 
             if(response?.data?.status== "success")
             {
                 //Approve Transaction
                 log = await _paymentLogRepository.GetSingleAsync(x => x.Reference == reference);
                 log.ConfirmedDate = DateTime.Now;
-                log.Status= Enums.PaymentStatus.Success;
+                log.Status= PaymentStatus.Success;
                 await _paymentLogRepository.UpdateAsync(log, cancellationToken);
 
-                //Approve Ballot
-                Ballot? ballot = await _ballotRepository.GetSingleAsync(x => x.Id == log.BallotId);
-                if (ballot != null)
+                //Approve Ballots
+
+                IQueryable<Ballot> ballots = await _ballotRepository.FilterAsync(x => x.Reference == reference);
+
+                ballots = ballots.ToList().Select(x =>
                 {
-                    ballot.Status = Enums.BallotStatus.Approved;
-                    ballot.VoteDate = DateTime.Now;
-                    await _ballotRepository.UpdateAsync(ballot, cancellationToken);
-                }
+                    x.Status = BallotStatus.Approved;
+                    x.VoteDate = DateTime.Now;
+                    return x;
+                }).AsQueryable();
+
+                await _ballotRepository.UpdateRangeAsync(ballots, cancellationToken);
 
                 //Approve Voter
-                Voter? voter = await _voterRepository.GetSingleAsync(x => x.Id == ballot!.VoterId);
+                Voter? voter = await _voterRepository.GetSingleAsync(x => x.Reference == reference);
                 if (voter != null)
                 {
                     voter.BallotStatus = BallotStatus.Approved;

@@ -1,5 +1,6 @@
 using AddWebsiteMvc;
 using AddWebsiteMvc.Business;
+using AddWebsiteMvc.Business.Configurations;
 using AddWebsiteMvc.Business.Entities.Identity;
 using AddWebsiteMvc.Business.HttpClientWrapper;
 using AddWebsiteMvc.Business.Interfaces;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Http;
+using System.Configuration;
 using VoteApp.Application.Services.Election;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,8 @@ builder.Services.AddDbContext<VoteDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSignalR();
+
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {

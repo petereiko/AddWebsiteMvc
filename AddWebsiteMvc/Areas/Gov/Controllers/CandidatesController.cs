@@ -22,13 +22,29 @@ namespace AddWebsiteMvc.Areas.Gov.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            MessageResult<CandidateGridViewModel> model = await _candidateService.FetchCandidatesAsync(cancellationToken);
-            Parallel.ForEach(model.Data.Candidates, candidate =>
+            MessageResult<CandidateGridViewModel> model = new();
+            try
             {
-                candidate.PassportFileName = $"{_configuration["BaseUrl"]}/passports/{candidate.PassportFileName}";
-            });
+                model = await _candidateService.FetchCandidatesAsync(cancellationToken);
+                Parallel.ForEach(model.Data.Candidates, candidate =>
+                {
+                    candidate.PassportFileName = $"{_configuration["BaseUrl"]}/passports/{candidate.PassportFileName}";
+                });
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
+                model = new() { Data = new CandidateGridViewModel(), Message = "Service is unavailable now", Success = false };
+                ErrorViewModel errorModel = new()
+                {
+                    RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                    Message = "An error occurred while trying to connect to the datasource. Please try again later"
+                };
+                return View("Error", errorModel);
+            }
+            
         }
 
 
@@ -57,7 +73,7 @@ namespace AddWebsiteMvc.Areas.Gov.Controllers
         [HttpPost]
         public async Task<JsonResult> Vote(VoteRequest model, CancellationToken cancellationToken)
         {
-            InitiateVoteDto initiateVoteModel = new() { CandidateId= Guid.Parse(model.candidateId), Count = model.count, Email = model.email, FirstName = model.firstName, LastName = model.lastName, CategoryId = model.categoryId };
+            InitiateVoteDto initiateVoteModel = new() { CandidateId= Guid.Parse(model.CandidateId), Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, CategoryItems = model.CategoryItems };
             var result = await _voteService.InitiateVote(initiateVoteModel, cancellationToken);
 
             return Json(result);

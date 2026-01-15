@@ -37,7 +37,6 @@ namespace AddWebsiteMvc.Business.Persistence
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<CandidateCategory> CandidateCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Election> Elections { get; set; }
         public DbSet<EmailLog> EmailLogs { get; set; }
         public DbSet<PaymentLog> PaymentLogs { get; set; }

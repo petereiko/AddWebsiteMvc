@@ -206,6 +206,7 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                string? error = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).FirstOrDefault();
                 return RedirectToAction("ManageCategories", new { id = model.CandidateId, title = model.Title, firstname = model.FirstName, lastname = model.LastName, state = model.State });
             }
 
