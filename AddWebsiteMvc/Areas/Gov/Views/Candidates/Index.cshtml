@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lagos State Electoral Portal - Secure Digital Voting</title>
+    <title>NIGERIA GOVERNORS SCORECARD AWARDS - Secure Digital Voting</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
@@ -41,11 +41,7 @@
             --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: "Inter", sans-serif;
@@ -55,9 +51,8 @@
             min-height: 100vh;
         }
 
-        /* Enhanced Navbar */
         .navbar {
-            background: linear-gradient( 135deg, var(--primary) 0%, var(--secondary) 100% );
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             box-shadow: var(--shadow-lg);
             position: sticky;
             top: 0;
@@ -86,7 +81,7 @@
         .brand-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient( 135deg, var(--accent-gold), var(--accent-gold-dark) );
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -102,60 +97,10 @@
             letter-spacing: -0.5px;
         }
 
-        .brand-text p {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-top: 2px;
-        }
+        .brand-text p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
 
-        .navbar-actions {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
 
-        .nav-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-btn-primary {
-            background: var(--accent-gold);
-            color: var(--primary);
-        }
-
-            .nav-btn-primary:hover {
-                background: var(--accent-gold-dark);
-                transform: translateY(-2px);
-                box-shadow: var(--shadow-md);
-            }
-
-        .nav-btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-            .nav-btn-secondary:hover {
-                border-color: var(--accent-gold);
-                background: rgba(212, 175, 55, 0.1);
-            }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Security Banner */
         .security-banner {
             background: linear-gradient(135deg, var(--success), #059669);
             color: white;
@@ -169,9 +114,396 @@
             gap: 12px;
         }
 
-            .security-banner i {
-                font-size: 18px;
-            }
+        .security-banner i { font-size: 18px; }
+
+        /* Legend Section */
+        .legend-section { margin: 32px 0; position: relative; }
+
+        .legend-container {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        }
+
+        .legend-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark), var(--accent-gold));
+        }
+
+        .legend-container::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0;
+            width: 300px; height: 100%;
+            background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .legend-header {
+            padding: 28px 32px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .legend-title-group { display: flex; align-items: center; gap: 16px; }
+
+        .legend-icon-wrapper {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+            animation: legendPulse 3s ease-in-out infinite;
+        }
+
+        @@keyframes legendPulse {
+            0%, 100% { box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 8px 32px rgba(212, 175, 55, 0.5); }
+        }
+
+        .legend-icon-wrapper i { font-size: 26px; color: var(--primary); }
+
+        .legend-title-text h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+
+        .legend-title-text p { font-size: 14px; color: rgba(255, 255, 255, 0.7); font-weight: 500; }
+
+        .legend-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px 18px;
+            border-radius: 50px;
+            color: var(--accent-gold);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-badge i { font-size: 14px; }
+
+        .legend-content { padding: 24px 32px 32px; position: relative; z-index: 1; }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .legend-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .legend-item::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-gold), var(--accent-gold-dark));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateX(4px);
+        }
+
+        .legend-item:hover::before { opacity: 1; }
+
+        .legend-state-info { display: flex; align-items: center; gap: 14px; }
+
+        .state-flag {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--accent-gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .state-details h4 { font-size: 16px; font-weight: 600; color: white; margin-bottom: 2px; }
+        .state-details span { font-size: 12px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .legend-votes { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+
+        .vote-count {
+            font-family: "Playfair Display", serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .vote-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* COUNTDOWN TIMER STYLES */
+        .countdown-wrapper {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 24px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.02) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+            animation: countdownGlow 4s ease-in-out infinite;
+        }
+
+        @@keyframes countdownGlow {
+            0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+            50% { transform: translate(10%, 10%); opacity: 1; }
+        }
+
+        .countdown-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--primary);
+            animation: timerPulse 1s ease-in-out infinite;
+        }
+
+        @@keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .countdown-title {
+            font-family: "Playfair Display", serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+        }
+
+        .countdown-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-timer {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-unit { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+
+        .countdown-value-wrapper {
+            background: linear-gradient(180deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
+            padding: 16px 20px;
+            min-width: 80px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .countdown-value-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .countdown-value-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .countdown-value {
+            font-family: "Playfair Display", serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            line-height: 1;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .countdown-separator { display: flex; align-items: center; padding-bottom: 28px; }
+
+        .countdown-separator span {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            animation: separatorBlink 1s ease-in-out infinite;
+        }
+
+        @@keyframes separatorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .countdown-message {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown-message i { color: var(--success); font-size: 16px; }
+        .countdown-message span { font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.9); }
+
+        .countdown-ended { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+        .countdown-ended-icon {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            animation: successPulse 2s ease-in-out infinite;
+        }
+
+        @@keyframes successPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+        }
+
+        .countdown-ended-text {
+            font-family: "Playfair Display", serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .countdown-ended-subtext { font-size: 14px; color: rgba(255, 255, 255, 0.7); }
+
+        @@media (max-width: 600px) {
+            .countdown-unit { min-width: 65px; }
+            .countdown-value-wrapper { padding: 12px 14px; min-width: 65px; }
+            .countdown-value { font-size: 28px; }
+            .countdown-separator span { font-size: 24px; }
+            .countdown-timer { gap: 8px; }
+            .countdown-title { font-size: 18px; }
+        }
+
+        .legend-toggle {
+            display: none;
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .legend-toggle:hover { background: rgba(212, 175, 55, 0.1); }
+        .legend-toggle i { margin-right: 10px; color: var(--accent-gold); }
+
+        @@media (max-width: 768px) {
+            .legend-header { padding: 20px 20px 16px; }
+            .legend-content { padding: 16px 20px 24px; }
+            .legend-title-text h2 { font-size: 20px; }
+            .legend-grid { grid-template-columns: 1fr; }
+            .legend-toggle { display: flex; align-items: center; justify-content: center; }
+            .legend-container.collapsed .legend-content { display: none; }
+            .legend-container.collapsed .legend-header { border-bottom: none; }
+        }
 
         /* Search Section */
         .search-section {
@@ -183,28 +515,18 @@
             border: 1px solid var(--border);
         }
 
-        .search-header {
-            text-align: center;
-            margin-bottom: 32px;
+        .search-header { text-align: center; margin-bottom: 32px; }
+
+        .search-header h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 32px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
         }
 
-            .search-header h2 {
-                font-family: "Playfair Display", serif;
-                font-size: 32px;
-                color: var(--text-primary);
-                margin-bottom: 8px;
-            }
+        .search-header p { color: var(--text-secondary); font-size: 16px; }
 
-            .search-header p {
-                color: var(--text-secondary);
-                font-size: 16px;
-            }
-
-        .search-container {
-            position: relative;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .search-container { position: relative; max-width: 700px; margin: 0 auto; }
 
         .search-input {
             width: 100%;
@@ -217,12 +539,12 @@
             background: var(--bg-light);
         }
 
-            .search-input:focus {
-                outline: none;
-                border-color: var(--accent-gold);
-                background: white;
-                box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-            }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
 
         .search-icon {
             position: absolute;
@@ -232,34 +554,6 @@
             color: var(--text-secondary);
             font-size: 20px;
         }
-
-        /* Filter Bar */
-        .filter-bar {
-            display: flex;
-            gap: 16px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid var(--border);
-            background: white;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--text-secondary);
-        }
-
-            .filter-btn:hover,
-            .filter-btn.active {
-                border-color: var(--accent-gold);
-                background: var(--accent-gold);
-                color: var(--primary);
-            }
 
         /* Stats Dashboard */
         .stats-dashboard {
@@ -279,20 +573,17 @@
             overflow: hidden;
         }
 
-            .stat-card::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 4px;
-                height: 100%;
-                background: linear-gradient( to bottom, var(--accent-gold), var(--accent-gold-dark) );
-            }
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent-gold), var(--accent-gold-dark));
+        }
 
         .stat-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient( 135deg, var(--accent-gold), var(--accent-gold-dark) );
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -310,13 +601,9 @@
             margin-bottom: 4px;
         }
 
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+        .stat-label { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
 
-        /* Enhanced Candidates Grid */
+        /* Candidates Grid */
         .candidates-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -335,34 +622,15 @@
             position: relative;
         }
 
-            .candidate-card:hover {
-                transform: translateY(-8px);
-                box-shadow: var(--shadow-xl);
-            }
-
-        .candidate-image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-        }
-
-        .candidate-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .candidate-card:hover .candidate-image {
-            transform: scale(1.05);
+        .candidate-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
         }
 
         .candidate-badge {
             position: absolute;
-            top: 16px;
-            right: 16px;
-            background: linear-gradient( 135deg, var(--accent-gold), var(--accent-gold-dark) );
+            top: 16px; right: 16px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
             color: white;
             padding: 8px 16px;
             border-radius: 8px;
@@ -373,95 +641,7 @@
             box-shadow: var(--shadow-md);
         }
 
-        .candidate-content {
-            padding: 28px;
-        }
-
-        .candidate-header {
-            margin-bottom: 20px;
-        }
-
-        .candidate-name {
-            font-family: "Playfair Display", serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .candidate-party {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 15px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .party-abbr {
-            background: var(--bg-light);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--accent-gold);
-        }
-
-        .candidate-position {
-            font-size: 14px;
-            color: var(--accent-gold);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-        }
-
-        .candidate-details {
-            margin: 20px 0;
-        }
-
-        .detail-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
-            padding: 12px;
-            background: var(--bg-light);
-            border-radius: 8px;
-        }
-
-        .detail-icon {
-            color: var(--accent-gold);
-            font-size: 16px;
-            margin-top: 2px;
-        }
-
-        .detail-text {
-            flex: 1;
-        }
-
-        .detail-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-        }
-
-        .detail-value {
-            font-size: 14px;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .candidate-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
+        .candidate-actions { display: flex; gap: 12px; margin-top: 24px; }
 
         .btn {
             flex: 1;
@@ -480,39 +660,30 @@
         }
 
         .btn-vote {
-            background: linear-gradient( 135deg, var(--accent-gold), var(--accent-gold-dark) );
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
             color: white;
             box-shadow: var(--shadow-sm);
         }
 
-            .btn-vote:hover {
-                transform: translateY(-2px);
-                box-shadow: var(--shadow-lg);
-            }
-
-            .btn-vote:active {
-                transform: translateY(0);
-            }
-
-        .btn-details {
-            background: white;
-            color: var(--text-primary);
-            border: 2px solid var(--border);
+        .btn-vote:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-            .btn-details:hover {
-                border-color: var(--accent-gold);
-                background: var(--bg-light);
-            }
+        .party-abbr {
+            background: var(--bg-light);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
 
-        /* Enhanced Modal */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.8);
             z-index: 2000;
             align-items: center;
@@ -522,9 +693,7 @@
             animation: fadeIn 0.3s ease;
         }
 
-            .modal.active {
-                display: flex;
-            }
+        .modal.active { display: flex; }
 
         .modal-content {
             background: white;
@@ -537,26 +706,10 @@
             animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @@keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
+        @@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @@keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px) scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .modal-header {
@@ -568,8 +721,7 @@
         }
 
         .modal-icon {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -582,14 +734,12 @@
 
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 20px; right: 20px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
             font-size: 24px;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -598,29 +748,13 @@
             transition: all 0.3s ease;
         }
 
-            .modal-close:hover {
-                background: rgba(255, 255, 255, 0.3);
-                transform: rotate(90deg);
-            }
+        .modal-close:hover { background: rgba(255, 255, 255, 0.3); transform: rotate(90deg); }
 
-        .modal-title {
-            font-family: "Playfair Display", serif;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
+        .modal-title { font-family: "Playfair Display", serif; font-size: 28px; margin-bottom: 8px; }
+        .modal-subtitle { font-size: 16px; opacity: 0.9; }
+        .modal-body { padding: 32px; }
 
-        .modal-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .modal-body {
-            padding: 32px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
+        .form-group { margin-bottom: 24px; }
 
         .form-label {
             display: block;
@@ -630,10 +764,7 @@
             margin-bottom: 8px;
         }
 
-            .form-label i {
-                color: var(--accent-gold);
-                margin-right: 8px;
-            }
+        .form-label i { color: var(--accent-gold); margin-right: 8px; }
 
         .form-input {
             width: 100%;
@@ -645,16 +776,10 @@
             transition: all 0.3s ease;
         }
 
-            .form-input:focus {
-                outline: none;
-                border-color: var(--accent-gold);
-                box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
-            }
-
-        .form-help {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-top: 6px;
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
         }
 
         .info-box {
@@ -674,17 +799,9 @@
             gap: 8px;
         }
 
-        .info-box-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
+        .info-box-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 32px;
-        }
+        .modal-actions { display: flex; gap: 12px; margin-top: 32px; }
 
         .modal-btn {
             flex: 1;
@@ -702,20 +819,12 @@
         }
 
         .modal-btn-primary {
-            background: linear-gradient( 135deg, var(--accent-gold), var(--accent-gold-dark) );
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
             color: white;
         }
 
-            .modal-btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: var(--shadow-lg);
-            }
-
-            .modal-btn-primary:disabled {
-                background: var(--border);
-                cursor: not-allowed;
-                transform: none;
-            }
+        .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .modal-btn-primary:disabled { background: var(--border); cursor: not-allowed; transform: none; }
 
         .modal-btn-secondary {
             background: white;
@@ -723,206 +832,26 @@
             border: 2px solid var(--border);
         }
 
-            .modal-btn-secondary:hover {
-                background: var(--bg-light);
-            }
+        .modal-btn-secondary:hover { background: var(--bg-light); }
 
-        /* Success/Error States */
-        .success-icon {
-            color: var(--success);
-        }
+        .success-icon { color: var(--success); }
+        .danger-icon { color: var(--danger); }
+        .warning-icon { color: var(--warning); }
 
-        .error-icon {
-            color: var(--danger);
-        }
-
-        .warning-icon {
-            color: var(--warning);
-        }
-
-        /* Enhanced Footer */
-        .footer {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 64px 0 32px;
-            margin-top: 80px;
-            position: relative;
-        }
-
-            .footer::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: linear-gradient( to right, var(--accent-gold), var(--accent-gold-dark), var(--accent-gold) );
-            }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 48px;
-            margin-bottom: 48px;
-        }
-
-        .footer-section h3 {
-            font-family: "Playfair Display", serif;
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: var(--accent-gold);
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 15px;
-            line-height: 1.8;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-        }
-
-            .footer-section a:hover {
-                color: var(--accent-gold);
-                padding-left: 8px;
-            }
-
-        .footer-section i {
-            margin-right: 12px;
-            color: var(--accent-gold);
-            width: 20px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .social-link {
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            margin-bottom: 0 !important;
-        }
-
-            .social-link:hover {
-                background: var(--accent-gold);
-                color: var(--primary);
-                transform: translateY(-4px);
-                padding-left: 0 !important;
-            }
-
-        .footer-bottom {
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-            .footer-bottom p {
-                color: rgba(255, 255, 255, 0.6);
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-
-        .security-badges {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-
-        .security-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-            .security-badge i {
-                color: var(--accent-gold);
-            }
-
-        /* Loading State */
         .loading {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
             animation: spin 0.8s linear infinite;
         }
 
-        @@keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        @@keyframes spin { to { transform: rotate(360deg); } }
 
-        /* No Results */
-        .no-results {
-            text-align: center;
-            padding: 80px 24px;
-            color: var(--text-secondary);
-        }
-
-            .no-results i {
-                font-size: 80px;
-                margin-bottom: 24px;
-                opacity: 0.3;
-            }
-
-            .no-results h3 {
-                font-family: "Playfair Display", serif;
-                font-size: 28px;
-                margin-bottom: 12px;
-                color: var(--text-primary);
-            }
-
-        /* Responsive */
-        @@media (max-width: 768px) {
-            .navbar-container {
-                flex-direction: column;
-                padding: 16px 24px;
-                min-height: auto;
-                gap: 16px;
-            }
-
-            .navbar-actions {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .search-header h2 {
-                font-size: 24px;
-            }
-
-            .stats-dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .candidates-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
+        .no-results { text-align: center; padding: 80px 24px; color: var(--text-secondary); }
+        .no-results i { font-size: 80px; margin-bottom: 24px; opacity: 0.3; }
+        .no-results h3 { font-family: "Playfair Display", serif; font-size: 28px; margin-bottom: 12px; color: var(--text-primary); }
 
         .professional-table {
             width: 100%;
@@ -933,161 +862,116 @@
             overflow: hidden;
         }
 
-            .professional-table thead {
-                background-color: #f8f9fa;
-                border-bottom: 2px solid #dee2e6;
-            }
+        .professional-table thead { background-color: #f8f9fa; border-bottom: 2px solid #dee2e6; }
 
-            .professional-table th {
-                padding: 12px 16px;
-                text-align: left;
-                font-weight: 600;
-                color: #495057;
-                font-size: 14px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
+        .professional-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-                .professional-table th:first-child {
-                    width: 60px;
-                    text-align: center;
-                }
+        .professional-table th:first-child { width: 60px; text-align: center; }
+        .professional-table th:last-child { width: 120px; text-align: center; }
 
-                .professional-table th:last-child {
-                    width: 120px;
-                    text-align: center;
-                }
+        .professional-table tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s ease;
+        }
 
-            .professional-table tbody tr {
-                border-bottom: 1px solid #e9ecef;
-                transition: background-color 0.2s ease;
-            }
+        .professional-table tbody tr:hover { background-color: #f8f9fa; }
+        .professional-table tbody tr:last-child { border-bottom: none; }
 
-                .professional-table tbody tr:hover {
-                    background-color: #f8f9fa;
-                }
+        .professional-table td { padding: 12px 16px; color: #212529; font-size: 14px; }
+        .professional-table td:first-child { text-align: center; font-weight: 500; color: #6c757d; }
+        .professional-table td:last-child { text-align: center; }
 
-                .professional-table tbody tr:last-child {
-                    border-bottom: none;
-                }
-
-            .professional-table td {
-                padding: 12px 16px;
-                color: #212529;
-                font-size: 14px;
-            }
-
-                .professional-table td:first-child {
-                    text-align: center;
-                    font-weight: 500;
-                    color: #6c757d;
-                }
-
-                .professional-table td:last-child {
-                    text-align: center;
-                }
-
-            /* Empty state styling */
-            .professional-table tbody:empty::after {
-                content: "No categories available";
-                display: table-row;
-                text-align: center;
-                padding: 20px;
-                color: #6c757d;
-                font-style: italic;
-            }
+        @@media (max-width: 768px) {
+            .navbar-container { flex-direction: column; padding: 16px 24px; min-height: auto; gap: 16px; }
+            .search-header h2 { font-size: 24px; }
+            .stats-dashboard { grid-template-columns: 1fr; }
+            .candidates-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-brand">
-                <div class="brand-icon">
-                    <i class="fas fa-vote-yea"></i>
-                </div>
+                <div class="brand-icon"><i class="fas fa-vote-yea"></i></div>
                 <div class="brand-text">
                     <h1>@Model.Data.Election.Title</h1>
                     <p>Secure • Transparent • Democratic</p>
                 </div>
             </a>
-
         </div>
     </nav>
 
-    <!-- Security Banner -->
     <div class="security-banner">
         <i class="fas fa-lock"></i>
-        <span>
-            All votes are encrypted and securely stored with end-to-end
-            verification
-        </span>
+        <span>All votes are encrypted and securely stored with end-to-end verification</span>
     </div>
 
     <main class="container">
-        <!-- Search Section -->
+        <section class="legend-section">
+            <button class="legend-toggle" onclick="toggleLegend()">
+                <i class="fas fa-map-marked-alt"></i>
+                View State Voting Limits
+                <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+            </button>
+            <div class="legend-container" id="legendContainer">
+                <div class="legend-header">
+                    <div class="legend-title-group">
+                        <div class="legend-icon-wrapper"><i class="fas fa-map-marked-alt"></i></div>
+                        <div class="legend-title-text">
+                            <h2>Vote Category Distribution</h2>
+                            <p>Maximum votes per category by state</p>
+                        </div>
+                    </div>
+                    <div class="legend-badge">
+                        <i class="fas fa-info-circle"></i>
+                        Vote/Category Statistics
+                    </div>
+                </div>
+                <div class="legend-content">
+                    <div class="legend-grid" id="legendGrid"></div>
+                </div>
+            </div>
+        </section>
+
         <section class="search-section">
             <div class="search-header">
                 <h2>Cast Your Vote</h2>
-                <p>
-                    Search and select your preferred candidates for the 2026 elections
-                </p>
+                <p>Search and select your preferred candidates for the 2026 elections</p>
             </div>
             <div class="search-container">
-                <input type="text"
-                       id="searchInput"
-                       class="search-input"
-                       placeholder="Search by name"
-                       autocomplete="off" />
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name" autocomplete="off" />
                 <i class="fas fa-search search-icon"></i>
             </div>
-            @* <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">
-                    All Positions
-                </button>
-                <button class="filter-btn" data-filter="governor">Governor</button>
-                <button class="filter-btn" data-filter="senator">Senator</button>
-                <button class="filter-btn" data-filter="house">
-                    House of Assembly
-                </button>
-            </div> *@
         </section>
 
-        <!-- Stats Dashboard -->
         <div class="stats-dashboard">
             <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                </div>
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
                 <div class="stat-value" id="totalCandidates">0</div>
                 <div class="stat-label">Total Candidates</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
+                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
                 <div class="stat-value" id="displayedCandidates">0</div>
                 <div class="stat-label">Showing Now</div>
             </div>
-            @*  <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-flag"></i>
-                </div>
-                <div class="stat-value" id="totalParties">0</div>
-                <div class="stat-label">Political Parties</div>
-            </div> *@
             <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-vote-yea"></i>
-                </div>
+                <div class="stat-icon"><i class="fas fa-vote-yea"></i></div>
                 <div class="stat-value" id="totalVotes1">@Model.Data.VotesCastToday</div>
                 <div class="stat-label">Votes Cast Today</div>
             </div>
         </div>
 
-        <!-- Candidates Grid -->
         <div id="candidatesGrid" class="candidates-grid"></div>
-
         <div id="noResults" class="no-results" style="display: none">
             <i class="fas fa-search"></i>
             <h3>No candidates found</h3>
@@ -1095,287 +979,67 @@
         </div>
     </main>
 
-    <!-- Vote Confirmation Modal -->
+    <!-- Vote Modal -->
     <div id="voteModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="modal-close" onclick="closeVoteModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="modal-icon">
-                    <i class="fas fa-vote-yea" style="color: var(--accent-gold)"></i>
-                </div>
+                <button class="modal-close" onclick="closeVoteModal()"><i class="fas fa-times"></i></button>
+                <div class="modal-icon"><i class="fas fa-vote-yea" style="color: var(--accent-gold)"></i></div>
                 <h2 class="modal-title">Verify Your Identity</h2>
                 <p class="modal-subtitle">Enter your Email Address to cast your vote</p>
-
             </div>
             <div class="modal-body">
                 <div class="info-box">
-                    <div class="info-box-title">
-                        <i class="fas fa-info-circle"></i>
-                        Voting for:
-                    </div>
-                    <div class="info-box-text">
-                        <strong id="voteCandidate"></strong> <span id="voteParty"></span> • <span id="voteState"></span>
-                    </div>
+                    <div class="info-box-title"><i class="fas fa-info-circle"></i>Voting for:</div>
+                    <div class="info-box-text"><strong id="voteCandidate"></strong> <span id="voteParty"></span> • <span id="voteState"></span></div>
                 </div>
-                <div id="lblmessage"></div>
-                <br />
+                <div id="lblmessage"></div><br />
                 <form id="voteForm">
                     <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-id-card"></i>
-                            First Name:
-                        </label>
-                        <input type="text"
-                               id="firstName"
-                               class="form-input"
-                               placeholder="Enter your First Name"
-                               maxlength="50"
-                               required />
+                        <label class="form-label"><i class="fas fa-id-card"></i>First Name:</label>
+                        <input type="text" id="firstName" class="form-input" placeholder="Enter your First Name" maxlength="50" required />
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-id-card"></i>
-                            Surname:
-                        </label>
-                        <input type="text"
-                               id="surname"
-                               class="form-input"
-                               placeholder="Enter your Surname"
-                               maxlength="50"
-                               required />
+                        <label class="form-label"><i class="fas fa-id-card"></i>Surname:</label>
+                        <input type="text" id="surname" class="form-input" placeholder="Enter your Surname" maxlength="50" required />
                     </div>
-
                     <div class="form-group">
-                        <label class="form-label">
-                            <i class="fas fa-id-card"></i>
-                            Email Address:
-                        </label>
-                        <input type="text"
-                               id="email"
-                               class="form-input"
-                               placeholder="Enter your Email Address"
-                               maxlength="50"
-                               required />
-
+                        <label class="form-label"><i class="fas fa-id-card"></i>Email Address:</label>
+                        <input type="text" id="email" class="form-input" placeholder="Enter your Email Address" maxlength="50" required />
                     </div>
-
                     <div class="form-group row">
                         <table>
                             <tr>
                                 <td>
-                                    <label class="form-label">
-                                        <i class="fas fa-id-card"></i>
-                                        Category:
-                                    </label>
+                                    <label class="form-label"><i class="fas fa-id-card"></i>Category:</label>
                                     <select class="form-input" id="category" required style="height:30px; padding:0; font-size:12px">
                                         <option value="">--Select Category--</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <label class="form-label">
-                                        <i class="fas fa-id-card"></i>
-                                        Votes:
-                                    </label>
-                                    <input width="100" type="number"
-                                           id="voteCountForm"
-                                           class="form-input"
-                                           placeholder="Count"
-                                           maxlength="6"
-                                           required style="width:100px; height:10px; font-size:12px" />
+                                    <label class="form-label"><i class="fas fa-id-card"></i>Votes:</label>
+                                    <input width="100" type="number" id="voteCountForm" class="form-input" placeholder="Count" maxlength="6" required style="width:100px; height:10px; font-size:12px" />
                                 </td>
-                                <td>
-                                    <br />
-                                    <button type="button" style="font-size:12px; height:30px" class="modal-btn modal-btn-primary" onclick="AddItem()">Add</button>
-                                </td>
+                                <td><br /><button type="button" style="font-size:12px; height:30px" class="modal-btn modal-btn-primary" onclick="AddItem()">Add</button></td>
                             </tr>
                         </table>
                     </div>
-
-                    
-                    <script>
-                        let items=[];
-                        function AddItem(){
-                            let categoryElement = document.getElementById("category");
-                            let voteCountFormElement = document.getElementById("voteCountForm");
-                            
-                            if(categoryElement.value===""){
-                                categoryElement.focus();
-                                categoryElement.style.borderColor="red";
-                                return;
-                            }
-                            if(voteCountFormElement.value===""){
-                                voteCountFormElement.focus();
-                                voteCountFormElement.style.borderColor="red";
-                                return;
-                            }
-                            
-                            let voteCount = Number(voteCountFormElement.value)
-                            if(voteCount<=0){
-                                voteCountFormElement.focus();
-                                voteCountFormElement.style.borderColor="red";
-                                return;
-                            }
-
-                            let item = {
-                                id: Math.random().toString(16).slice(2),
-                                categoryName: categoryElement.options[categoryElement.selectedIndex].text,
-                                voteCount: voteCount,
-                                categoryId : categoryElement.value
-                            };
-
-                            var foundItem = items.find(x=>x.categoryId==item.categoryId);
-                            if(foundItem){
-                                alert("You have already added votes for this category.");
-                                return;
-                            }
-
-
-                            items = [...items, item];
-
-                            LoadTable(items);
-                        }
-
-                        function DeleteItem(id){
-                            items = items.filter(x=>x.id!==id);
-                            LoadTable(items);
-                        }
-
-                        function LoadTable(items){
-                            let html='';
-                            let iota=1;
-                            let price = @Model.Data.VotePrice.Price;
-
-                            let totalPrice=0;
-
-                            items.forEach((item, index)=>{
-                                iota = index+1;
-                                 totalPrice+=item.voteCount * price;
-                                html+=`
-                                        <tr>
-                                            <td>${iota}</td>
-                                            <td>${item.categoryName}</td>
-                                            <td>${item.voteCount}</td>
-                                            <td>${item.voteCount * price}</td>
-                                            <td><button type="button" style="font-size:12px;color:white !important; background-color:red !important" class="btn btn-delete" onclick="DeleteItem('${item.id}')"><i class="fas fa-trash"></i></button></td>
-                                        </tr>
-                                      `;
-                            });
-
-                            document.getElementById("lbltotalamount").innerHTML =`₦${totalPrice}`;
-                            document.getElementById("categoryTableBody").innerHTML=html;
-                        }
-
-                    </script>
-
                     <div class="form-group">
                         <table class="professional-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Category</th>
-                                    <th>Votes</th>
-                                    <th>Amount</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody id="categoryTableBody">
-                                <tr>
-                                    <td colspan="6"><center>No vote has been added yet</center></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3"></th>
-                                    <th><label id="lbltotalamount"></label></th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
+                            <thead><tr><th>#</th><th>Category</th><th>Votes</th><th>Amount</th><th>Action</th></tr></thead>
+                            <tbody id="categoryTableBody"><tr><td colspan="6"><center>No vote has been added yet</center></td></tr></tbody>
+                            <tfoot><tr><th colspan="3"></th><th><label id="lbltotalamount"></label></th><th></th></tr></tfoot>
                         </table>
                     </div>
-
-                    <div class="info-box"
-                         style="background: #fef3c7; border-left-color: var(--warning)">
-                        <div class="info-box-title">
-                            <i class="fas fa-exclamation-triangle warning-icon"></i>
-                            Important Notice
-                        </div>
-                        <div class="info-box-text">
-                            Please note that a Vote costs ₦@Model.Data.VotePrice.Price.ToString("#,##")
-                            Once you cast your vote, it cannot be changed. Please ensure you
-                            have selected the correct candidate before proceeding.
-                        </div>
+                    <div class="info-box" style="background: #fef3c7; border-left-color: var(--warning)">
+                        <div class="info-box-title"><i class="fas fa-exclamation-triangle warning-icon"></i>Important Notice</div>
+                        <div class="info-box-text">Please note that a Vote costs ₦@Model.Data.VotePrice.Price.ToString("#,##"). Once you cast your vote, it cannot be changed.</div>
                     </div>
-
                     <div class="modal-actions">
-                        <button type="button"
-                                class="modal-btn modal-btn-secondary"
-                                onclick="closeVoteModal()">
-                            <i class="fas fa-times"></i>
-                            Cancel
-                        </button>
-                        <button
-                                class="modal-btn modal-btn-primary"
-                                id="submitVoteBtn">
-                            <i class="fas fa-check"></i>
-                            Confirm Vote
-                        </button>
+                        <button type="button" class="modal-btn modal-btn-secondary" onclick="closeVoteModal()"><i class="fas fa-times"></i>Cancel</button>
+                        <button class="modal-btn modal-btn-primary" id="submitVoteBtn"><i class="fas fa-check"></i>Confirm Vote</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Details Modal -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeDetailsModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h2 class="modal-title" id="modalName"></h2>
-                <p class="modal-subtitle" id="modalParty"></p>
-            </div>
-            <div class="modal-body">
-                <div class="detail-section">
-                    <div class="detail-label">Position Running For</div>
-                    <div class="detail-value large" id="modalPosition"></div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">Political Affiliation</div>
-                    <div class="detail-value" id="modalPartyFull"></div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">Running Mate</div>
-                    <div class="detail-value" id="modalRunningMate"></div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">Campaign Platform</div>
-                    <div class="detail-value" id="modalPlatform"></div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">Professional Experience</div>
-                    <div class="detail-value" id="modalExperience"></div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">Educational Background</div>
-                    <div class="detail-value" id="modalEducation"></div>
-                </div>
-                <div class="modal-actions">
-                    <button class="modal-btn modal-btn-secondary"
-                            onclick="closeDetailsModal()">
-                        <i class="fas fa-times"></i>
-                        Close
-                    </button>
-                    <button class="modal-btn modal-btn-primary"
-                            onclick="voteFromDetails()">
-                        <i class="fas fa-vote-yea"></i>
-                        Vote for Candidate
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -1383,523 +1047,1407 @@
     <!-- Success Modal -->
     <div id="successModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"
-                 style="background: linear-gradient(135deg, var(--success), #059669)">
-                <button class="modal-close" onclick="closeSuccessModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="modal-icon">
-                    <i class="fas fa-check-circle success-icon"></i>
-                </div>
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--success), #059669)">
+                <button class="modal-close" onclick="closeSuccessModal()"><i class="fas fa-times"></i></button>
+                <div class="modal-icon"><i class="fas fa-check-circle success-icon"></i></div>
                 <h2 class="modal-title">Vote Recorded Successfully!</h2>
                 <p class="modal-subtitle">Your vote has been securely counted</p>
             </div>
             <div class="modal-body">
-                <div class="info-box"
-                     style="background: #d1fae5; border-left-color: var(--success)">
-                    <div class="info-box-title">
-                        <i class="fas fa-shield-alt success-icon"></i>
-                        Verification Details
-                    </div>
-                    <div class="info-box-text">
-                        <strong>Reference Number:</strong>
-                        <span id="referenceNumber"></span><br />
-                        <strong>Timestamp:</strong> <span id="voteTimestamp"></span><br />
-                        <strong>Voter ID:</strong> <span id="confirmedVoterId"></span>
-                    </div>
+                <div class="info-box" style="background: #d1fae5; border-left-color: var(--success)">
+                    <div class="info-box-title"><i class="fas fa-shield-alt success-icon"></i>Verification Details</div>
+                    <div class="info-box-text"><strong>Reference Number:</strong> <span id="referenceNumber"></span><br /><strong>Timestamp:</strong> <span id="voteTimestamp"></span><br /><strong>Voter ID:</strong> <span id="confirmedVoterId"></span></div>
                 </div>
-
-                <p style="
-              color: var(--text-secondary);
-              font-size: 14px;
-              line-height: 1.6;
-              margin: 20px 0;
-            ">
-                    Thank you for exercising your democratic right. Your vote has been
-                    encrypted and stored securely. You can verify your vote using the
-                    reference number provided above.
-                </p>
-
-                <div class="modal-actions">
-                    <button class="modal-btn modal-btn-primary"
-                            onclick="closeSuccessModal()"
-                            style="flex: 1">
-                        <i class="fas fa-check"></i>
-                        Done
-                    </button>
-                </div>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin: 20px 0;">Thank you for exercising your democratic right.</p>
+                <div class="modal-actions"><button class="modal-btn modal-btn-primary" onclick="closeSuccessModal()" style="flex: 1"><i class="fas fa-check"></i>Done</button></div>
             </div>
         </div>
     </div>
 
+    <!-- Error Modal -->
     <div id="errorModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"
-                 style="background: linear-gradient(135deg, var(--danger), red)">
-                <button class="modal-close" onclick="closeErrorModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="modal-icon">
-                    <i class="fas fa-check-circle danger-icon"></i>
-                </div>
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--danger), red)">
+                <button class="modal-close" onclick="closeErrorModal()"><i class="fas fa-times"></i></button>
+                <div class="modal-icon"><i class="fas fa-times-circle danger-icon"></i></div>
                 <h2 class="modal-title">Error Occurred!</h2>
                 <p class="modal-subtitle">Your vote did not happen</p>
             </div>
             <div class="modal-body">
-                <div class="info-box"
-                     style="background: pink; border-left-color: var(--danger)">
-                    <div class="info-box-title">
-                        <i class="fas fa-shield-alt danger-icon"></i>
-                        Error Details
-                    </div>
-                    <div class="info-box-text" id="errordetails" style="color:red">
-                    </div>
+                <div class="info-box" style="background: pink; border-left-color: var(--danger)">
+                    <div class="info-box-title"><i class="fas fa-shield-alt danger-icon"></i>Error Details</div>
+                    <div class="info-box-text" id="errordetails" style="color:red"></div>
                 </div>
-                <div class="modal-actions">
-                    <button class="modal-btn modal-btn-primary"
-                            onclick="closeErrorModal()"
-                            style="flex: 1">
-                        <i class="fas fa-check"></i>
-                        Ok
-                    </button>
-                </div>
+                <div class="modal-actions"><button class="modal-btn modal-btn-primary" onclick="closeErrorModal()" style="flex: 1"><i class="fas fa-check"></i>Ok</button></div>
             </div>
         </div>
     </div>
 
-    <!-- Enhanced Footer -->
-    @* <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About This Platform</h3>
-                    <p>
-                        The Lagos State Electoral Portal is a secure, transparent, and
-                        user-friendly digital voting system designed to ensure every vote
-                        counts.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                    </div>
-                </div>
+    <!-- Disclaimer Section -->
 
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="#"><i class="fas fa-home"></i>Home</a>
-                    <a href="#"><i class="fas fa-info-circle"></i>About Us</a>
-                    <a href="#"><i class="fas fa-shield-alt"></i>Security & Privacy</a>
-                    <a href="#"><i class="fas fa-file-alt"></i>Terms of Service</a>
-                    <a href="#"><i class="fas fa-question-circle"></i>FAQ</a>
-                </div>
 
-                <div class="footer-section">
-                    <h3>Support</h3>
-                    <a href="#"><i class="fas fa-headset"></i>Help Center</a>
-                    <a href="#"><i class="fas fa-book"></i>Voter's Guide</a>
-                    <a href="#"><i class="fas fa-id-card"></i>Verify Voter ID</a>
-                    <a href="#"><i class="fas fa-envelope"></i>Contact Support</a>
-                    <a href="#"><i class="fas fa-phone"></i>+234 (0) 800-VOTE-NOW</a>
+<!-- Disclaimer Section -->
+<section class="disclaimer-section" id="disclaimerSection">
+    <div class="disclaimer-header" onclick="toggleDisclaimer()">
+        <div class="disclaimer-title-group">
+            <div class="disclaimer-icon-wrapper">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="disclaimer-title-text">
+                <h2>Important Legal Information</h2>
+                <p>Disclaimer, Terms & Conditions, Privacy Policy</p>
+            </div>
+        </div>
+        <div class="disclaimer-badge">
+            <i class="fas fa-gavel"></i>
+            Please Read Carefully
+        </div>
+        <i class="fas fa-chevron-down disclaimer-toggle-icon"></i>
+    </div>
+    
+    <div class="disclaimer-content">
+        <div class="disclaimer-inner">
+            <!-- Alert Banner -->
+            <div class="disclaimer-alert">
+                <div class="disclaimer-alert-icon">
+                    <i class="fas fa-exclamation"></i>
                 </div>
-
-                <div class="footer-section">
-                    <h3>Legal & Compliance</h3>
-                    <a href="#"><i class="fas fa-balance-scale"></i>Electoral Act 2026</a>
-                    <a href="#"><i class="fas fa-user-shield"></i>Privacy Policy</a>
-                    <a href="#"><i class="fas fa-cookie-bite"></i>Cookie Policy</a>
-                    <a href="#"><i class="fas fa-universal-access"></i>Accessibility</a>
-                    <a href="#"><i class="fas fa-flag"></i>Report an Issue</a>
+                <div class="disclaimer-alert-content">
+                    <h3>⚠️ IMPORTANT DISCLAIMER</h3>
+                    <p>THIS IS AN INDEPENDENT ONLINE PLATFORM FOR INFORMATIONAL AND EDUCATIONAL PURPOSES ONLY</p>
                 </div>
             </div>
-
-            <div class="footer-bottom">
-                <div class="security-badges">
-                    <div class="security-badge">
-                        <i class="fas fa-lock"></i>
-                        SSL Encrypted
+            
+            <!-- Tabs Navigation -->
+            <div class="disclaimer-tabs">
+                <button class="disclaimer-tab active" onclick="showDisclaimerTab('disclaimer')">
+                    <i class="fas fa-shield-alt"></i> Disclaimer
+                </button>
+                <button class="disclaimer-tab" onclick="showDisclaimerTab('additional')">
+                    <i class="fas fa-plus-circle"></i> Additional Disclaimers
+                </button>
+                <button class="disclaimer-tab" onclick="showDisclaimerTab('terms')">
+                    <i class="fas fa-file-contract"></i> Terms & Conditions
+                </button>
+                <button class="disclaimer-tab" onclick="showDisclaimerTab('privacy')">
+                    <i class="fas fa-user-shield"></i> Privacy Policy
+                </button>
+            </div>
+            
+            <!-- Disclaimer Panel -->
+            <div class="disclaimer-panel active" id="disclaimer-panel">
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-ban"></i>
+                        <h4>1. NOT AN OFFICIAL ELECTION PLATFORM</h4>
                     </div>
-                    <div class="security-badge">
-                        <i class="fas fa-shield-alt"></i>
-                        ISO 27001 Certified
-                    </div>
-                    <div class="security-badge">
-                        <i class="fas fa-check-circle"></i>
-                        INEC Approved
-                    </div>
-                    <div class="security-badge">
-                        <i class="fas fa-database"></i>
-                        Blockchain Verified
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-times-circle"></i> This website is NOT affiliated with, endorsed by, or connected to the Independent National Electoral Commission (INEC) of Nigeria.</li>
+                            <li><i class="fas fa-times-circle"></i> This platform does NOT conduct official elections or referendums.</li>
+                            <li><i class="fas fa-times-circle"></i> Votes cast here have NO legal standing and do NOT affect official electoral processes.</li>
+                        </ul>
                     </div>
                 </div>
-                <p style="margin-top: 32px">
-                    © 2026 Lagos State Electoral Commission. All Rights Reserved.
-                </p>
-                <p>
-                    Designed and developed with excellence for a transparent democracy.
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-bullseye"></i>
+                        <h4>2. PURPOSE OF THIS PLATFORM</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>This service is designed for:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check-circle"></i> Informal opinion polling</li>
+                            <li><i class="fas fa-check-circle"></i> Educational simulations</li>
+                            <li><i class="fas fa-check-circle"></i> Organizational decision-making</li>
+                            <li><i class="fas fa-check-circle"></i> Market research</li>
+                            <li><i class="fas fa-check-circle"></i> Community preference gathering</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h4>3. NO OFFICIAL ELECTION RESULTS</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-info-circle"></i> Results displayed on this platform reflect only the opinions of participating users</li>
+                            <li><i class="fas fa-info-circle"></i> These results should NOT be reported as election outcomes</li>
+                            <li><i class="fas fa-info-circle"></i> These results do NOT predict or influence actual election results</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-microphone-alt"></i>
+                        <h4>4. REPORTING RESPONSIBILITY</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-newspaper"></i> Media outlets and users must include this disclaimer when referencing our polls</li>
+                            <li><i class="fas fa-tag"></i> Results must be clearly labeled as "informal," "unofficial," or "simulated"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-landmark"></i>
+                        <h4>5. OFFICIAL ELECTIONS</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>For official voter registration, election information, and legitimate voting:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-external-link-alt"></i> Visit INEC's official website: <a href="https://www.inecnigeria.org/" target="_blank" style="color: var(--accent-gold);">https://www.inecnigeria.org/</a></li>
+                            <li><i class="fas fa-phone-alt"></i> Contact INEC directly for election-related matters</li>
+                            <li><i class="fas fa-check-double"></i> Follow only INEC-announced election results</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-balance-scale"></i>
+                        <h4>6. COMPLIANCE</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-gavel"></i> This platform operates in compliance with Nigerian laws regarding online services</li>
+                            <li><i class="fas fa-handshake"></i> We cooperate with lawful requests from appropriate authorities</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-highlight warning">
+                    <div class="disclaimer-highlight-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        User Acknowledgment
+                    </div>
+                    <p>By using this service, you acknowledge and agree that this is NOT an official voting platform and results have NO legal validity in Nigerian elections.</p>
+                    <p><strong>For official electoral matters, always refer to the Independent National Electoral Commission (INEC).</strong></p>
+                </div>
+            </div>
+            
+            <!-- Additional Disclaimers Panel -->
+            <div class="disclaimer-panel" id="additional-panel">
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-building"></i>
+                        <h4>Not an Official Electoral Platform</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>This platform is a private service and is NOT:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-times"></i> Affiliated with INEC (Independent National Electoral Commission)</li>
+                            <li><i class="fas fa-times"></i> Authorized to conduct official government elections</li>
+                            <li><i class="fas fa-times"></i> A substitute for official voter registration</li>
+                            <li><i class="fas fa-times"></i> Recognized for any legal or government electoral purposes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h4>No Guarantees on Results</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-info-circle"></i> Poll results reflect only the votes cast on this Platform</li>
+                            <li><i class="fas fa-info-circle"></i> We do not verify the real-world authority or legality of any poll</li>
+                            <li><i class="fas fa-info-circle"></i> Poll administrators are solely responsible for the validity and enforcement of their polls</li>
+                            <li><i class="fas fa-info-circle"></i> Results on this Platform have no legal standing unless independently validated</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>Technical Limitations</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-server"></i> We strive for 99.9% uptime but cannot guarantee uninterrupted service</li>
+                            <li><i class="fas fa-bug"></i> Technical issues may affect voting access or result accuracy</li>
+                            <li><i class="fas fa-clock"></i> Users should plan accordingly and allow time buffers for critical votes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-check"></i>
+                        <h4>User Responsibility</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-search"></i> Users are responsible for verifying they are participating in legitimate polls</li>
+                            <li><i class="fas fa-flag"></i> Users should report suspicious or fraudulent polls immediately</li>
+                            <li><i class="fas fa-exclamation-circle"></i> We are not responsible for disputes arising from poll results</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-highlight">
+                    <div class="disclaimer-highlight-title">
+                        <i class="fas fa-landmark"></i>
+                        For Official INEC Elections and Information
+                    </div>
+                    <p><strong>Visit:</strong> <a href="https://www.inecnigeria.org" target="_blank">https://www.inecnigeria.org</a></p>
+                    <p><strong>Call:</strong> INEC Contact Center</p>
+                </div>
+            </div>
+            
+            <!-- Terms Panel -->
+            <div class="disclaimer-panel" id="terms-panel">
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px; margin-bottom: 24px;"><strong>Last Updated:</strong> 10/1/2026</p>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-handshake"></i>
+                        <h4>1. Acceptance of Terms</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>By accessing and using this online voting platform ("@Model.Data.Election.Title"), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use the Platform.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-info-circle"></i>
+                        <h4>2. Description of Service</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>The Platform provides online voting, polling, and survey services for private organizations, associations, groups, and individuals. The Platform is designed for:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-building"></i> Organizational elections (clubs, associations, corporate bodies)</li>
+                            <li><i class="fas fa-poll"></i> Opinion polls and surveys</li>
+                            <li><i class="fas fa-users"></i> Community decision-making</li>
+                            <li><i class="fas fa-user-friends"></i> Private group voting</li>
+                            <li><i class="fas fa-trophy"></i> Event-related voting (awards, competitions, etc.)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-check"></i>
+                        <h4>3. Eligibility</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-id-card"></i> <strong>3.1.</strong> You must be at least 18 years old to use this Platform.</li>
+                            <li><i class="fas fa-gavel"></i> <strong>3.2.</strong> By using the Platform, you represent and warrant that you have the legal capacity to enter into these Terms.</li>
+                            <li><i class="fas fa-building"></i> <strong>3.3.</strong> Organizations using the Platform must have proper authorization to conduct votes on behalf of their members.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-cog"></i>
+                        <h4>4. User Accounts and Registration</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> <strong>4.1.</strong> You may be required to create an account to access certain features of the Platform.</li>
+                            <li><i class="fas fa-check"></i> <strong>4.2.</strong> You are responsible for maintaining the confidentiality of your account credentials.</li>
+                            <li><i class="fas fa-check"></i> <strong>4.3.</strong> You agree to provide accurate, current, and complete information during registration.</li>
+                            <li><i class="fas fa-check"></i> <strong>4.4.</strong> You are responsible for all activities that occur under your account.</li>
+                            <li><i class="fas fa-check"></i> <strong>4.5.</strong> You must notify us immediately of any unauthorized use of your account.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-vote-yea"></i>
+                        <h4>5. Voting Integrity and Conduct</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-user"></i> <strong>5.1. One Person, One/Multiple Vote/s:</strong> Users may vote multiple times in the same poll.</li>
+                            <li><i class="fas fa-ban"></i> <strong>5.2. No Vote Manipulation:</strong> Users must not engage in vote rigging, ballot stuffing, bot usage, or any form of electoral fraud.</li>
+                            <li><i class="fas fa-heart"></i> <strong>5.3. Honest Participation:</strong> Users must not impersonate others or create fake accounts to manipulate voting results.</li>
+                            <li><i class="fas fa-balance-scale"></i> <strong>5.4. Respect for Process:</strong> Users must respect the voting rules established by poll administrators.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-tie"></i>
+                        <h4>6. Poll Administrator Responsibilities</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> <strong>6.1.</strong> Poll creators are responsible for ensuring their polls comply with their organization's rules and applicable laws.</li>
+                            <li><i class="fas fa-check"></i> <strong>6.2.</strong> Poll administrators must clearly communicate voting rules, eligibility criteria, and deadlines to participants.</li>
+                            <li><i class="fas fa-check"></i> <strong>6.3.</strong> Poll administrators must not use the Platform for any illegal purposes or to conduct official government elections.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-ban"></i>
+                        <h4>7. Prohibited Uses</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>You may NOT use the Platform to:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-times"></i> Conduct official government elections or claim affiliation with INEC</li>
+                            <li><i class="fas fa-times"></i> Engage in illegal activities or fraud</li>
+                            <li><i class="fas fa-times"></i> Harass, abuse, or harm others</li>
+                            <li><i class="fas fa-times"></i> Collect personal information without consent</li>
+                            <li><i class="fas fa-times"></i> Spread misinformation or malicious content</li>
+                            <li><i class="fas fa-times"></i> Interfere with the Platform's security features</li>
+                            <li><i class="fas fa-times"></i> Violate any applicable Nigerian laws or regulations</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-copyright"></i>
+                        <h4>8. Intellectual Property</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> <strong>8.1.</strong> The Platform and its content (excluding user-generated content) are owned by us (ADDA Consulting Limited) and protected by Nigerian and international intellectual property laws.</li>
+                            <li><i class="fas fa-check"></i> <strong>8.2.</strong> Users retain ownership of content they create but grant us a license to use, display, and process such content to operate the Platform.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>9. Data Security and Vote Integrity</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> <strong>9.1.</strong> We implement reasonable security measures to protect voting data and ensure vote integrity.</li>
+                            <li><i class="fas fa-check"></i> <strong>9.2.</strong> However, no online platform can guarantee 100% security. Users acknowledge the inherent risks of online voting.</li>
+                            <li><i class="fas fa-check"></i> <strong>9.3.</strong> We are not liable for unauthorized access to voting data resulting from circumstances beyond our reasonable control.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>10. Limitation of Liability</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p><strong>10.1.</strong> TO THE FULLEST EXTENT PERMITTED BY NIGERIAN LAW, WE SHALL NOT BE LIABLE FOR:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-minus-circle"></i> Any indirect, incidental, special, or consequential damages</li>
+                            <li><i class="fas fa-minus-circle"></i> Loss of profits, data, or business opportunities</li>
+                            <li><i class="fas fa-minus-circle"></i> Disputes arising from poll results</li>
+                            <li><i class="fas fa-minus-circle"></i> Technical failures or service interruptions</li>
+                            <li><i class="fas fa-minus-circle"></i> Actions of third-party poll administrators</li>
+                        </ul>
+                        <p style="margin-top: 16px;"><strong>10.2.</strong> Our total liability shall not exceed the fees paid by you for use of the Platform in the 36 months preceding the claim.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-shield"></i>
+                        <h4>11. Indemnification</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>You agree to indemnify and hold us harmless from any claims, damages, losses, or expenses (including legal fees) arising from:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> Your use of the Platform</li>
+                            <li><i class="fas fa-check"></i> Your violation of these Terms</li>
+                            <li><i class="fas fa-check"></i> Your violation of any rights of third parties</li>
+                            <li><i class="fas fa-check"></i> Your polls or voting activities conducted on the Platform</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-power-off"></i>
+                        <h4>12. Termination</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> <strong>12.1.</strong> We reserve the right to suspend or terminate your account at any time for violation of these Terms.</li>
+                            <li><i class="fas fa-check"></i> <strong>12.2.</strong> You may terminate your account at any time by contacting us.</li>
+                            <li><i class="fas fa-check"></i> <strong>12.3.</strong> Upon termination, your right to use the Platform ceases immediately.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-balance-scale-right"></i>
+                        <h4>13. Dispute Resolution</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-flag"></i> <strong>13.1.</strong> These Terms shall be governed by the laws of the Federal Republic of Nigeria.</li>
+                            <li><i class="fas fa-handshake"></i> <strong>13.2.</strong> Any disputes shall first be resolved through good faith negotiation.</li>
+                            <li><i class="fas fa-gavel"></i> <strong>13.3.</strong> If negotiation fails, disputes shall be resolved through arbitration in accordance with the Arbitration and Conciliation Act of Nigeria.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-edit"></i>
+                        <h4>14. Changes to Terms</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>We reserve the right to modify these Terms at any time. Changes will be effective upon posting to the Platform. Continued use of the Platform after changes constitutes acceptance of the modified Terms.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-envelope"></i>
+                        <h4>15. Contact Information</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>For questions about these Terms, please contact us at:</p>
+                        <p><a href="mailto:info@addaconsults.com" style="color: var(--accent-gold); font-weight: 600;">info@addaconsults.com</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Privacy Panel -->
+            <div class="disclaimer-panel" id="privacy-panel">
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 13px; margin-bottom: 24px;"><strong>Last Updated:</strong> 10/1/2026</p>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-book-open"></i>
+                        <h4>1. Introduction</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you use our online voting platform. We are committed to protecting your privacy in accordance with the Nigeria Data Protection Regulation (NDPR) 2019 and other applicable laws.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-database"></i>
+                        <h4>2. Information We Collect</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <h5 class="disclaimer-section-title">2.1. Personal Information You Provide:</h5>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-user"></i> Name, email address</li>
+                            <li><i class="fas fa-phone"></i> Phone number (If applicable)</li>
+                            <li><i class="fas fa-building"></i> Organization or group affiliation (If applicable)</li>
+                            <li><i class="fas fa-key"></i> Login credentials (username, password) (If applicable)</li>
+                            <li><i class="fas fa-id-badge"></i> Profile information</li>
+                            <li><i class="fas fa-credit-card"></i> Payment information (if applicable)</li>
+                        </ul>
+                        
+                        <h5 class="disclaimer-section-title">2.2. Voting Information:</h5>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-vote-yea"></i> Votes cast (may be anonymized depending on poll settings)</li>
+                            <li><i class="fas fa-clock"></i> Voting timestamps</li>
+                            <li><i class="fas fa-list-check"></i> Poll participation records</li>
+                            <li><i class="fas fa-user-check"></i> Eligibility verification data</li>
+                        </ul>
+                        
+                        <h5 class="disclaimer-section-title">2.3. Automatically Collected Information:</h5>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-globe"></i> IP addresses</li>
+                            <li><i class="fas fa-laptop"></i> Device information (browser type, operating system)</li>
+                            <li><i class="fas fa-chart-line"></i> Usage data (pages visited, features used)</li>
+                            <li><i class="fas fa-cookie"></i> Cookies and similar tracking technologies</li>
+                            <li><i class="fas fa-file-alt"></i> Log files</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-cogs"></i>
+                        <h4>3. How We Use Your Information</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>We use your information to:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> Provide and operate the voting Platform</li>
+                            <li><i class="fas fa-check"></i> Verify voter eligibility</li>
+                            <li><i class="fas fa-check"></i> Prevent fraud and ensure voting integrity</li>
+                            <li><i class="fas fa-check"></i> Process and record votes</li>
+                            <li><i class="fas fa-check"></i> Communicate with you about your account and polls</li>
+                            <li><i class="fas fa-check"></i> Send administrative notices and updates</li>
+                            <li><i class="fas fa-check"></i> Improve our services and user experience</li>
+                            <li><i class="fas fa-check"></i> Comply with legal obligations</li>
+                            <li><i class="fas fa-check"></i> Generate anonymized statistics and analytics</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-balance-scale"></i>
+                        <h4>4. Legal Basis for Processing (NDPR Compliance)</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>We process your personal data based on:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check-circle"></i> <strong>Consent:</strong> When you create an account (If applicable) and agree to these terms</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Contractual Necessity:</strong> To provide the voting services you request</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Legal Obligation:</strong> To comply with Nigerian laws and regulations</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Legitimate Interests:</strong> To prevent fraud and ensure platform security</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-secret"></i>
+                        <h4>5. Vote Confidentiality</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-mask"></i> <strong>5.1. Anonymous Voting:</strong> When a poll is set to "anonymous," we implement technical measures to separate your identity from your vote choice. However, we may retain metadata (such as whether you voted) for eligibility verification.</li>
+                            <li><i class="fas fa-eye"></i> <strong>5.2. Public Voting:</strong> When a poll is set to "public," your vote choices may be visible to the poll administrator and other participants as specified in the poll settings.</li>
+                            <li><i class="fas fa-user-cog"></i> <strong>5.3. Poll Administrator Access:</strong> Poll administrators may have access to voting data as configured in their poll settings. We are not responsible for how poll administrators use this data.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-share-alt"></i>
+                        <h4>6. Data Sharing and Disclosure</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>We may share your information with:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-user-tie"></i> <strong>6.1. Poll Administrators:</strong> When you participate in a poll, your information may be shared with the poll creator as configured in poll settings.</li>
+                            <li><i class="fas fa-cogs"></i> <strong>6.2. Service Providers:</strong> Third-party vendors who help us operate the Platform (hosting, analytics, payment processing).</li>
+                            <li><i class="fas fa-gavel"></i> <strong>6.3. Legal Authorities:</strong> When required by Nigerian law or to respond to legal processes.</li>
+                            <li><i class="fas fa-exchange-alt"></i> <strong>6.4. Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets.</li>
+                        </ul>
+                        <p style="margin-top: 16px;"><strong>We do NOT sell your personal information to third parties for marketing purposes.</strong></p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>7. Data Security</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p><strong>7.1.</strong> We implement industry-standard security measures including:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-lock"></i> Encryption of data in transit and at rest</li>
+                            <li><i class="fas fa-key"></i> Secure authentication mechanisms</li>
+                            <li><i class="fas fa-search"></i> Regular security audits</li>
+                            <li><i class="fas fa-user-lock"></i> Access controls and monitoring</li>
+                            <li><i class="fas fa-server"></i> Secure data centers</li>
+                        </ul>
+                        <p style="margin-top: 16px;"><strong>7.2.</strong> Despite our efforts, no security system is impenetrable. We cannot guarantee absolute security of your data.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-user-shield"></i>
+                        <h4>8. Your Rights (NDPR)</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>Under the Nigeria Data Protection Regulation, you have the right to:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-eye"></i> <strong>Access:</strong> Request copies of your personal data</li>
+                            <li><i class="fas fa-edit"></i> <strong>Correction:</strong> Correct inaccurate personal data</li>
+                            <li><i class="fas fa-trash"></i> <strong>Deletion:</strong> Request deletion of your personal data (subject to legal requirements)</li>
+                            <li><i class="fas fa-download"></i> <strong>Portability:</strong> Receive your data in a structured, commonly used format</li>
+                            <li><i class="fas fa-hand-paper"></i> <strong>Objection:</strong> Object to processing of your personal data</li>
+                            <li><i class="fas fa-undo"></i> <strong>Withdraw Consent:</strong> Withdraw consent at any time</li>
+                            <li><i class="fas fa-flag"></i> <strong>Lodge a Complaint:</strong> File a complaint with the Nigeria Data Protection Bureau (NDPB)</li>
+                        </ul>
+                        <p style="margin-top: 16px;">To exercise these rights, contact us at: <a href="mailto:info@addaconsults.com" style="color: var(--accent-gold);">info@addaconsults.com</a></p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-history"></i>
+                        <h4>9. Data Retention</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> <strong>9.1.</strong> We retain personal data for as long as necessary to provide services and comply with legal obligations.</li>
+                            <li><i class="fas fa-check"></i> <strong>9.2.</strong> Voting records may be retained for audit and verification purposes as required by poll administrators.</li>
+                            <li><i class="fas fa-check"></i> <strong>9.3.</strong> Inactive accounts may be deleted after 12 months of inactivity (If applicable).</li>
+                            <li><i class="fas fa-check"></i> <strong>9.4.</strong> You may request earlier deletion of your data subject to our legal obligations.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-cookie-bite"></i>
+                        <h4>10. Cookies and Tracking Technologies</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p><strong>10.1.</strong> We use cookies to:</p>
+                        <ul class="disclaimer-list">
+                            <li><i class="fas fa-check"></i> Maintain your login session</li>
+                            <li><i class="fas fa-check"></i> Remember your preferences</li>
+                            <li><i class="fas fa-check"></i> Analyze platform usage</li>
+                            <li><i class="fas fa-check"></i> Enhance security</li>
+                        </ul>
+                        <p style="margin-top: 16px;"><strong>10.2.</strong> You can control cookies through your browser settings, but this may limit platform functionality.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-external-link-alt"></i>
+                        <h4>11. Third-Party Links</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>The Platform may contain links to third-party websites. We are not responsible for the privacy practices of these websites. Please review their privacy policies.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-child"></i>
+                        <h4>12. Children's Privacy</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>The Platform is not intended for users under 18 years of age. We do not knowingly collect personal information from children. If we learn we have collected data from a child, we will delete it promptly.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-globe-africa"></i>
+                        <h4>13. International Data Transfers</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>Your data is primarily stored and processed in Nigeria. If data is transferred internationally, we ensure appropriate safeguards are in place as required by NDPR.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>14. Changes to Privacy Policy</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>We may update this Privacy Policy from time to time. We will notify you of material changes by email or prominent notice on the Platform. Your continued use after changes constitutes acceptance.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer-card">
+                    <div class="disclaimer-card-header">
+                        <i class="fas fa-envelope"></i>
+                        <h4>15. Contact Us</h4>
+                    </div>
+                    <div class="disclaimer-card-body">
+                        <p>For privacy-related questions or to exercise your rights, contact:</p>
+                        <p><a href="mailto:info@addaconsults.com" style="color: var(--accent-gold); font-weight: 600;">info@addaconsults.com</a></p>
+                        
+                        <div class="disclaimer-highlight" style="margin-top: 20px;">
+                            <div class="disclaimer-highlight-title">
+                                <i class="fas fa-landmark"></i>
+                                Nigeria Data Protection Bureau
+                            </div>
+                            <p><strong>Website:</strong> <a href="https://ndpb.gov.ng" target="_blank">https://ndpb.gov.ng</a></p>
+                            <p><strong>Email:</strong> <a href="mailto:info@ndpb.gov.ng">info@ndpb.gov.ng</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="disclaimer-footer">
+                <div class="disclaimer-footer-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    Secure & Transparent Process
+                </div>
+                <p class="disclaimer-copyright">
+                    © @DateTime.UtcNow.Year Nigeria Governors Scorecard Awards. All Rights Reserved. | 
+                    <a href="mailto:info@addaconsults.com">info@addaconsults.com</a>
                 </p>
             </div>
         </div>
-    </footer> *@
+    </div>
+</section>
+
+
+    <style>
+        /* Disclaimer Section */
+.disclaimer-section {
+    margin: 48px 0 0;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+}
+
+.disclaimer-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-dark), var(--accent-gold));
+}
+
+.disclaimer-header {
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.disclaimer-header:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.disclaimer-title-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.disclaimer-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--warning), #d97706);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.disclaimer-icon-wrapper i {
+    font-size: 26px;
+    color: white;
+}
+
+.disclaimer-title-text h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.disclaimer-title-text p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.disclaimer-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 10px 18px;
+    border-radius: 50px;
+    color: var(--warning);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.disclaimer-badge i {
+    font-size: 14px;
+}
+
+.disclaimer-toggle-icon {
+    color: var(--accent-gold);
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.disclaimer-section.expanded .disclaimer-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.disclaimer-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.disclaimer-section.expanded .disclaimer-content {
+    max-height: none;
+}
+
+.disclaimer-inner {
+    padding: 32px;
+}
+
+.disclaimer-alert {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+    border: 2px solid rgba(245, 158, 11, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.disclaimer-alert-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--warning);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.disclaimer-alert-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.disclaimer-alert-content h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    color: var(--warning);
+    margin-bottom: 8px;
+}
+
+.disclaimer-alert-content p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+.disclaimer-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 16px;
+}
+
+.disclaimer-tab {
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.disclaimer-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.disclaimer-tab.active {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+    color: var(--primary);
+    border-color: var(--accent-gold);
+}
+
+.disclaimer-tab i {
+    font-size: 16px;
+}
+
+.disclaimer-panel {
+    display: none;
+    animation: fadeInPanel 0.3s ease;
+}
+
+.disclaimer-panel.active {
+    display: block;
+}
+
+@@keyframes fadeInPanel {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.disclaimer-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.disclaimer-card-header {
+    padding: 20px 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.disclaimer-card-header i {
+    color: var(--accent-gold);
+    font-size: 20px;
+}
+
+.disclaimer-card-header h4 {
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    color: white;
+    font-weight: 600;
+}
+
+.disclaimer-card-body {
+    padding: 24px;
+}
+
+.disclaimer-card-body p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+
+.disclaimer-card-body p:last-child {
+    margin-bottom: 0;
+}
+
+.disclaimer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.disclaimer-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.disclaimer-list li:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: var(--accent-gold);
+}
+
+.disclaimer-list li:last-child {
+    margin-bottom: 0;
+}
+
+.disclaimer-list li i {
+    color: var(--accent-gold);
+    font-size: 14px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.disclaimer-list li strong {
+    color: white;
+}
+
+.disclaimer-highlight {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.disclaimer-highlight.warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.disclaimer-highlight.warning .disclaimer-highlight-title {
+    color: var(--warning);
+}
+
+.disclaimer-highlight-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--success);
+    margin-bottom: 10px;
+}
+
+.disclaimer-highlight-title i {
+    font-size: 18px;
+}
+
+.disclaimer-highlight p,
+.disclaimer-highlight a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.disclaimer-highlight p:last-child {
+    margin-bottom: 0;
+}
+
+.disclaimer-highlight a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.disclaimer-highlight a:hover {
+    color: var(--accent-gold-dark);
+    text-decoration: underline;
+}
+
+.disclaimer-section-title {
+    font-family: "Playfair Display", serif;
+    font-size: 16px;
+    color: var(--accent-gold);
+    margin: 24px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.disclaimer-section-title:first-child {
+    margin-top: 0;
+}
+
+.disclaimer-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    margin: 32px 0;
+}
+
+.disclaimer-footer {
+    margin-top: 32px;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.disclaimer-footer-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+    padding: 12px 24px;
+    border-radius: 50px;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.disclaimer-footer-badge i {
+    font-size: 18px;
+}
+
+.disclaimer-copyright {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.disclaimer-copyright a {
+    color: var(--accent-gold);
+    text-decoration: none;
+}
+
+.disclaimer-copyright a:hover {
+    text-decoration: underline;
+}
+
+.disclaimer-sub-list {
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+.disclaimer-sub-list li {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+@@media (max-width: 768px) {
+    .disclaimer-header {
+        padding: 20px;
+    }
+    
+    .disclaimer-inner {
+        padding: 20px;
+    }
+    
+    .disclaimer-title-text h2 {
+        font-size: 18px;
+    }
+    
+    .disclaimer-tabs {
+        flex-direction: column;
+    }
+    
+    .disclaimer-tab {
+        justify-content: center;
+    }
+    
+    .disclaimer-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .disclaimer-alert {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+    </style>
+
+
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+   
     <script>
-            // Sample candidate data with stock image URLs
-            let candidates=@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Candidates));
-            let hasElectionStarted = @HasElectionStarted.ToString().ToLower();
-            let candidateCategories = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.CandidateCategories))
+        function toggleDisclaimer() {
+    document.getElementById('disclaimerSection').classList.toggle('expanded');
+}
 
-            console.log(candidates);
+function showDisclaimerTab(tabName) {
+    // Remove active class from all tabs and panels
+    document.querySelectorAll('.disclaimer-tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.disclaimer-panel').forEach(panel => panel.classList.remove('active'));
+    
+    // Add active class to selected tab and panel
+    event.target.closest('.disclaimer-tab').classList.add('active');
+    document.getElementById(tabName + '-panel').classList.add('active');
+}
+    </script>
+    
+    <script>
+        let candidates = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Candidates));
+        let hasElectionStarted = @HasElectionStarted.ToString().ToLower();
+        let candidateCategories = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.CandidateCategories));
+        let stateCategoryLimits = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.StateCategoryLimits));
+        let votingStartDate = new Date("@Model.Data.Election.StartDate.ToString("o")");
 
+        console.log(votingStartDate);
 
-            // Anti-spam tracking
-            const emails = new Set(
-              JSON.parse(localStorage.getItem("votedVoterIds") || "[]")
-            );
-            let currentVoteCandidate = null;
-            let currentDetailsCandidate = null;
-            //let totalVotesCount = parseInt(localStorage.getItem("totalVotes") || "0");
+        const emails = new Set(JSON.parse(localStorage.getItem("votedVoterIds") || "[]"));
+        let currentVoteCandidate = null;
+        let countdownInterval = null;
+        let items = [];
 
-            // Initialize
-            function init() {
-              renderCandidates(candidates);
-              updateStats(candidates);
-              setupEventListeners();
-              //updateVoteCount();
-            }
-
-            function setupEventListeners() {
-              document
-                .getElementById("searchInput")
-                .addEventListener("input", handleSearch);
-
-              // Filter buttons
-              document.querySelectorAll(".filter-btn").forEach((btn) => {
-                btn.addEventListener("click", function () {
-                  document
-                    .querySelectorAll(".filter-btn")
-                    .forEach((b) => b.classList.remove("active"));
-                  this.classList.add("active");
-
-                  const filter = this.dataset.filter;
-                  if (filter === "all") {
-                    renderCandidates(candidates);
-                  } else {
-                    const filtered = candidates.filter((c) => c.category === filter);
-                    renderCandidates(filtered);
-                  }
-                });
-              });
-
-              // Vote form submission
-              document
-                .getElementById("voteForm")
-                .addEventListener("submit", handleVoteSubmit);
-            }
-
-            function renderCandidates(candidatesToRender) {
-              const grid = document.getElementById("candidatesGrid");
-              const noResults = document.getElementById("noResults");
-
-              if (candidatesToRender.length === 0) {
-                grid.style.display = "none";
-                noResults.style.display = "block";
-                return;
-              }
-
-              grid.style.display = "grid";
-              noResults.style.display = "none";
-
-              grid.innerHTML = candidatesToRender
-                .map(
-                  (candidate, index) => hasElectionStarted? `
-                          <div class="candidate-card" style="animation-delay: ${index * 0.05}s; height:600px !important">
-                          <div class="">
-                              <img src="${candidate.PassportFileName}" alt="${candidate.FirstName}" style="width:100%; height:500px;bject-fit: cover">
-                              <div class="candidate-badge">${candidate.StateName} State</div>
-                          </div>
-                          <div  class="">
-                              <div class="candidate-actions">
-                                  <button class="btn btn-vote" onclick="initiateVote('${candidate.Id}')">
-                                      <i class="fas fa-vote-yea"></i>
-                                          Cast Vote (<span class="party-abbr">Votes: ${candidate.VoteCount}</span>)
-                                  </button>
-                              </div>
-                          </div>
-                      </div>
-                  `:
-                   `
-                          <div class="candidate-card" style="animation-delay: ${index * 0.05}s; height:500px !important">
-                          <div class="">
-                              <img src="${candidate.PassportFileName}" alt="${candidate.FirstName}" style="width:100%; height:500px;bject-fit: cover">
-                              <div class="candidate-badge">${candidate.StateName} State</div>
-                          </div>
-                      </div>
-                  `
-                )
-                .join("");
-
-              updateStats(candidatesToRender);
-            }
-
-            function updateStats(candidatesToDisplay) {
-              document.getElementById("totalCandidates").textContent =
-                candidates.length;
-              document.getElementById("displayedCandidates").textContent =
-                candidatesToDisplay.length;
-
-              // const uniqueParties = new Set(candidates.map((c) => c.party));
-              // document.getElementById("totalPartiestotalParties").textContent =
-              //   uniqueParties.size;
-            }
-
-            // function updateVoteCount() {
-            //   document.getElementById("totalVotes").textContent = totalVotesCount;
-            // }
-
-            function handleSearch(e) {
-              const searchTerm = e.target.value.toLowerCase();
-              // const activeFilter =
-              //   document.querySelector(".filter-btn.active").dataset.filter;
-
-              let filtered = candidates;
-
-              // if (activeFilter !== "all") {
-              //   filtered = filtered.filter((c) => c.category === activeFilter);
-              // }
-
-              if (searchTerm) {
-                filtered = filtered.filter((candidate) => {
-                  return (
-                    candidate.FirstName.toLowerCase().includes(searchTerm) ||
-                    candidate.LastName.toLowerCase().includes(searchTerm) ||
-                    candidate.StateName.toLowerCase().includes(searchTerm)
-                  );
-                });
-              }
-
-              renderCandidates(filtered);
-            }
-
-            let _candidateId=0;
-
-            function initiateVote(candidateId) {
-                console.log(candidateId);
-                _candidateId=candidateId;
-                const candidate = candidates.find((c) => c.Id === candidateId);
-              if (!candidate) return;
-
-              //Load Categories
-              let filteredCategories = candidateCategories.filter(c=>c.CandidateId==candidateId);
-              console.log('filteredCategories', candidateCategories);
-              let categorySelectListHtml = '<option value="">--Select Category--</option>';
-                filteredCategories.forEach(cat=>{
-                    categorySelectListHtml += `<option value="${cat.CategoryId}">${cat.Category}</option>`;
-                });
-                document.getElementById("category").innerHTML = categorySelectListHtml;
-
-              currentVoteCandidate = candidate;
-
-              document.getElementById("voteCandidate").textContent = candidate.Title+" "+ candidate.FirstName+" "+candidate.LastName;
-
-              document.getElementById("voteState").textContent = candidate.StateName;
-
-              document.getElementById("email").value = "";
-              //document.getElementById("voteCount").value = "";
-              document.getElementById("firstName").value="";
-              document.getElementById("surname").value="";
-
-              document.getElementById("voteModal").classList.add("active");
-              document.body.style.overflow = "hidden";
-            }
-
-            function handleVoteSubmit(e) {
-              e.preventDefault();
-
-              const email = document.getElementById("email").value.trim();
-              const firstName = document.getElementById("firstName").value.trim();
-              const surname = document.getElementById("surname").value.trim();
-              //const voteCount = document.getElementById("voteCount").value.trim();
-              const submitBtn = document.getElementById("submitVoteBtn");
-
-              if(firstName==""){
-                      document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">First name is required</span>';
-                            document.getElementById("firstName").focus();
-                        return;
-              }
-                  if(surname==""){
-                          document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Surname is required</span>';
-                                document.getElementById("surname").focus();
-                            return;
-                  }
-
-              // Validation
-              const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-        //return regex.test(email);
-            if(!emailRegex.test(email)){
-                document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Invalid email address</span>';
-                    document.getElementById("email").focus();
-                    return;
+        function init() {
+            renderCandidates(candidates);
+            updateStats(candidates);
+            setupEventListeners();
+            renderLegend();
         }
 
-              //   if (voteCount<0) {
-              //   document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%;padding:10px; border-radius:3px">Invalid vote count</span>';
-              //   return;
-              // }
-                  document.getElementById("lblmessage").innerHTML="";
-              // Show loading state
-              submitBtn.disabled = true;
-              submitBtn.innerHTML = '<span class="loading"></span> Processing...';
+        function getTimeRemaining(targetDate) {
+            const now = new Date();
+            const total = targetDate - now;
+            if (total <= 0) return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
+            return {
+                total,
+                days: Math.floor(total / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((total / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((total / 1000 / 60) % 60),
+                seconds: Math.floor((total / 1000) % 60)
+            };
+        }
 
-              // Simulate API call
+        function padZero(num) { return num.toString().padStart(2, '0'); }
 
+        function generateCountdownHTML() {
+            const time = getTimeRemaining(votingStartDate);
+            if (time.total <= 0) {
+                return '<div class="countdown-wrapper"><div class="countdown-ended"><div class="countdown-ended-icon"><i class="fas fa-check"></i></div><div class="countdown-ended-text">Voting is Now Open!</div><div class="countdown-ended-subtext">Cast your vote for your preferred candidate</div></div></div>';
+            }
+            const formattedDate = votingStartDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            return '<div class="countdown-wrapper"><div class="countdown-header"><div class="countdown-icon"><i class="fas fa-hourglass-half"></i></div><h3 class="countdown-title">Voting Opens Soon</h3></div><p class="countdown-subtitle">' + formattedDate + '</p><div class="countdown-timer" id="countdownTimer"><div class="countdown-unit"><div class="countdown-value-wrapper"><span class="countdown-value" id="countdownDays">' + padZero(time.days) + '</span></div><span class="countdown-label">Days</span></div><div class="countdown-separator"><span>:</span></div><div class="countdown-unit"><div class="countdown-value-wrapper"><span class="countdown-value" id="countdownHours">' + padZero(time.hours) + '</span></div><span class="countdown-label">Hours</span></div><div class="countdown-separator"><span>:</span></div><div class="countdown-unit"><div class="countdown-value-wrapper"><span class="countdown-value" id="countdownMinutes">' + padZero(time.minutes) + '</span></div><span class="countdown-label">Minutes</span></div><div class="countdown-separator"><span>:</span></div><div class="countdown-unit"><div class="countdown-value-wrapper"><span class="countdown-value" id="countdownSeconds">' + padZero(time.seconds) + '</span></div><span class="countdown-label">Seconds</span></div></div><div class="countdown-message"><i class="fas fa-bell"></i><span>Get ready to make your voice heard!</span></div></div>';
+        }
 
+        function updateCountdown() {
+            const time = getTimeRemaining(votingStartDate);
+            if (time.total <= 0) { clearInterval(countdownInterval); renderLegend(); return; }
+            const d = document.getElementById('countdownDays'), h = document.getElementById('countdownHours'), m = document.getElementById('countdownMinutes'), s = document.getElementById('countdownSeconds');
+            if (d) d.textContent = padZero(time.days);
+            if (h) h.textContent = padZero(time.hours);
+            if (m) m.textContent = padZero(time.minutes);
+            if (s) s.textContent = padZero(time.seconds);
+        }
 
+        function renderLegend() {
+            const legendGrid = document.getElementById("legendGrid");
+            if (countdownInterval) clearInterval(countdownInterval);
+            if (!stateCategoryLimits || stateCategoryLimits.length === 0) {
+                legendGrid.innerHTML = generateCountdownHTML() + '<div class="legend-item" style="grid-column: 1 / -1; justify-content: center;"><div class="legend-state-info"><div class="state-flag"><i class="fas fa-info-circle"></i></div><div class="state-details"><h4>No votes yet</h4><span>No Vote/Category distribution yet</span></div></div></div>';
+            } else {
+                legendGrid.innerHTML = generateCountdownHTML() + stateCategoryLimits.map(item => '<div class="legend-item"><div class="legend-state-info"><div class="state-flag"><i class="fas fa-landmark"></i></div><div class="state-details"><h4>' + (item.StateName || item.stateName || 'Unknown State') + '</h4><span>' + (item.CategoryName || item.categoryName || 'All Categories') + '</span></div></div><div class="legend-votes"><div class="vote-count">' + (item.MaxVotes || item.maxVotes || 0).toLocaleString() + '</div><div class="vote-label">Max Votes</div></div></div>').join('');
+            }
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
 
-              setTimeout(() => {
-                // Record the vote
+        function toggleLegend() { document.getElementById("legendContainer").classList.toggle("collapsed"); }
+
+        function setupEventListeners() {
+            document.getElementById("searchInput").addEventListener("input", handleSearch);
+            document.getElementById("voteForm").addEventListener("submit", handleVoteSubmit);
+        }
+
+        function renderCandidates(candidatesToRender) {
+            const grid = document.getElementById("candidatesGrid"), noResults = document.getElementById("noResults");
+            if (candidatesToRender.length === 0) { grid.style.display = "none"; noResults.style.display = "block"; return; }
+            grid.style.display = "grid"; noResults.style.display = "none";
+            grid.innerHTML = candidatesToRender.map((candidate, index) => hasElectionStarted ?
+                '<div class="candidate-card" style="animation-delay: ' + (index * 0.05) + 's; height:600px !important"><div><img src="' + candidate.PassportFileName + '" alt="' + candidate.FirstName + '" style="width:100%; height:500px; object-fit: cover"><div class="candidate-badge">' + candidate.StateName + ' State</div></div><div><div class="candidate-actions"><button class="btn btn-vote" onclick="initiateVote(\'' + candidate.Id + '\')"><i class="fas fa-vote-yea"></i>Cast Vote (<span class="party-abbr">Votes: ' + candidate.VoteCount + '</span>)</button></div></div></div>' :
+                '<div class="candidate-card" style="animation-delay: ' + (index * 0.05) + 's; height:500px !important"><div><img src="' + candidate.PassportFileName + '" alt="' + candidate.FirstName + '" style="width:100%; height:500px; object-fit: cover"><div class="candidate-badge">' + candidate.StateName + ' State</div></div></div>'
+            ).join("");
+            updateStats(candidatesToRender);
+        }
+
+        function updateStats(candidatesToDisplay) {
+            document.getElementById("totalCandidates").textContent = candidates.length;
+            document.getElementById("displayedCandidates").textContent = candidatesToDisplay.length;
+        }
+
+        function handleSearch(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            let filtered = candidates;
+            if (searchTerm) filtered = filtered.filter(c => c.FirstName.toLowerCase().includes(searchTerm) || c.LastName.toLowerCase().includes(searchTerm) || c.StateName.toLowerCase().includes(searchTerm));
+            renderCandidates(filtered);
+        }
+
+        let _candidateId = 0;
+
+        function initiateVote(candidateId) {
+            _candidateId = candidateId;
+            const candidate = candidates.find(c => c.Id === candidateId);
+            if (!candidate) return;
+            let filteredCategories = candidateCategories.filter(c => c.CandidateId == candidateId);
+            let html = '<option value="">--Select Category--</option>';
+            filteredCategories.forEach(cat => { html += '<option value="' + cat.CategoryId + '">' + cat.Category + '</option>'; });
+            document.getElementById("category").innerHTML = html;
+            currentVoteCandidate = candidate;
+            document.getElementById("voteCandidate").textContent = candidate.Title + " " + candidate.FirstName + " " + candidate.LastName;
+            document.getElementById("voteState").textContent = candidate.StateName;
+            document.getElementById("email").value = "";
+            document.getElementById("firstName").value = "";
+            document.getElementById("surname").value = "";
+            items = [];
+            LoadTable(items);
+            document.getElementById("voteModal").classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function AddItem() {
+            let cat = document.getElementById("category"), vc = document.getElementById("voteCountForm");
+            if (cat.value === "") { cat.focus(); cat.style.borderColor = "red"; return; }
+            if (vc.value === "") { vc.focus(); vc.style.borderColor = "red"; return; }
+            let voteCount = Number(vc.value);
+            if (voteCount <= 0) { vc.focus(); vc.style.borderColor = "red"; return; }
+            let item = { id: Math.random().toString(16).slice(2), categoryName: cat.options[cat.selectedIndex].text, voteCount: voteCount, categoryId: cat.value };
+            if (items.find(x => x.categoryId == item.categoryId)) { alert("You have already added votes for this category."); return; }
+            items = [...items, item];
+            LoadTable(items);
+            cat.style.borderColor = ""; vc.style.borderColor = "";
+        }
+
+        function DeleteItem(id) { items = items.filter(x => x.id !== id); LoadTable(items); }
+
+        function LoadTable(items) {
+            let html = '', price = @Model.Data.VotePrice.Price, totalPrice = 0;
+            if (items.length === 0) { html = '<tr><td colspan="6"><center>No vote has been added yet</center></td></tr>'; }
+            else { items.forEach((item, index) => { totalPrice += item.voteCount * price; html += '<tr><td>' + (index + 1) + '</td><td>' + item.categoryName + '</td><td>' + item.voteCount + '</td><td>' + (item.voteCount * price) + '</td><td><button type="button" style="font-size:12px;color:white !important; background-color:red !important" class="btn btn-delete" onclick="DeleteItem(\'' + item.id + '\')"><i class="fas fa-trash"></i></button></td></tr>'; }); }
+            document.getElementById("lbltotalamount").innerHTML = '₦' + totalPrice;
+            document.getElementById("categoryTableBody").innerHTML = html;
+        }
+
+        function handleVoteSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById("email").value.trim(), firstName = document.getElementById("firstName").value.trim(), surname = document.getElementById("surname").value.trim(), submitBtn = document.getElementById("submitVoteBtn");
+            if (firstName == "") { document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">First name is required</span>'; document.getElementById("firstName").focus(); return; }
+            if (surname == "") { document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Surname is required</span>'; document.getElementById("surname").focus(); return; }
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            if (!emailRegex.test(email)) { document.getElementById("lblmessage").innerHTML = '<span style="color:red; background-color:pink; width:100%; padding:10px; border-radius:3px">Invalid email address</span>'; document.getElementById("email").focus(); return; }
+            document.getElementById("lblmessage").innerHTML = "";
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span> Processing...';
+            setTimeout(() => {
                 emails.add(email);
                 localStorage.setItem("votedVoterIds", JSON.stringify([...emails]));
-
-                //totalVotesCount++;
-                //localStorage.setItem("totalVotes", totalVotesCount.toString());
-                //updateVoteCount();
-
-                // Generate reference number
-                const referenceNumber =
-                  "LG-" +
-                  Date.now().toString(36).toUpperCase() +
-                  "-" +
-                  Math.random().toString(36).substring(2, 8).toUpperCase();
-                const timestamp = new Date().toLocaleString("en-US", {
-                  dateStyle: "long",
-                  timeStyle: "short",
-                });
-
-                // Show success modal
-                document.getElementById("referenceNumber").textContent =
-                  referenceNumber;
+                const referenceNumber = "LG-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+                const timestamp = new Date().toLocaleString("en-US", { dateStyle: "long", timeStyle: "short" });
+                document.getElementById("referenceNumber").textContent = referenceNumber;
                 document.getElementById("voteTimestamp").textContent = timestamp;
-                document.getElementById("confirmedVoterId").textContent =
-                  email.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
-
+                document.getElementById("confirmedVoterId").textContent = email;
                 closeVoteModal();
                 document.getElementById("successModal").classList.add("active");
-
-                // Reset button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirm Vote';
+                $.ajax({
+                    url: '@Url.Action("Vote", "Candidates", new { Area = "Gov" })',
+                    type: 'post',
+                    dataType: 'json',
+                    data: { email: email, firstName: firstName, lastName: surname, candidateId: _candidateId, categoryItems: items },
+                    success: function(response) {
+                        if (response.success) { location.href = response.data.authorizationUrl; }
+                        else { document.getElementById("successModal").classList.remove("active"); document.getElementById("errorModal").classList.add("active"); document.getElementById('errordetails').innerHTML = response.message; }
+                    },
+                    error: function(err) { document.getElementById("successModal").classList.remove("active"); document.getElementById("errorModal").classList.add("active"); document.getElementById('errordetails').innerHTML = err.responseText; }
+                });
+            }, 2000);
+        }
 
-                        $.ajax({
-                              url:'@Url.Action("Vote", "Candidates", new { Area = "Gov" })',
-                              type:'post',
-                              dataType:'json',
-                              data:{
-                                  email:email,
-                                  firstName:firstName,
-                                  lastName:surname,
-                                  candidateId:_candidateId,
-                                  categoryItems: items
-                              },
-                              success:function(response){
-                                  console.log(response);
-                                  if(response.success){
-                                  location.href=response.data.authorizationUrl;
-                                  }
-                                  else{
+        function closeVoteModal() { document.getElementById("voteModal").classList.remove("active"); document.body.style.overflow = "auto"; }
+        function closeSuccessModal() { document.getElementById("successModal").classList.remove("active"); document.body.style.overflow = "auto"; }
+        function closeErrorModal() { document.getElementById("errorModal").classList.remove("active"); document.body.style.overflow = "auto"; }
 
-                                          console.log(response.message)
-                                          let htmlContent=response.message;
-                                          
+        document.querySelectorAll(".modal").forEach(modal => {
+            modal.addEventListener("click", function(e) { if (e.target === this) { this.classList.remove("active"); document.body.style.overflow = "auto"; } });
+        });
 
-                                              document.getElementById("successModal").classList.remove("active");
-                                              document.getElementById("errorModal").classList.add("active");
-                                              document.getElementById('errordetails').innerHTML = htmlContent;//errordetails
-                                  }
-                              },
-                              error:function(err){
-                                      document.getElementById("successModal").classList.remove("active");
-                                          document.getElementById("errorModal").classList.add("active");
-                                      document.getElementById('errordetails').innerHtml = err.responseText;
-                              }
-                      });
-
-                // Here you would make your actual API call
-                // submitVoteToAPI(currentVoteCandidate.id, voterId, phone);
-              }, 2000);
-            }
-
-            function showDetails(candidateId) {
-              const candidate = candidates.find((c) => c.id === candidateId);
-              if (!candidate) return;
-
-              currentDetailsCandidate = candidate;
-
-              document.getElementById("modalName").textContent = candidate.name;
-              document.getElementById(
-                "modalParty"
-              ).textContent = `${candidate.party} (${candidate.partyAbbr})`;
-              document.getElementById("modalPosition").textContent =
-                candidate.position;
-              document.getElementById("modalPartyFull").textContent = candidate.party;
-              document.getElementById("modalRunningMate").textContent =
-                candidate.runningMate;
-              document.getElementById("modalPlatform").textContent =
-                candidate.platform;
-              document.getElementById("modalExperience").textContent =
-                candidate.experience;
-              document.getElementById("modalEducation").textContent =
-                candidate.education;
-
-              document.getElementById("detailsModal").classList.add("active");
-              document.body.style.overflow = "hidden";
-            }
-
-            function voteFromDetails() {
-              closeDetailsModal();
-              if (currentDetailsCandidate) {
-                initiateVote(currentDetailsCandidate.id);
-              }
-            }
-
-            function closeVoteModal() {
-              document.getElementById("voteModal").classList.remove("active");
-              document.body.style.overflow = "auto";
-            }
-
-            function closeDetailsModal() {
-              document.getElementById("detailsModal").classList.remove("active");
-              document.body.style.overflow = "auto";
-            }
-
-            function closeSuccessModal() {
-              document.getElementById("successModal").classList.remove("active");
-              document.body.style.overflow = "auto";
-            }
-
-                function closeErrorModal() {
-                  document.getElementById("errorModal").classList.remove("active");
-                  document.body.style.overflow = "auto";
-                }
-
-            // Close modals when clicking outside
-            document.querySelectorAll(".modal").forEach((modal) => {
-              modal.addEventListener("click", function (e) {
-                if (e.target === this) {
-                  this.classList.remove("active");
-                  document.body.style.overflow = "auto";
-                }
-              });
-            });
-
-            // Initialize on load
-            init();
+        init();
     </script>
 </body>
 </html>

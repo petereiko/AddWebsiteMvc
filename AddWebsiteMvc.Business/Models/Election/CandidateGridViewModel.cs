@@ -15,6 +15,14 @@ namespace AddWebsiteMvc.Business.Models.Election
         public int VotesCastToday { get; set; }
         public VotePriceDto VotePrice { get; set; } = default!;
         public List<CategoryDto> Categories { get; set; } = new();
+        public List<StateCategoryLimit> StateCategoryLimits { get; set; } = new();
 
+    }
+
+    public class StateCategoryLimit
+    {
+        public string StateName { get; set; }
+        public string CategoryName { get; set; }
+        public int MaxVotes { get; set; }
     }
 }
