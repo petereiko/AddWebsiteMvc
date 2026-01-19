@@ -3,7 +3,7 @@
 
 @{
     Layout = null;
-    bool HasElectionStarted = Model.Data.Election != null && Model.Data.Election.StartDate <= DateTime.UtcNow && Model.Data.Election.EndDate >= DateTime.UtcNow;
+    bool HasElectionStarted = Model.Data.Election != null && Model.Data.Election.StartDate <= DateTime.Now && Model.Data.Election.EndDate >= DateTime.Now;
 }
 
 @model MessageResult<CandidateGridViewModel>
