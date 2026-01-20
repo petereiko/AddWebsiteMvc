@@ -31,6 +31,8 @@ namespace AddWebsiteMvc.Areas.Gov.Controllers
                     candidate.PassportFileName = $"{_configuration["BaseUrl"]}/passports/{candidate.PassportFileName}";
                 });
 
+                
+
                 return View(model);
             }
             catch (Exception ex)

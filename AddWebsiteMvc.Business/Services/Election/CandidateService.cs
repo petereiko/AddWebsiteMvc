@@ -284,6 +284,20 @@ namespace AddWebsiteMvc.Business.Services.Election
                         });
                     }
                 }
+
+                if (reader.NextResult())
+                {
+                    while (reader.Read())
+                    {
+                        result.Data.StateCategoryLimits.Add(new StateCategoryLimit
+                        {
+                            MaxVotes = reader.GetInt32("MaxVotes"),
+                            CategoryName = reader.GetString("CategoryName"),
+                            StateName = reader.GetString("StateName")
+                        });
+                    }
+                }
+
             }
             result.Message = "Ok";
             result.Success = true;
