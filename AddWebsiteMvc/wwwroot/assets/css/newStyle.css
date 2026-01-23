@@ -142,11 +142,12 @@ h6 {
 # Header - Glassmorphism effect
 --------------------------------------------------------------*/
 #header {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 997;
-  padding: 20px 0;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+    background: linear-gradient(rgba(25, 135, 84, 0.95)) !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 997;
+    padding: 20px 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 #header.header-scrolled,

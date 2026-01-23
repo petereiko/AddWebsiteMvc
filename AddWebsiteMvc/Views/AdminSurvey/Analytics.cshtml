@@ -1,0 +1,638 @@
+﻿@using AddWebsiteMvc.Business.Enums
+@using AddWebsiteMvc.Business.Models.SurveyModels.AdminDto
+@model SurveyAnalyticsDto
+@{
+    ViewData["Title"] = $"{Model.Title} - Analytics";
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="analytics-dashboard">
+    <div class="analytics-header">
+        <a href="@Url.Action("Index")" class="back-link">
+            <i class="icon-arrow-left"></i> Back to Surveys
+        </a>
+        <h1 class="analytics-title">@Model.Title</h1>
+        <p class="analytics-subtitle">@Model.Description</p>
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-card primary">
+            <div class="metric-icon">📧</div>
+            <div class="metric-content">
+                <div class="metric-value">@Model.TotalInvites</div>
+                <div class="metric-label">Invites Sent</div>
+            </div>
+        </div>
+
+        <div class="metric-card success">
+            <div class="metric-icon">📬</div>
+            <div class="metric-content">
+                <div class="metric-value">@Model.EmailsOpened</div>
+                <div class="metric-label">Emails Opened</div>
+                <div class="metric-percentage">@Model.OpenRate% open rate</div>
+            </div>
+        </div>
+
+        <div class="metric-card info">
+            <div class="metric-icon">🔗</div>
+            <div class="metric-content">
+                <div class="metric-value">@Model.LinksClicked</div>
+                <div class="metric-label">Links Clicked</div>
+                <div class="metric-percentage">@Model.ClickRate% click rate</div>
+            </div>
+        </div>
+
+        <div class="metric-card warning">
+            <div class="metric-icon">📝</div>
+            <div class="metric-content">
+                <div class="metric-value">@Model.SurveysStarted</div>
+                <div class="metric-label">Surveys Started</div>
+                <div class="metric-percentage">@Model.StartRate% start rate</div>
+            </div>
+        </div>
+
+        <div class="metric-card completed">
+            <div class="metric-icon">✅</div>
+            <div class="metric-content">
+                <div class="metric-value">@Model.SurveysCompleted</div>
+                <div class="metric-label">Surveys Completed</div>
+                <div class="metric-percentage">@Model.CompletionRate% completion rate</div>
+            </div>
+        </div>
+
+        <div class="metric-card time">
+            <div class="metric-icon">⏱️</div>
+            <div class="metric-content">
+                <div class="metric-value">@Model.AvgCompletionTimeMinutes.ToString("F1")</div>
+                <div class="metric-label">Avg Minutes</div>
+                <div class="metric-percentage">to complete</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-section">
+        <div class="chart-card full-width">
+            <div class="chart-header">
+                <h2 class="chart-title">Conversion Funnel</h2>
+                <p class="chart-subtitle">Journey from invitation to completion</p>
+            </div>
+            <div class="funnel-container">
+                <div class="funnel-step" style="width: 100%">
+                    <div class="funnel-bar" style="background: #3b82f6">
+                        <div class="funnel-label">@Model.TotalInvites Invites Sent</div>
+                    </div>
+                </div>
+                <div class="funnel-step" style="width: @((decimal)Model.EmailsOpened / Model.TotalInvites * 100)%">
+                    <div class="funnel-bar" style="background: #8b5cf6">
+                        <div class="funnel-label">@Model.EmailsOpened Opened (@Model.OpenRate%)</div>
+                    </div>
+                </div>
+                <div class="funnel-step" style="width: @((decimal)Model.LinksClicked / Model.TotalInvites * 100)%">
+                    <div class="funnel-bar" style="background: #ec4899">
+                        <div class="funnel-label">@Model.LinksClicked Clicked (@Model.ClickRate%)</div>
+                    </div>
+                </div>
+                <div class="funnel-step" style="width: @((decimal)Model.SurveysStarted / Model.TotalInvites * 100)%">
+                    <div class="funnel-bar" style="background: #f59e0b">
+                        <div class="funnel-label">@Model.SurveysStarted Started (@Model.StartRate%)</div>
+                    </div>
+                </div>
+                <div class="funnel-step" style="width: @((decimal)Model.SurveysCompleted / Model.TotalInvites * 100)%">
+                    <div class="funnel-bar" style="background: #10b981">
+                        <div class="funnel-label">@Model.SurveysCompleted Completed (@Model.CompletionRate%)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="questions-analysis">
+        <div class="section-header">
+            <h2 class="section-title">Question Analysis</h2>
+            <a href="@Url.Action("Export", new { surveyId = Model.SurveyId })" class="export-btn">
+                <i class="icon-download"></i> Export to Excel
+            </a>
+        </div>
+
+        @foreach (var question in Model.Questions)
+        {
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">@question.QuestionText</h3>
+                    <span class="question-type">@question.QuestionType</span>
+                </div>
+                <div class="question-stats">
+                    <span class="answer-count">@question.TotalAnswers responses</span>
+                </div>
+
+                @if (question.QuestionType == QuestionType.MultipleChoice || question.QuestionType == QuestionType.YesNo)
+                {
+                    <div class="options-chart">
+                        @foreach (var option in question.OptionCounts.OrderByDescending(x => x.Value))
+                        {
+                            var percentage = question.TotalAnswers > 0 ? (decimal)option.Value / question.TotalAnswers * 100 : 0;
+                            <div class="option-row">
+                                <div class="option-label">@option.Key</div>
+                                <div class="option-bar-container">
+                                    <div class="option-bar" style="width: @percentage%"></div>
+                                </div>
+                                <div class="option-value">@option.Value (@percentage.ToString("F1")%)</div>
+                            </div>
+                        }
+                    </div>
+                }
+                else if (question.QuestionType == QuestionType.Scale || question.QuestionType == QuestionType.Rating)
+                {
+                    <div class="scale-summary">
+                        <div class="average-score">
+                            <div class="score-label">Average Score</div>
+                            <div class="score-value">@question.AverageScore?.ToString("F2")</div>
+                        </div>
+                        <div class="scale-distribution">
+                            @foreach (var score in question.ScoreDistribution.OrderBy(x => x.Key))
+                            {
+                                var percentage = question.TotalAnswers > 0 ? (decimal)score.Value / question.TotalAnswers * 100 : 0;
+                                <div class="scale-bar-item">
+                                    <div class="scale-number">@score.Key</div>
+                                    <div class="scale-bar">
+                                        <div class="scale-fill" style="width: @percentage%; height: @(score.Value * 3)px"></div>
+                                    </div>
+                                    <div class="scale-count">@score.Value</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                else if (question.QuestionType == QuestionType.Text)
+                {
+                    <div class="text-responses">
+                        @if (question.TextResponses.Any())
+                        {
+                            <div class="responses-header">Recent responses:</div>
+                            @foreach (var response in question.TextResponses.Take(5))
+                            {
+                                <div class="text-response-item">
+                                    <i class="icon-quote"></i>
+                                    <span>@response</span>
+                                </div>
+                            }
+                            @if (question.TextResponses.Count > 5)
+                            {
+                                <div class="more-responses">
+                                    + @(question.TextResponses.Count - 5) more responses
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="no-responses">No text responses yet</div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="actions-footer">
+        <a href="@Url.Action("Responses", new { surveyId = Model.SurveyId })" class="btn-action primary">
+            View All Responses
+        </a>
+        <a href="@Url.Action("Index")" class="btn-action secondary">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<style>
+    .analytics-dashboard {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 40px 20px;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .analytics-header {
+        max-width: 1400px;
+        margin: 0 auto 40px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        transition: all 0.3s;
+    }
+
+    .back-link:hover {
+        color: #ffffff;
+        transform: translateX(-4px);
+    }
+
+    .analytics-title {
+        font-size: 42px;
+        font-weight: 900;
+        color: #ffffff;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
+    }
+
+    .analytics-subtitle {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .metrics-grid {
+        max-width: 1400px;
+        margin: 0 auto 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .metric-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .metric-icon {
+        font-size: 48px;
+        line-height: 1;
+    }
+
+    .metric-value {
+        font-size: 36px;
+        font-weight: 900;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+
+    .metric-label {
+        font-size: 13px;
+        color: #6b7280;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .metric-percentage {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: 4px;
+    }
+
+    .charts-section {
+        max-width: 1400px;
+        margin: 0 auto 40px;
+    }
+
+    .chart-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-header {
+        margin-bottom: 30px;
+    }
+
+    .chart-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 4px;
+    }
+
+    .chart-subtitle {
+        font-size: 14px;
+        color: #6b7280;
+    }
+
+    .funnel-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .funnel-step {
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .funnel-bar {
+        padding: 20px 30px;
+        border-radius: 12px;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .questions-analysis {
+        max-width: 1400px;
+        margin: 0 auto 40px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 32px;
+        font-weight: 900;
+        color: #ffffff;
+    }
+
+    .export-btn {
+        background: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .export-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+    }
+
+    .question-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 16px;
+    }
+
+    .question-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1f2937;
+        flex: 1;
+    }
+
+    .question-type {
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .question-stats {
+        margin-bottom: 20px;
+    }
+
+    .answer-count {
+        font-size: 13px;
+        color: #9ca3af;
+        font-weight: 600;
+    }
+
+    .options-chart {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .option-row {
+        display: grid;
+        grid-template-columns: 200px 1fr 120px;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .option-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .option-bar-container {
+        background: #f3f4f6;
+        height: 32px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .option-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .option-value {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1f2937;
+        text-align: right;
+    }
+
+    .scale-summary {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .average-score {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 16px;
+        color: #ffffff;
+        min-width: 150px;
+    }
+
+    .score-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        opacity: 0.9;
+    }
+
+    .score-value {
+        font-size: 48px;
+        font-weight: 900;
+    }
+
+    .scale-distribution {
+        flex: 1;
+        display: flex;
+        gap: 16px;
+        align-items: flex-end;
+        padding: 20px 0;
+    }
+
+    .scale-bar-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .scale-number {
+        font-size: 14px;
+        font-weight: 700;
+        color: #6b7280;
+    }
+
+    .scale-bar {
+        width: 100%;
+        background: #f3f4f6;
+        border-radius: 8px 8px 0 0;
+        min-height: 100px;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .scale-fill {
+        width: 100%;
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        border-radius: 8px 8px 0 0;
+        transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scale-count {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .text-responses {
+        background: #f9fafb;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .responses-header {
+        font-size: 13px;
+        font-weight: 700;
+        color: #6b7280;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .text-response-item {
+        background: #ffffff;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #374151;
+        border-left: 3px solid #667eea;
+        display: flex;
+        gap: 12px;
+        align-items: start;
+    }
+
+    .more-responses {
+        text-align: center;
+        padding: 12px;
+        font-size: 13px;
+        color: #6b7280;
+        font-weight: 600;
+    }
+
+    .no-responses {
+        text-align: center;
+        padding: 20px;
+        color: #9ca3af;
+        font-style: italic;
+    }
+
+    .actions-footer {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .btn-action {
+        padding: 16px 40px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .btn-action.primary {
+        background: #ffffff;
+        color: #667eea;
+    }
+
+    .btn-action.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-action.secondary {
+        background: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-action.secondary:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    @@media (max-width: 768px) {
+        .metrics-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .option-row {
+            grid-template-columns: 1fr;
+        }
+
+        .scale-summary {
+            flex-direction: column;
+        }
+
+        .actions-footer {
+            flex-direction: column;
+        }
+    }
+</style>

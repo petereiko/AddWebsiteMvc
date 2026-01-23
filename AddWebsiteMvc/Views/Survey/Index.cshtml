@@ -1,0 +1,504 @@
+﻿@using AddWebsiteMvc.Business.Enums
+@using AddWebsiteMvc.Business.Models.SurveyModels
+@model SurveyDto
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = null; // Use your existing layout or create a clean one
+}
+
+<style>
+    .survey-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .survey-header {
+        background: #212529;
+        padding: 30px 40px;
+        text-align: center;
+        border-bottom: 4px solid #198754;
+    }
+
+    .survey-branding .logo {
+        max-width: 140px;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .product-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .product-name {
+        color: #198754;
+        font-size: 22px;
+        font-weight: 800;
+        margin-top: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .survey-content {
+        padding: 40px;
+    }
+
+    .survey-intro {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .survey-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: #212529;
+        margin-bottom: 15px;
+    }
+
+    .survey-description {
+        font-size: 16px;
+        color: #6c757d;
+        line-height: 1.6;
+    }
+
+    .questions-container {
+        margin-bottom: 30px;
+    }
+
+    .question-card {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 25px;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s;
+    }
+
+        .question-card:hover {
+            border-color: #198754;
+            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.1);
+        }
+
+    .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .question-number {
+        font-size: 13px;
+        font-weight: 600;
+        color: #198754;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .required-badge {
+        background: #dc3545;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .question-text {
+        font-size: 18px;
+        font-weight: 600;
+        color: #212529;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .options-container,
+    .yesno-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .option-label {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        background: #ffffff;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+        .option-label:hover {
+            border-color: #198754;
+            background: #f0fdf4;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+    .option-text {
+        font-size: 15px;
+        color: #495057;
+    }
+
+    .scale-container {
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 8px;
+    }
+
+    .scale-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .scale-options {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .scale-option {
+        flex: 1;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+
+    .scale-number {
+        display: block;
+        padding: 15px;
+        background: #e9ecef;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .scale-option input[type="radio"]:checked + .scale-number {
+        background: #198754;
+        color: white;
+        border-color: #198754;
+    }
+
+    .rating-container {
+        display: flex;
+        gap: 10px;
+        font-size: 36px;
+    }
+
+    .star-label {
+        cursor: pointer;
+    }
+
+        .star-label input[type="radio"] {
+            display: none;
+        }
+
+        .star-label i {
+            color: #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .star-label.hover i,
+        .star-label.selected i,
+        .star-label input[type="radio"]:checked ~ i {
+            color: #ffc107;
+        }
+
+    .text-input-container input,
+    .textarea-container textarea {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s;
+    }
+
+        .text-input-container input:focus,
+        .textarea-container textarea:focus {
+            outline: none;
+            border-color: #198754;
+        }
+
+    .survey-footer {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+        color: white;
+        border: none;
+        padding: 18px 50px;
+        font-size: 16px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 6px 20px rgba(25, 135, 84, 0.3);
+    }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(25, 135, 84, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+    .alert {
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    @@media (max-width: 768px) {
+        .survey-container {
+            margin: 20px;
+        }
+
+        .survey-content {
+            padding: 20px;
+        }
+
+        .question-card {
+            padding: 20px;
+        }
+
+        .scale-options {
+            flex-wrap: wrap;
+        }
+    }
+</style>
+
+
+<div class="survey-container">
+    <div class="survey-header">
+        <div class="survey-branding">
+            <img src="https://addaconsults.com/assets/img/adda-logo.png" alt="Adda Consults" class="logo" />
+            <h2 class="product-name">NIGERIA GOVERNORS SCORECARD AWARDS</h2>
+            <span class="product-badge">A Product by ADDA Consulting Limited</span>
+            
+        </div>
+    </div>
+
+    <div class="survey-content">
+        <div class="survey-intro">
+            <h1 class="survey-title">@Model.Title</h1>
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <p class="survey-description">@Model.Description</p>
+            }
+        </div>
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <form asp-action="Submit" asp-controller="Survey" method="post" id="surveyForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Token" value="@ViewBag.Token" />
+
+            <div class="questions-container">
+                @foreach (var question in Model.Questions)
+                {
+                    <div class="question-card" data-question-id="@question.QuestionId">
+                        <div class="question-header">
+                            <span class="question-number">Question @question.DisplayOrder</span>
+                            @if (question.IsRequired)
+                            {
+                                <span class="required-badge">Required</span>
+                            }
+                        </div>
+
+                        <h3 class="question-text">@question.QuestionText</h3>
+
+                        @switch (question.QuestionType)
+                        {
+                            case QuestionType.MultipleChoice:
+                                <div class="options-container">
+                                    @foreach (var option in question.Options)
+                                    {
+                                        <label class="option-label">
+                                            <input type="radio"
+                                                   name="Answers[@question.DisplayOrder - 1].AnswerText"
+                                                   value="@option"
+                                                   required="@question.IsRequired" />
+                                            <span class="option-text">@option</span>
+                                        </label>
+                                    }
+                                    <input type="hidden" name="Answers[@question.DisplayOrder - 1].QuestionId" value="@question.QuestionId" />
+                                </div>
+                                break;
+
+                            case QuestionType.YesNo:
+                                <div class="yesno-container">
+                                    <label class="option-label">
+                                        <input type="radio"
+                                               name="Answers[@question.DisplayOrder - 1].AnswerText"
+                                               value="Yes"
+                                               required="@question.IsRequired" />
+                                        <span class="option-text">Yes</span>
+                                    </label>
+                                    <label class="option-label">
+                                        <input type="radio"
+                                               name="Answers[@question.DisplayOrder - 1].AnswerText"
+                                               value="No"
+                                               required="@question.IsRequired" />
+                                        <span class="option-text">No</span>
+                                    </label>
+                                    <input type="hidden" name="Answers[@question.DisplayOrder - 1].QuestionId" value="@question.QuestionId" />
+                                </div>
+                                break;
+
+                            case QuestionType.Scale:
+                                <div class="scale-container">
+                                    <div class="scale-labels">
+                                        <span class="scale-label-min">@question.MinValue</span>
+                                        <span class="scale-label-max">@question.MaxValue</span>
+                                    </div>
+                                    <div class="scale-options">
+                                        @for (int i = question.MinValue ?? 1; i <= (question.MaxValue ?? 5); i++)
+                                        {
+                                            <label class="scale-option">
+                                                <input type="radio"
+                                                       name="Answers[@question.DisplayOrder - 1].AnswerNumeric"
+                                                       value="@i"
+                                                       required="@question.IsRequired" />
+                                                <span class="scale-number">@i</span>
+                                            </label>
+                                        }
+                                    </div>
+                                    <input type="hidden" name="Answers[@question.DisplayOrder - 1].QuestionId" value="@question.QuestionId" />
+                                </div>
+                                break;
+
+                            case QuestionType.Rating:
+                                <div class="rating-container">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <label class="star-label">
+                                            <input type="radio"
+                                                   name="Answers[@question.DisplayOrder - 1].AnswerNumeric"
+                                                   value="@i"
+                                                   required="@question.IsRequired" />
+                                            <i class="fa fa-star"></i>
+                                        </label>
+                                    }
+                                    <input type="hidden" name="Answers[@question.DisplayOrder - 1].QuestionId" value="@question.QuestionId" />
+                                </div>
+                                break;
+
+                            case QuestionType.Text:
+                                <div class="text-input-container">
+                                    <input type="text"
+                                           name="Answers[@question.DisplayOrder - 1].AnswerText"
+                                           class="form-control"
+                                           placeholder="Your answer..."
+                                           required="@question.IsRequired" />
+                                    <input type="hidden" name="Answers[@question.DisplayOrder - 1].QuestionId" value="@question.QuestionId" />
+                                </div>
+                                break;
+
+                            @* case QuestionType.LongText:
+                                <div class="textarea-container">
+                                    <textarea name="Answers[@question.DisplayOrder - 1].AnswerText"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Your answer..."
+                                  required="@question.IsRequired"></textarea>
+                                    <input type="hidden" name="Answers[@question.DisplayOrder - 1].QuestionId" value="@question.QuestionId" />
+                                </div>
+                                break; *@
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="survey-footer">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="fa fa-paper-plane"></i>
+                    Submit Survey
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...';
+        });
+
+        // Star rating interactivity
+        document.querySelectorAll('.rating-container').forEach(container => {
+            const stars = container.querySelectorAll('.star-label');
+            stars.forEach((star, index) => {
+                star.addEventListener('mouseover', () => {
+                    stars.forEach((s, i) => {
+                        if (i <= index) {
+                            s.classList.add('hover');
+                        } else {
+                            s.classList.remove('hover');
+                        }
+                    });
+                });
+
+                star.addEventListener('click', () => {
+                    stars.forEach((s, i) => {
+                        if (i <= index) {
+                            s.classList.add('selected');
+                        } else {
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+
+            container.addEventListener('mouseleave', () => {
+                stars.forEach(s => s.classList.remove('hover'));
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />

@@ -8,6 +8,7 @@ using AddWebsiteMvc.Business.Persistence;
 using AddWebsiteMvc.Business.Services;
 using AddWebsiteMvc.Business.Services.Auth;
 using AddWebsiteMvc.Business.Services.Election;
+using AddWebsiteMvc.Business.Services.SurveyModule;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -68,6 +69,13 @@ builder.Services.AddTransient<IVoteService, VoteService>();
 
 builder.Services.AddTransient<IVotePriceService, VotePriceService>();
 
+builder.Services.AddTransient<ISurveyService, SurveyService>();
+
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+builder.Services.AddTransient<ISurveyAdminService, SurveyAdminService>();
+
+
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -121,6 +129,10 @@ app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
   );
+app.MapControllerRoute(
+    name: "survey",
+    pattern: "survey/{token?}",
+    defaults: new { controller = "Survey", action = "Index" });
 
 app.MapControllerRoute(
     name: "default",

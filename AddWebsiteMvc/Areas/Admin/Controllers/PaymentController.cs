@@ -1,4 +1,6 @@
-﻿using AddWebsiteMvc.Business.Interfaces;
+﻿using AddWebsiteMvc.Business.Entities;
+using AddWebsiteMvc.Business.Interfaces;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,10 +10,12 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
     public class PaymentController : Controller
     {
         private readonly IVoteService _contestantService;
+        private readonly IEmailService _emailService;
 
-        public PaymentController(IVoteService contestantService)
+        public PaymentController(IVoteService contestantService, IEmailService emailService)
         {
             _contestantService = contestantService;
+            _emailService = emailService;
         }
 
         [HttpGet]

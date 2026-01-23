@@ -242,26 +242,6 @@ namespace AddWebsiteMvc.Business.Migrations
                     b.ToTable("EmailLogs");
                 });
 
-            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("AddWebsiteMvc.Business.Entities.Identity.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -303,8 +283,8 @@ namespace AddWebsiteMvc.Business.Migrations
                         new
                         {
                             Id = new Guid("1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"),
-                            ConcurrencyStamp = "aae6c525-231e-46c3-aebb-86679ec770d9",
-                            CreatedAt = new DateTime(2026, 1, 14, 15, 28, 28, 850, DateTimeKind.Utc).AddTicks(8424),
+                            ConcurrencyStamp = "55fb3fa6-682e-4d32-8231-c138d5838ceb",
+                            CreatedAt = new DateTime(2026, 1, 21, 18, 39, 37, 681, DateTimeKind.Utc).AddTicks(7532),
                             Description = "Administrator role with full access",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -312,8 +292,8 @@ namespace AddWebsiteMvc.Business.Migrations
                         new
                         {
                             Id = new Guid("2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e"),
-                            ConcurrencyStamp = "6286f63e-54d6-4369-9510-b58a8bf7ac43",
-                            CreatedAt = new DateTime(2026, 1, 14, 15, 28, 28, 850, DateTimeKind.Utc).AddTicks(8490),
+                            ConcurrencyStamp = "3f5009b3-18b2-4cf7-919a-364e1013069e",
+                            CreatedAt = new DateTime(2026, 1, 21, 18, 39, 37, 681, DateTimeKind.Utc).AddTicks(7604),
                             Description = "Standard user role",
                             Name = "User",
                             NormalizedName = "USER"
@@ -475,6 +455,409 @@ namespace AddWebsiteMvc.Business.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("States");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.Survey", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AllowMultipleResponses")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ThankYouMessage")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive");
+
+                    b.ToTable("Surveys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+                            AllowMultipleResponses = false,
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Description = "Help us improve! Share your experience with our voting platform.",
+                            IsActive = true,
+                            ThankYouMessage = "Thank you for your valuable feedback! Your input helps us improve.",
+                            Title = "Voting Experience Survey",
+                            UpdatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyAnswer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("AnswerNumeric")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AnswerText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("AnsweredAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ResponseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("ResponseId");
+
+                    b.ToTable("SurveyAnswers");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyEmailTracking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ClickedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("EmailStatus")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("FailureReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("OpenedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ResponseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SentAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("Token")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmailStatus");
+
+                    b.HasIndex("ResponseId")
+                        .IsUnique();
+
+                    b.HasIndex("UserEmail");
+
+                    b.ToTable("SurveyEmailTrackings");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequired")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int?>("MaxValue")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MinValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Options")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("QuestionType")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SurveyId");
+
+                    b.ToTable("SurveyQuestions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ada9ce3f-c3dd-4083-aee9-e3de0d9f7cfa"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 1,
+                            IsActive = false,
+                            IsRequired = true,
+                            MaxValue = 5,
+                            MinValue = 1,
+                            QuestionText = "How would you rate your overall voting experience?",
+                            QuestionType = 2,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        },
+                        new
+                        {
+                            Id = new Guid("a93ecc9a-9860-4f91-8e84-ce98867b651c"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 2,
+                            IsActive = false,
+                            IsRequired = true,
+                            QuestionText = "Was the voting process easy to understand?",
+                            QuestionType = 3,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        },
+                        new
+                        {
+                            Id = new Guid("0016bfbb-1bad-43ff-9e19-fcab88238fc3"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 3,
+                            IsActive = false,
+                            IsRequired = true,
+                            MaxValue = 5,
+                            MinValue = 1,
+                            QuestionText = "How satisfied are you with the website interface?",
+                            QuestionType = 2,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        },
+                        new
+                        {
+                            Id = new Guid("b117642b-8440-4fad-b3c6-fde39000b5bd"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 4,
+                            IsActive = false,
+                            IsRequired = true,
+                            QuestionText = "Did you encounter any technical issues?",
+                            QuestionType = 3,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        },
+                        new
+                        {
+                            Id = new Guid("ea3fd4ad-8f23-4b56-be7f-380c7f3229be"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 5,
+                            IsActive = false,
+                            IsRequired = false,
+                            QuestionText = "What did you like most about the voting process?",
+                            QuestionType = 0,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        },
+                        new
+                        {
+                            Id = new Guid("265e66ea-67a5-4416-bbfe-d4420a3b4cd6"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 6,
+                            IsActive = false,
+                            IsRequired = false,
+                            QuestionText = "What could we improve?",
+                            QuestionType = 0,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        },
+                        new
+                        {
+                            Id = new Guid("d5fee1ab-2d88-43ba-bad5-7afc4dada945"),
+                            CreatedAt = new DateTime(2026, 1, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
+                            DisplayOrder = 7,
+                            IsActive = false,
+                            IsRequired = true,
+                            QuestionText = "Would you recommend our voting platform to others?",
+                            QuestionType = 3,
+                            SurveyId = new Guid("5c48d2cf-d296-4cd4-a533-97b31e55a68b")
+                        });
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyResponse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ResponseToken")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<DateTime>("StartedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<Guid>("SurveyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserAgent")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<Guid?>("VoteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompletedAt");
+
+                    b.HasIndex("ResponseToken");
+
+                    b.HasIndex("SurveyId");
+
+                    b.HasIndex("UserEmail");
+
+                    b.ToTable("SurveyResponses");
                 });
 
             modelBuilder.Entity("AddWebsiteMvc.Business.Entities.VotePrice", b =>
@@ -706,6 +1089,58 @@ namespace AddWebsiteMvc.Business.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyAnswer", b =>
+                {
+                    b.HasOne("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyQuestion", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyResponse", "Response")
+                        .WithMany("Answers")
+                        .HasForeignKey("ResponseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("Response");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyEmailTracking", b =>
+                {
+                    b.HasOne("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyResponse", "Response")
+                        .WithOne("EmailTracking")
+                        .HasForeignKey("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyEmailTracking", "ResponseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Response");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyQuestion", b =>
+                {
+                    b.HasOne("AddWebsiteMvc.Business.Entities.SurveyEntity.Survey", "Survey")
+                        .WithMany("Questions")
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyResponse", b =>
+                {
+                    b.HasOne("AddWebsiteMvc.Business.Entities.SurveyEntity.Survey", "Survey")
+                        .WithMany("Responses")
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Survey");
+                });
+
             modelBuilder.Entity("AddWebsiteMvc.Business.Entities.VotePrice", b =>
                 {
                     b.HasOne("AddWebsiteMvc.Business.Entities.Election", "Election")
@@ -771,6 +1206,26 @@ namespace AddWebsiteMvc.Business.Migrations
             modelBuilder.Entity("AddWebsiteMvc.Business.Entities.Identity.ApplicationUser", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.Survey", b =>
+                {
+                    b.Navigation("Questions");
+
+                    b.Navigation("Responses");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyQuestion", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("AddWebsiteMvc.Business.Entities.SurveyEntity.SurveyResponse", b =>
+                {
+                    b.Navigation("Answers");
+
+                    b.Navigation("EmailTracking")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

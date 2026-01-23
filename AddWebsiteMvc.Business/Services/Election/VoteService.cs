@@ -22,9 +22,10 @@ namespace AddWebsiteMvc.Business.Services.Election
         private readonly IGenericRepository<PaymentLog> _paymentLogRepository;
         private readonly IGenericRepository<AddWebsiteMvc.Business.Entities.Election> _electionRepository;
         private readonly IHttpClientWrapperService _httpClientWrapperService;
+        private readonly IEmailService _emailService;
         private readonly AppSettings _appSettings;
 
-        public VoteService(IOptions<AppSettings> options, IGenericRepository<Voter> voterRepository, IGenericRepository<VotePrice> votePriceRepository, IGenericRepository<Ballot> ballotRepository, IGenericRepository<PaymentLog> paymentLogRepository, IHttpClientWrapperService httpClientWrapperService, IGenericRepository<Entities.Election> electionRepository)
+        public VoteService(IOptions<AppSettings> options, IGenericRepository<Voter> voterRepository, IGenericRepository<VotePrice> votePriceRepository, IGenericRepository<Ballot> ballotRepository, IGenericRepository<PaymentLog> paymentLogRepository, IHttpClientWrapperService httpClientWrapperService, IGenericRepository<Entities.Election> electionRepository, IEmailService emailService)
         {
             _voterRepository = voterRepository;
             _votePriceRepository = votePriceRepository;
@@ -33,6 +34,7 @@ namespace AddWebsiteMvc.Business.Services.Election
             _httpClientWrapperService = httpClientWrapperService;
             _appSettings = options.Value;
             _electionRepository = electionRepository;
+            _emailService = emailService;
         }
 
         public async Task<MessageResult<int>> GetVoteCountAsync(decimal amount)
@@ -246,7 +248,11 @@ namespace AddWebsiteMvc.Business.Services.Election
                 {
                     voter.BallotStatus = BallotStatus.Approved;
                     await _voterRepository.UpdateAsync(voter, cancellationToken);
+
+                    _ = _emailService.SendSurveyInvitationAsync(voter.Email, voter.FullName, voter.Id);
                 }
+
+               
 
                 result.Success = true;
                 result.Message = "Verification successful";
