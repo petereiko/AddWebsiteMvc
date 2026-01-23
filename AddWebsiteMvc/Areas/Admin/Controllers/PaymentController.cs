@@ -1,4 +1,7 @@
 ﻿using AddWebsiteMvc.Business.Interfaces;
+using AddWebsiteMvc.Business.Models;
+using AddWebsiteMvc.Business.Models.Payment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -24,6 +27,20 @@ namespace AddWebsiteMvc.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Candidates", new { area = "Gov" });
             }
             return View();
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult Do()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Do([FromBody] PaymentModel model, CancellationToken cancellationToken)
+        {
+            MessageResult result = await _contestantService.Verify(model.Reference, cancellationToken);
+            return Json(result);
         }
     }
 }

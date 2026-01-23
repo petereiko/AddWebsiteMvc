@@ -311,6 +311,8 @@ namespace AddWebsiteMvc.Business.Services.Election
 
             VerifyTransactionResponse? response = JsonConvert.DeserializeObject<VerifyTransactionResponse>(json);
 
+            await _paymentLogRepository.BeginTransactionAsync();
+
             if(response?.data?.status== "success")
             {
                 //Approve Transaction
@@ -339,6 +341,7 @@ namespace AddWebsiteMvc.Business.Services.Election
                     voter.BallotStatus = BallotStatus.Approved;
                     await _voterRepository.UpdateAsync(voter, cancellationToken);
                 }
+                await _paymentLogRepository.CommitTransactionAsync();
 
                 result.Success = true;
                 result.Message = "Verification successful";
@@ -349,6 +352,7 @@ namespace AddWebsiteMvc.Business.Services.Election
                 log = await _paymentLogRepository.GetSingleAsync(x => x.Reference == reference);
                 log.Status = PaymentStatus.Failed;
                 await _paymentLogRepository.UpdateAsync(log, cancellationToken);
+                await _paymentLogRepository.CommitTransactionAsync();
             }
 
             result.Message=response.data?.message;
