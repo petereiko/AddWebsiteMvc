@@ -190,6 +190,98 @@ namespace AddWebsiteMvc.Business.Services.Election
             return result;
         }
 
+
+        public async Task<MessageResult> AdminVote(InitiateVoteDto model, CancellationToken cancellationToken)
+        {
+            MessageResult result = new();
+            try
+            {
+                var election = await _electionRepository.GetSingleAsync(x => x.IsActive, false);
+                if (election == null)
+                {
+                    result.Message = "Election has not been set up";
+                    return result;
+                }
+
+                if (election.StartDate > DateTime.UtcNow)
+                {
+                    result.Message = "Voting has not started";
+                    return result;
+                }
+
+                if (election.EndDate < DateTime.UtcNow)
+                {
+                    result.Message = "Voting has closed";
+                    return result;
+                }
+
+                string reference = DateTime.Now.Ticks.ToString();
+
+                var votePrice = await _votePriceRepository.GetSingleAsync(x => x.IsActive);
+
+                decimal amount = model.CategoryItems.Sum(x => x.VoteCount * votePrice!.Price);
+
+                //Insert into Voter's Table
+                _voterRepository.BeginTransaction();
+
+                Voter voter = new()
+                {
+                    Id = Guid.NewGuid(),
+                    FullName = $"{model.FirstName} {model.LastName}",
+                    Email = model.Email,
+                    Reference = reference,
+                    BallotStatus = BallotStatus.Approved
+                };
+                 _voterRepository.Add(voter);
+
+                //Insert into Ballot Table
+
+                foreach (var categoryItem in model.CategoryItems)
+                {
+                    Ballot ballotItem = new()
+                    {
+                        Id = Guid.NewGuid(),
+                        CastTime = DateTime.Now,
+                        CandidateId = model.CandidateId,
+                        Count = categoryItem.VoteCount,
+                        VoteDate = DateTime.Now,
+                        VoterId = voter.Id,
+                        CategoryId = categoryItem.CategoryId,
+                        Reference = reference,
+                        IsFree = true,
+                        Status = BallotStatus.Approved
+                    };
+                    _ballotRepository.Add(ballotItem);
+                }
+
+                //Insert into Payment Log Table
+                PaymentLog paymentLog = new()
+                {
+                    Id = Guid.NewGuid(),
+                    Amount = amount,
+                    CreatedDate = DateTime.Now,
+                    Reference = reference,
+                    AccessCode = string.Empty,
+                    AuthorizationUrl = string.Empty,
+                    Status = PaymentStatus.Success,
+                    ConfirmedDate = DateTime.Now,
+                    RetryCount = 0
+                };
+                _paymentLogRepository.Add(paymentLog);
+
+
+                _voterRepository.CommitTransaction();
+
+                result.Success = true;
+                result.Message = "Vote recorded successfully";
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
         public async Task<MessageResult> Verify(string reference, CancellationToken cancellationToken)
         {
             MessageResult result = new();
