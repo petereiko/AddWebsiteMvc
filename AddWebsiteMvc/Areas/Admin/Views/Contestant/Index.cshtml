@@ -354,6 +354,7 @@
 </style>
 
 <div class="container">
+    <a asp-action="do" asp-controller="payment" asp-area="admin" class="btn btn-link create-btn">Confirm Payment by Reference</a>
     <div class="page-header">
         <h1>📋 Governor Management</h1>
         <a asp-action="Create" asp-controller="Contestant" asp-area="Admin" class="create-btn">
@@ -395,12 +396,16 @@
 
                         </td>
                         <td>
+                            <a asp-action="Index" asp-controller="Vote" asp-area="Admin" asp-route-id="@item.Id" class="action-link" style="background-color:blue; color:white; border-color:blue">
+                                Vote
+                            </a>
+
                             <a asp-action="Edit" asp-controller="Contestant" asp-area="Admin" asp-route-id="@item.Id" class="action-link">
                                 Edit
                             </a>
 
                             <a asp-action="ManageCategories" asp-controller="Contestant" asp-area="Admin" asp-route-title="@WebUtility.UrlEncode(item.Title)" asp-route-firstname="@WebUtility.UrlEncode(item.FirstName)" asp-route-lastname="@WebUtility.UrlEncode(item.LastName)" asp-route-state="@WebUtility.UrlEncode(item.StateName)" asp-route-id="@item.Id" class="action-link manage">
-                                Manage Categories
+                                Categories
                             </a>
                              
                             <a asp-action="Delete" asp-controller="Contestant" asp-area="Admin" asp-route-id="@item.Id" class="action-link delete" onclick="return confirm('Are you sure you want to delete this contestant?')">

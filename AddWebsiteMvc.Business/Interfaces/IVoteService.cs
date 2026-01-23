@@ -14,6 +14,7 @@ namespace AddWebsiteMvc.Business.Interfaces
         Task<MessageResult<bool>> VoteIsOpen();
         Task<MessageResult<int>> GetVoteCountAsync(decimal amount);
         Task<MessageResult<InitiateVoteResponse>> InitiateVote(InitiateVoteDto model, CancellationToken cancellationToken);
+        Task<MessageResult> AdminVote(InitiateVoteDto model, CancellationToken cancellationToken);
         Task<MessageResult> Verify(string reference, CancellationToken cancellationToken);
     }
 }
