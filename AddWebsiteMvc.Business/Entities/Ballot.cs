@@ -29,5 +29,6 @@ namespace AddWebsiteMvc.Business.Entities
         public DateTime VoteDate { get; set; }
 
         public DateTime CastTime { get; set; } = DateTime.UtcNow;
+        public bool IsFree { get; set; }
     }
 }

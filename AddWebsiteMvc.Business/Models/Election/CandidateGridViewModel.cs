@@ -8,6 +8,7 @@ namespace AddWebsiteMvc.Business.Models.Election
 {
     public class CandidateGridViewModel
     {
+        public Guid Id { get; set; } = Guid.Empty;
         public List<CandidateDto> Candidates { get; set; } = new();
         public List<CandidateCategoryModel> CandidateCategories { get; set; } = new();
         public List<CandidateCategoryVoteModel> CandidateCategoryVotes { get; set; } = new();
