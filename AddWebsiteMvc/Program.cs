@@ -9,6 +9,8 @@ using AddWebsiteMvc.Business.Services;
 using AddWebsiteMvc.Business.Services.Auth;
 using AddWebsiteMvc.Business.Services.Election;
 using AddWebsiteMvc.Business.Services.SurveyModule;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -106,6 +108,22 @@ builder.Services.AddHttpClient<IHttpClientWrapperService, HttpClientWrapperServi
 builder.Services.AddAuthentication();
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseDefaultTypeSerializer()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.FromSeconds(15),
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
+
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
