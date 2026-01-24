@@ -357,6 +357,7 @@ namespace AddWebsiteMvc.Business.Services.Election
             {
                 log = await _paymentLogRepository.GetSingleAsync(x => x.Reference == reference);
                 log.Status = PaymentStatus.Failed;
+                //log.RetryCount = log.RetryCount == null ? 1 : log.RetryCount + 1;
                 await _paymentLogRepository.UpdateAsync(log, cancellationToken);
                 await _paymentLogRepository.CommitTransactionAsync();
             }

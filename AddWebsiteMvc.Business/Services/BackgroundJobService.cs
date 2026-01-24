@@ -33,7 +33,7 @@ namespace VoteApp.Application.Services
         {
             try
             {
-                List<PaymentLog> paymentLogs = _paymentLogRepository.Filter(x => x.Status != PaymentStatus.Success && x.RetryCount == null || x.RetryCount <= 10).Take(10).ToList();
+                List<PaymentLog> paymentLogs = _paymentLogRepository.Filter(x => x.Status != PaymentStatus.Success && x.RetryCount == null || x.RetryCount <= 3).ToList();
                 foreach (var item in paymentLogs)
                 {
                     try
