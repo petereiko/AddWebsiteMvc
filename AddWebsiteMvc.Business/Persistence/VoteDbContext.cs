@@ -101,7 +101,6 @@ namespace AddWebsiteMvc.Business.Persistence
             // Survey Configuration
             builder.Entity<Survey>(entity =>
             {
-                entity.HasKey(e => e.Id);
                 entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.Description).HasMaxLength(1000);
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
@@ -188,7 +187,7 @@ namespace AddWebsiteMvc.Business.Persistence
             });
 
             // Seed default survey data (optional)
-            SeedDefaultSurvey(builder);
+            //SeedDefaultSurvey(builder);
 
             // Seed default roles
             SeedRoles(builder);
@@ -218,98 +217,98 @@ namespace AddWebsiteMvc.Business.Persistence
             );
         }
 
-        private void SeedDefaultSurvey(ModelBuilder modelBuilder)
-        {
-            // Seed default survey
-            modelBuilder.Entity<Survey>().HasData(new Survey
-            {
-                Id = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                Title = "Voting Experience Survey",
-                Description = "Help us improve! Share your experience with our voting platform.",
-                IsActive = true,
-                ThankYouMessage = "Thank you for your valuable feedback! Your input helps us improve.",
-                AllowMultipleResponses = false,
-                CreatedAt = Convert.ToDateTime("2026-01-19"),
-                UpdatedAt = Convert.ToDateTime("2026-01-19")
-            });
+        //private void SeedDefaultSurvey(ModelBuilder modelBuilder)
+        //{
+        //    // Seed default survey
+        //    modelBuilder.Entity<Survey>().HasData(new Survey
+        //    {
+        //        Id = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //        Title = "Voting Experience Survey",
+        //        Description = "Help us improve! Share your experience with our voting platform.",
+        //        IsActive = true,
+        //        ThankYouMessage = "Thank you for your valuable feedback! Your input helps us improve.",
+        //        AllowMultipleResponses = false,
+        //        CreatedAt = Convert.ToDateTime("2026-01-19"),
+        //        UpdatedAt = Convert.ToDateTime("2026-01-19")
+        //    });
 
-            // Seed default questions
-            modelBuilder.Entity<SurveyQuestion>().HasData(
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("ada9ce3f-c3dd-4083-aee9-e3de0d9f7cfa"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "How would you rate your overall voting experience?",
-                    QuestionType = QuestionType.Rating,
-                    IsRequired = true,
-                    DisplayOrder = 1,
-                    MinValue = 1,
-                    MaxValue = 5,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                },
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("a93ecc9a-9860-4f91-8e84-ce98867b651c"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "Was the voting process easy to understand?",
-                    QuestionType = QuestionType.YesNo,
-                    IsRequired = true,
-                    DisplayOrder = 2,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                },
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("0016bfbb-1bad-43ff-9e19-fcab88238fc3"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "How satisfied are you with the website interface?",
-                    QuestionType = QuestionType.Rating,
-                    IsRequired = true,
-                    DisplayOrder = 3,
-                    MinValue = 1,
-                    MaxValue = 5,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                },
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("b117642b-8440-4fad-b3c6-fde39000b5bd"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "Did you encounter any technical issues?",
-                    QuestionType = QuestionType.YesNo,
-                    IsRequired = true,
-                    DisplayOrder = 4,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                },
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("ea3fd4ad-8f23-4b56-be7f-380c7f3229be"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "What did you like most about the voting process?",
-                    QuestionType = QuestionType.Text,
-                    IsRequired = false,
-                    DisplayOrder = 5,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                },
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("265e66ea-67a5-4416-bbfe-d4420a3b4cd6"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "What could we improve?",
-                    QuestionType = QuestionType.Text,
-                    IsRequired = false,
-                    DisplayOrder = 6,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                },
-                new SurveyQuestion
-                {
-                    Id = Guid.Parse("d5fee1ab-2d88-43ba-bad5-7afc4dada945"),
-                    SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
-                    QuestionText = "Would you recommend our voting platform to others?",
-                    QuestionType = QuestionType.YesNo,
-                    IsRequired = true,
-                    DisplayOrder = 7,
-                    CreatedAt = Convert.ToDateTime("2026-01-19")
-                }
-            );
-        }
+        //    // Seed default questions
+        //    modelBuilder.Entity<SurveyQuestion>().HasData(
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("ada9ce3f-c3dd-4083-aee9-e3de0d9f7cfa"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "How would you rate your overall voting experience?",
+        //            QuestionType = QuestionType.Rating,
+        //            IsRequired = true,
+        //            DisplayOrder = 1,
+        //            MinValue = 1,
+        //            MaxValue = 5,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        },
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("a93ecc9a-9860-4f91-8e84-ce98867b651c"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "Was the voting process easy to understand?",
+        //            QuestionType = QuestionType.YesNo,
+        //            IsRequired = true,
+        //            DisplayOrder = 2,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        },
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("0016bfbb-1bad-43ff-9e19-fcab88238fc3"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "How satisfied are you with the website interface?",
+        //            QuestionType = QuestionType.Rating,
+        //            IsRequired = true,
+        //            DisplayOrder = 3,
+        //            MinValue = 1,
+        //            MaxValue = 5,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        },
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("b117642b-8440-4fad-b3c6-fde39000b5bd"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "Did you encounter any technical issues?",
+        //            QuestionType = QuestionType.YesNo,
+        //            IsRequired = true,
+        //            DisplayOrder = 4,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        },
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("ea3fd4ad-8f23-4b56-be7f-380c7f3229be"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "What did you like most about the voting process?",
+        //            QuestionType = QuestionType.Text,
+        //            IsRequired = false,
+        //            DisplayOrder = 5,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        },
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("265e66ea-67a5-4416-bbfe-d4420a3b4cd6"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "What could we improve?",
+        //            QuestionType = QuestionType.Text,
+        //            IsRequired = false,
+        //            DisplayOrder = 6,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        },
+        //        new SurveyQuestion
+        //        {
+        //            Id = Guid.Parse("d5fee1ab-2d88-43ba-bad5-7afc4dada945"),
+        //            SurveyId = Guid.Parse("5c48d2cf-d296-4cd4-a533-97b31e55a68b"),
+        //            QuestionText = "Would you recommend our voting platform to others?",
+        //            QuestionType = QuestionType.YesNo,
+        //            IsRequired = true,
+        //            DisplayOrder = 7,
+        //            CreatedAt = Convert.ToDateTime("2026-01-19")
+        //        }
+        //    );
+        //}
     }
 }

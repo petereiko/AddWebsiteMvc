@@ -1,4 +1,5 @@
-﻿using AddWebsiteMvc.Business.Entities.SurveyEntity;
+﻿using AddWebsiteMvc.Business.Entities;
+using AddWebsiteMvc.Business.Entities.SurveyEntity;
 using AddWebsiteMvc.Business.Enums;
 using AddWebsiteMvc.Business.Interfaces;
 using AddWebsiteMvc.Business.Models.SurveyModels;
@@ -180,74 +181,62 @@ namespace AddWebsiteMvc.Business.Services.SurveyModule
             }
         }
 
-        //private async Task TrackSurveyEmailAsync(Guid voteId, string email, string token)
+        //private async Task<bool> SendEmailAsync(string toEmail, string subject, string htmlBody)
         //{
         //    try
         //    {
-        //        // First, we need to create or get the SurveyResponse
-        //        // Check if a response already exists for this vote
-        //        var existingResponse = await _context.SurveyResponses
-        //            .FirstOrDefaultAsync(r => r.VoteId == voteId && r.UserEmail == email);
+        //        var smtpServer = _configuration["Email:SmtpServer"];
+        //        var smtpPort = int.Parse(_configuration["Email:SmtpPort"] ?? "587");
+        //        var smtpUsername = _configuration["Email:SmtpUsername"];
+        //        var smtpPassword = _configuration["Email:SmtpPassword"];
+        //        var fromEmail = _configuration["Email:FromEmail"];
+        //        var fromName = _configuration["Email:FromName"] ?? "NIGERIA GOVERNORS SCORECARD AWARDS by Adda Consults";
 
-        //        Guid responseId;
-
-        //        if (existingResponse != null)
+        //        using var client = new SmtpClient(smtpServer, smtpPort)
         //        {
-        //            responseId = existingResponse.Id;
-        //        }
-        //        else
-        //        {
-        //            // Create a new survey response record
-        //            // Get the active survey
-        //            var activeSurvey = await _context.Surveys
-        //                .AsNoTracking()
-        //                .FirstOrDefaultAsync(s => s.IsActive);
-
-        //            if (activeSurvey == null)
-        //            {
-        //                _logger.LogWarning("No active survey found to track email");
-        //                return;
-        //            }
-
-        //            var newResponse = new SurveyResponse
-        //            {
-        //                SurveyId = activeSurvey.Id,
-        //                UserEmail = email,
-        //                VoteId = voteId,
-        //                ResponseToken = Guid.NewGuid(), // Generate a response token
-        //                StartedAt = DateTime.UtcNow,
-        //                IsCompleted = false
-        //            };
-
-        //            _context.SurveyResponses.Add(newResponse);
-        //            await _context.SaveChangesAsync();
-        //            responseId = newResponse.Id;
-        //        }
-
-        //        // Now create the email tracking record
-        //        var tracking = new SurveyEmailTracking
-        //        {
-        //            ResponseId = responseId,
-        //            UserEmail = email,
-        //            Token = token, // Store the Base64 token
-        //            SentAt = DateTime.UtcNow,
-        //            EmailStatus = EmailStatus.Sent
+        //            Credentials = new NetworkCredential(smtpUsername, smtpPassword),
+        //            EnableSsl = true
         //        };
 
-        //        _context.SurveyEmailTrackings.Add(tracking);
-        //        await _context.SaveChangesAsync();
+        //        var mailMessage = new MailMessage
+        //        {
+        //            From = new MailAddress(fromEmail, fromName),
+        //            Subject = subject,
+        //            Body = htmlBody,
+        //            IsBodyHtml = true
+        //        };
 
-        //        _logger.LogInformation($"Email tracking created for {email}, token: {token.Substring(0, 10)}...");
+        //        mailMessage.To.Add(toEmail);
+
+        //        await client.SendMailAsync(mailMessage);
+        //        return true;
         //    }
         //    catch (Exception ex)
         //    {
-        //        _logger.LogError(ex, $"Error tracking survey email for {email}");
+        //        _logger.LogError(ex, $"Failed to send email to {toEmail}");
+        //        return false;
         //    }
         //}
+
         private async Task<bool> SendEmailAsync(string toEmail, string subject, string htmlBody)
         {
+            // Create email log entry
+            var emailLog = new EmailLog
+            {
+                Email = toEmail,
+                Subject = subject,
+                Message = htmlBody,
+                CreatedDate = DateTime.UtcNow,
+                IsSent = false,
+                SentDate = null
+            };
+
             try
             {
+                // Add to database before sending (in case of failure)
+                _context.EmailLogs.Add(emailLog);
+                await _context.SaveChangesAsync();
+
                 var smtpServer = _configuration["Email:SmtpServer"];
                 var smtpPort = int.Parse(_configuration["Email:SmtpPort"] ?? "587");
                 var smtpUsername = _configuration["Email:SmtpUsername"];
@@ -268,15 +257,25 @@ namespace AddWebsiteMvc.Business.Services.SurveyModule
                     Body = htmlBody,
                     IsBodyHtml = true
                 };
-
                 mailMessage.To.Add(toEmail);
 
                 await client.SendMailAsync(mailMessage);
+
+                // Update log as sent
+                emailLog.IsSent = true;
+                emailLog.SentDate = DateTime.UtcNow;
+                _context.EmailLogs.Update(emailLog);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation($"Email sent successfully to {toEmail}. Subject: {subject}");
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed to send email to {toEmail}");
+                _logger.LogError(ex, $"Failed to send email to {toEmail}. Subject: {subject}");
+
+                // Log is already in database with IsSent = false
+                // Optionally, you could add an error message field to EmailLog
                 return false;
             }
         }
