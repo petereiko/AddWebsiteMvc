@@ -343,7 +343,7 @@ namespace AddWebsiteMvc.Business.Services.Election
                     voter.BallotStatus = BallotStatus.Approved;
                     await _voterRepository.UpdateAsync(voter, cancellationToken);
 
-                    await _emailService.SendSurveyInvitationAsync(voter.Email, voter.FullName, voter.Id);
+                    //await _emailService.SendSurveyInvitationAsync(voter.Email, voter.FullName, voter.Id);
                 }
                 await _paymentLogRepository.CommitTransactionAsync();
 

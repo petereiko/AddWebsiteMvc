@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Http;
 using System.Configuration;
+using VoteApp.Application.Services;
 using VoteApp.Application.Services.Election;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,6 +77,8 @@ builder.Services.AddTransient<ISurveyService, SurveyService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddTransient<ISurveyAdminService, SurveyAdminService>();
+
+builder.Services.AddTransient<BackgroundJobService>();
 
 
 
@@ -147,16 +150,19 @@ app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
   );
-app.MapControllerRoute(
-    name: "survey",
-    pattern: "survey/{token?}",
-    defaults: new { controller = "Survey", action = "Index" });
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-
+using (var scope = app.Services.CreateScope())
+{
+    var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+    recurringJobManager.AddOrUpdate<BackgroundJobService>(
+        "VerifyPayments",
+        service => service.VerifyPayments(),
+        Cron.MinuteInterval(2));
+}
 
 app.Run();
